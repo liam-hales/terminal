@@ -1,0 +1,19 @@
+{
+  "name": "dev-tools",
+  "description": "Useful dev tools, accessed via a browser, used like a terminal",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=18.12",
+    "npm": ">=8.19"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liam-hales/dev-tools.git"
+  },
+  "packageManager": "yarn@3.2.4"
+}

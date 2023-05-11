@@ -1,0 +1,20 @@
+root = true
+
+# Apply to all files
+[*]
+
+# Set unix-style newlines
+end_of_line = lf
+
+# Set the charset to UTF-8
+charset = utf-8
+
+# Add a newline at the end of the file
+insert_final_newline = true
+
+# Remove any trailing whitespace
+trim_trailing_whitespace = true
+
+# Set a 2 space indentation
+indent_style = space
+indent_size = 2

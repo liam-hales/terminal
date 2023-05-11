@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/*
+.yarn/*
+
+# Environment
+.env*
+
+# Misc
+.DS_Store
+
+# Logs
+*.log*
+
+# Build
+.next/*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
