@@ -1,6 +1,6 @@
 {
   "name": "dev-tools",
-  "description": "Useful dev tools, accessed via a browser, used like a terminal",
+  "description": "Useful dev tools accessed via a browser and used like a terminal",
   "version": "1.0.0",
   "private": true,
   "engines": {
