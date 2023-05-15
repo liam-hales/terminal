@@ -1,0 +1,177 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "airbnb-typescript",
+    "next/core-web-vitals"
+  ],
+  "rules": {
+    "max-len": "off",
+    "padded-blocks": "off",
+    "arrow-body-style": "off",
+    "no-confusing-arrow": "off",
+    "consistent-return": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "import/prefer-default-export": "off",
+    "import/no-cycle": "off",
+    "react/require-default-props": "off",
+    "react/display-name": "off",
+
+    "no-console": [
+      "error",
+      {
+        "allow": ["error"]
+      }
+    ],
+    "object-shorthand": ["error", "never"],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": {
+          "multiline": true,
+          "minProperties": 1,
+          "consistent": true
+        },
+        "ExportDeclaration": "always"
+      }
+    ],
+    "operator-linebreak": [
+      "error",
+      "after",
+      {
+        "overrides": {
+          "?": "before",
+          ":": "before"
+        }
+      }
+    ],
+    "eqeqeq": [
+      "error",
+      "always",
+      {
+        "null": "ignore"
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": ["error"],
+    "@typescript-eslint/return-await": ["error", "always"],
+    "@typescript-eslint/brace-style": ["error", "stroustrup"],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "default",
+        "format": ["camelCase"],
+        "leadingUnderscore": "forbid",
+        "trailingUnderscore": "forbid"
+      },
+      {
+        "selector": "variable",
+        "format": ["camelCase", "PascalCase"],
+        "leadingUnderscore": "allow",
+        "trailingUnderscore": "forbid"
+      },
+      {
+        "selector": "parameter",
+        "format": ["camelCase"],
+        "leadingUnderscore": "forbid",
+        "trailingUnderscore": "forbid"
+      },
+      {
+        "selector": "enumMember",
+        "format": ["UPPER_CASE"],
+        "leadingUnderscore": "forbid",
+        "trailingUnderscore": "forbid"
+      },
+      {
+        "selector": ["enum", "interface", "typeAlias", "typeParameter"],
+        "format": ["PascalCase"],
+        "leadingUnderscore": "forbid",
+        "trailingUnderscore": "forbid"
+      }
+    ],
+    "@typescript-eslint/strict-boolean-expressions": [
+      "error",
+      {
+        "allowString": false,
+        "allowNumber": false,
+        "allowNullableObject": false
+      }
+    ],
+    "@typescript-eslint/indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "flatTernaryExpressions": true,
+        "offsetTernaryExpressions": true,
+        "ignoredNodes": [
+          "TSTypeParameterInstantiation"
+        ]
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "never"
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "*.config.mjs",
+          "/**/*.script.ts"
+        ]
+      }
+    ],
+    "import/extensions": ["error", "never"],
+    "react/jsx-boolean-value": ["error", "always"],
+    "react/jsx-props-no-spreading": [
+      "error",
+      {
+        "exceptions": [
+          "Component",
+          "NextLink"
+        ]
+      }
+    ],
+    "react/jsx-no-useless-fragment": [
+      "error",
+      {
+        "allowExpressions": true
+      }
+    ],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "react/no-unknown-property": [
+      "error",
+      {
+        "ignore": ["css"]
+      }
+    ],
+    "jsx-a11y/no-static-element-interactions": [
+      "error",
+      {
+        "allowExpressionValues": true
+      }
+    ]
+  }
+}
