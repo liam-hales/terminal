@@ -1,3 +1,14 @@
+import bundleAnalyser from '@next/bundle-analyzer';
+
+/**
+ * The initialised bundle analyser
+ * from `@next/bundle-analyzer`
+ */
+const withAnalyser = bundleAnalyser({
+  enabled: process.env.ANALYSE_BUNDLE === 'true',
+  openAnalyzer: true,
+});
+
 /**
  * The Next.js config used to configure
  * the Next.js framework for the app
@@ -9,4 +20,4 @@ const nextConfig = {
   productionBrowserSourceMaps: true,
 };
 
-export default nextConfig;
+export default withAnalyser(nextConfig);
