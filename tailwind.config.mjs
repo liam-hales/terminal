@@ -8,6 +8,12 @@ const tailwindConfig = {
   content: [
     './src/**/*.{ts,tsx}',
   ],
+  theme: {
+    fontFamily: {
+      sans: 'var(--sans-font)',
+      mono: 'var(--mono-font)',
+    },
+  },
 };
 
 export default tailwindConfig;
