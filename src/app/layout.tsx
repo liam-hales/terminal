@@ -1,7 +1,7 @@
 import './globals.css';
 
-import { ReactElement, ReactNode } from 'react';
-import { BaseProps, ServerComponent } from '../types';
+import { FunctionComponent, ReactElement, ReactNode } from 'react';
+import { BaseProps } from '../types';
 import { urbanist, firaCode } from '../fonts';
 
 /**
@@ -18,7 +18,7 @@ interface Props extends BaseProps {
  * @param props The component props
  * @returns The `AppLayout` component
  */
-const AppLayout: ServerComponent<Props> = async ({ children }): Promise<ReactElement<Props>> => {
+const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
   return (
     <html
       lang="en"
