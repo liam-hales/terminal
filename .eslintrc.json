@@ -30,6 +30,7 @@
     "import/no-cycle": "off",
     "react/require-default-props": "off",
     "react/display-name": "off",
+    "react/jsx-no-constructed-context-values": "off",
 
     "no-console": [
       "error",
