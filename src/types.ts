@@ -23,3 +23,39 @@ export interface BaseProps<T extends HTMLElement = HTMLElement> {
 export interface AsyncComponent<P extends Partial<Record<keyof P, unknown>> = never> {
   (props: P): Promise<ReactElement<P>> | Promise<ReactElement>;
 }
+
+/**
+ * Describes the terminal input block used
+ * to store terminal input data
+ */
+export interface TerminalInputBlock {
+  readonly type: 'input';
+  readonly value: string;
+}
+
+/**
+ * Describes the terminal output block used
+ * to store terminal output data
+ */
+export interface TerminalOutputBlock {
+  readonly type: 'output';
+  readonly value: unknown;
+}
+
+/**
+ * Describes the terminal error block used
+ * to store terminal error data
+ */
+export interface TerminalErrorBlock {
+  readonly type: 'error';
+  readonly value: string;
+}
+
+/**
+ * The union type for all
+ * terminal block types
+ */
+export type TerminalBlock =
+  | TerminalInputBlock
+  | TerminalOutputBlock
+  | TerminalErrorBlock;
