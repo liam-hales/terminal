@@ -25,6 +25,15 @@ export interface AsyncComponent<P extends Partial<Record<keyof P, unknown>> = ne
 }
 
 /**
+ * Describes the parsed input which consists of
+ * the `command` and the `options`
+ */
+export interface ParsedInput {
+  readonly command?: string;
+  readonly options?: Record<string, unknown>;
+}
+
+/**
  * Describes the terminal input block used
  * to store terminal input data
  */
