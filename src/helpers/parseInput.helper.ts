@@ -11,7 +11,7 @@ import { ParsedInput } from '../types';
  * @param input The input to parse
  * @returns The parsed input
  */
-const parse = (input: string): ParsedInput => {
+const parseInput = (input: string): ParsedInput => {
   const args = input.split(' ');
 
   const { _, ...rest } = Parser(args, {
@@ -42,4 +42,4 @@ const parse = (input: string): ParsedInput => {
   };
 };
 
-export default parse;
+export default parseInput;

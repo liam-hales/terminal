@@ -1,5 +1,5 @@
-import parse from './parse.helper';
+import parseInput from './parseInput.helper';
 
 export {
-  parse,
+  parseInput,
 };
