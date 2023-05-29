@@ -26,9 +26,11 @@ export interface BaseProps<T extends HTMLElement = HTMLElement> {
 /**
  * Like `FunctionComponent from `react` but for `async`
  * server components with a `Promise` return type
+ *
+ * - Generic type `T` for the props
  */
-export interface AsyncComponent<P extends Partial<Record<keyof P, unknown>> = never> {
-  (props: P): Promise<ReactElement<P>> | Promise<ReactElement>;
+export interface AsyncComponent<T extends Partial<Record<keyof T, unknown>> = never> {
+  (props: T): Promise<ReactElement<T>> | Promise<ReactElement>;
 }
 
 /**
@@ -69,6 +71,8 @@ export interface Command<
 /**
  * Used to describe the command options which consists of the `schema`
  * used for validation and a `config` for each option
+ *
+ * - Generic type `T` for the schema
  */
 export interface CommandOptions<T extends Schema> {
   readonly schema: T;
