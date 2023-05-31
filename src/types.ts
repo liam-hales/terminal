@@ -1,5 +1,6 @@
 import { FunctionComponent, ReactElement, Ref } from 'react';
 import { Schema, z } from 'zod';
+import { Feature } from './features';
 
 /**
  * The feature ID used to differentiate
