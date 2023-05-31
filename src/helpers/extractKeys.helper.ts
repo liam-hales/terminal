@@ -7,7 +7,7 @@
  * @param from The object to extract keys from
  * @returns The objects keys
  */
-const extractKeys = <T extends Partial<Record<keyof T, unknown>>>(from: T): (keyof T)[] => {
+const extractKeys = <T extends object>(from: T): (keyof T)[] => {
   return Object.keys(from) as (keyof T)[];
 };
 

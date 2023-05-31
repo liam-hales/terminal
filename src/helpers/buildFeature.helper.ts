@@ -15,7 +15,7 @@ import { FeatureId, IFeature } from '../types';
 const buildFeature = <
   F extends FeatureId,
   S extends Schema,
-  P extends Record<keyof P, unknown>,
+  P extends object,
 >(config: IFeature<F, S, P>) => {
   return config;
 };

@@ -29,7 +29,7 @@ export interface BaseProps<T extends HTMLElement = HTMLElement> {
  *
  * - Generic type `T` for the props
  */
-export interface AsyncComponent<T extends Partial<Record<keyof T, unknown>> = never> {
+export interface AsyncComponent<T extends object = never> {
   (props: T): Promise<ReactElement<T>> | Promise<ReactElement>;
 }
 
@@ -44,7 +44,7 @@ export interface AsyncComponent<T extends Partial<Record<keyof T, unknown>> = ne
 export interface IFeature<
   F extends FeatureId,
   S extends Schema,
-  P extends Record<keyof P, unknown>,
+  P extends object,
 > {
   readonly id: F;
   readonly command: Command<S, P>;
@@ -61,7 +61,7 @@ export interface IFeature<
  */
 export interface Command<
   S extends Schema,
-  P extends Record<keyof P, unknown>,
+  P extends object,
 > {
   readonly name: string;
   readonly options: CommandOptions<S>;
