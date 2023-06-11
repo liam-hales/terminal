@@ -1,5 +1,5 @@
-import features from '../features';
-import { ParsedInput, TerminalOutputBlock } from '../types';
+import features, { Feature } from '../features';
+import { FeatureOutput, ParsedInput } from '../types';
 import { extractKeys } from '.';
 
 /**
@@ -11,9 +11,9 @@ import { extractKeys } from '.';
  * - Executes the feature command action
  *
  * @param input The parsed input
- * @returns The terminal output block
+ * @returns The feature output
  */
-const executeInput = (input: ParsedInput): TerminalOutputBlock => {
+const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
   const {
     command: inputCommand,
     options: inputOptions = {},
@@ -72,11 +72,8 @@ const executeInput = (input: ParsedInput): TerminalOutputBlock => {
   // and use the returned props for the terminal output block
   const props = action(validated.data);
   return {
-    type: 'output',
-    value: {
-      featureId: id,
-      props: props,
-    },
+    featureId: id,
+    props: props,
   };
 };
 
