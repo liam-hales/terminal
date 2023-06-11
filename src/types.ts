@@ -138,20 +138,12 @@ export interface ParsedInput {
 }
 
 /**
- * Describes the terminal input block used
- * to store terminal input data
- */
-export interface TerminalInputBlock {
-  readonly type: 'input';
-  readonly value: string;
-}
-
-/**
  * Describes the terminal output block used
  * to store terminal output data
  */
 export interface TerminalOutputBlock {
   readonly type: 'output';
+  readonly input: string;
   readonly value: FeatureOutput<Feature>;
 }
 
@@ -161,6 +153,7 @@ export interface TerminalOutputBlock {
  */
 export interface TerminalErrorBlock {
   readonly type: 'error';
+  readonly input: string;
   readonly value: string;
 }
 
@@ -168,7 +161,4 @@ export interface TerminalErrorBlock {
  * The union type for all
  * terminal block types
  */
-export type TerminalBlock =
-  | TerminalInputBlock
-  | TerminalOutputBlock
-  | TerminalErrorBlock;
+export type TerminalBlock = TerminalOutputBlock | TerminalErrorBlock;
