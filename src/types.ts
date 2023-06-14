@@ -144,7 +144,7 @@ export interface ParsedInput {
 export interface TerminalOutputBlock {
   readonly type: 'output';
   readonly input: string;
-  readonly value: FeatureOutput<Feature>;
+  readonly output: FeatureOutput<Feature>;
 }
 
 /**
@@ -154,7 +154,7 @@ export interface TerminalOutputBlock {
 export interface TerminalErrorBlock {
   readonly type: 'error';
   readonly input: string;
-  readonly value: string;
+  readonly error: Error;
 }
 
 /**

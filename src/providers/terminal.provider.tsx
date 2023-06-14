@@ -61,18 +61,18 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
       addBlock({
         type: 'output',
         input: input,
-        value: output,
+        output: output,
       });
     }
     catch (error) {
       if (error instanceof Error) {
 
         // Add the terminal error block
-        // for the caught error message
+        // for the caught error
         addBlock({
           type: 'error',
           input: input,
-          value: error.message,
+          error: error,
         });
       }
     }

@@ -12,7 +12,7 @@ type Props = Omit<ErrorBlock, 'type'> & BaseProps;
  * @param props The component props
  * @returns The `TerminalErrorBlock` component
  */
-const TerminalErrorBlock: FunctionComponent<Props> = ({ input, value }): ReactElement<Props> => {
+const TerminalErrorBlock: FunctionComponent<Props> = ({ input, error }): ReactElement<Props> => {
 
   const inputText = `> ${input}`;
   return (
@@ -21,7 +21,7 @@ const TerminalErrorBlock: FunctionComponent<Props> = ({ input, value }): ReactEl
         {inputText}
       </p>
       <pre className="font-mono font-bold text-sm text-red-400">
-        {value}
+        {error.message}
       </pre>
     </div>
   );
