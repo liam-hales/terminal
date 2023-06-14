@@ -1,3 +1,4 @@
+import { paramCase } from 'param-case';
 import features, { Feature } from '../features';
 import { FeatureOutput, ParsedInput } from '../types';
 import { extractKeys } from '.';
@@ -60,7 +61,7 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
 
         const plural = (keys.length > 1) ? 's' : '';
         const optons = keys
-          .map((key) => `"${key}"`)
+          .map((key) => `"--${paramCase(key)}"`)
           .join(', ');
 
         throw new Error(`Unknown option${plural}: ${optons}`);
@@ -79,7 +80,7 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
         // If the messages contains a "Required" error message
         // then return a required option error message
         if (isRequired === true) {
-          return `Option "${key}" is required`;
+          return `Option "--${paramCase(key)}" is required`;
         }
 
         // Format the error messages into a single
@@ -88,7 +89,7 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
           .map((message) => `  - ${message}`)
           .join('\n');
 
-        return `Option "${key}" is invalid\n${formatted}`;
+        return `Option "--${paramCase(key)}" is invalid\n${formatted}`;
       })
       .join('\n\n');
 
