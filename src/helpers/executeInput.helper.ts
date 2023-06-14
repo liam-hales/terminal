@@ -50,20 +50,47 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
   // into an a single message and throw an error
   if (validated.success === false) {
     const { error } = validated;
+    const { issues } = error;
+
+    // Check to see if there is an `unrecognized_keys` error and
+    // if so throw an unknown options error
+    issues.forEach((issue) => {
+      if (issue.code === 'unrecognized_keys') {
+        const { keys } = issue;
+
+        const plural = (keys.length > 1) ? 's' : '';
+        const optons = keys
+          .map((key) => `"${key}"`)
+          .join(', ');
+
+        throw new Error(`Unknown option${plural}: ${optons}`);
+      }
+    });
+
     const { fieldErrors } = error.flatten();
 
-    // Map the validation errors into a message
-    // for the error that will be thrown
+    // Map the validation errors into suitable messages and join
+    // them together for the error that will be thrown
     const message = extractKeys(fieldErrors)
       .map((key) => {
         const messages = fieldErrors[key] ?? [];
+        const isRequired = messages.includes('Required');
+
+        // If the messages contains a "Required" error message
+        // then return a required option error message
+        if (isRequired === true) {
+          return `Option "${key}" is required`;
+        }
+
+        // Format the error messages into a single
+        // invalid option error message
         const formatted = messages
           .map((message) => `  - ${message}`)
           .join('\n');
 
-        return `Option "${key}"\n${formatted}`;
+        return `Option "${key}" is invalid\n${formatted}`;
       })
-      .join('\n');
+      .join('\n\n');
 
     throw new Error(message);
   }
