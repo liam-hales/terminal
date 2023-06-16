@@ -1,6 +1,7 @@
 'use client';
 
 import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
+import { nanoid } from 'nanoid';
 import { TerminalContext } from '../context';
 import { BaseProps, TerminalBlock } from '../types';
 import { parseInput, executeInput } from '../helpers';
@@ -51,6 +52,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
    * @param input The user input
    */
   const execute = (input: string): void => {
+    const blockId = nanoid(16);
 
     try {
       const parsed = parseInput(input);
@@ -60,6 +62,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
       // for the feature output
       addBlock({
         type: 'output',
+        id: blockId,
         input: input,
         output: output,
       });
@@ -71,6 +74,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
         // for the caught error
         addBlock({
           type: 'error',
+          id: blockId,
           input: input,
           error: error,
         });
