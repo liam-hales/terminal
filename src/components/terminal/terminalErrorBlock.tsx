@@ -4,7 +4,7 @@ import { BaseProps, TerminalErrorBlock as ErrorBlock } from '../../types';
 /**
  * The `TerminalErrorBlock` component props
  */
-type Props = Omit<ErrorBlock, 'type'> & BaseProps;
+type Props = Omit<ErrorBlock, 'id' | 'type'> & BaseProps;
 
 /**
  * Used to render the terminal error block

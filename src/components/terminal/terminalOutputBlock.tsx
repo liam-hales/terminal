@@ -4,7 +4,7 @@ import { BaseProps, TerminalOutputBlock as OutputBlock } from '../../types';
 /**
  * The `TerminalOutputBlock` component props
  */
-type Props = Omit<OutputBlock, 'type'> & BaseProps;
+type Props = Omit<OutputBlock, 'id' | 'type'> & BaseProps;
 
 /**
  * Used to render the terminal output block
