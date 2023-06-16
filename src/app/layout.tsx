@@ -3,6 +3,8 @@ import './globals.css';
 import { FunctionComponent, ReactElement, ReactNode } from 'react';
 import { BaseProps } from '../types';
 import { urbanist, firaCode } from '../fonts';
+import { Terminal } from '../components';
+import { TerminalProvider } from '../providers';
 
 /**
  * The `AppLayout` component props
@@ -25,7 +27,11 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
       className={`${urbanist.variable} ${firaCode.variable}`}
     >
       <body className="bg-black">
-        {children}
+        <TerminalProvider>
+          <Terminal>
+            {children}
+          </Terminal>
+        </TerminalProvider>
       </body>
     </html>
   );
