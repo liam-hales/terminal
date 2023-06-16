@@ -23,6 +23,31 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   const { blocks, execute } = useTerminal();
   const [inputValue, setInputValue] = useState<string>('');
 
+  /**
+   * Used to handle keyboard events from the `TerminalInput`
+   * component underlying `input` HTML element
+   *
+   * @param key The key pressed
+   */
+  const onKeyDown = (key: string): void => {
+
+    switch (key) {
+      case 'Enter': {
+
+        // Call the `execute` function with the user
+        // input from state and clear the input
+        execute(inputValue);
+        setInputValue('');
+
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+  };
+
   return (
     <div className="h-screen flex flex-col">
       {children}
@@ -58,7 +83,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
       <TerminalInput
         value={inputValue}
         onChange={setInputValue}
-        onEnter={() => execute(inputValue)}
+        onKeyDown={onKeyDown}
       />
     </div>
   );

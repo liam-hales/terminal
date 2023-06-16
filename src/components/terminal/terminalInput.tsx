@@ -7,7 +7,7 @@ import { BaseProps } from '../../types';
 interface Props extends BaseProps {
   readonly value: string;
   readonly onChange: (value: string) => void;
-  readonly onEnter: () => void;
+  readonly onKeyDown: (key: string) => void;
 }
 
 /**
@@ -17,12 +17,13 @@ interface Props extends BaseProps {
  * @param props The component props
  * @returns The `TerminalInput` component
  */
-const TerminalInput: FunctionComponent<Props> = ({ value, onChange, onEnter }): ReactElement<Props> => {
+const TerminalInput: FunctionComponent<Props> = ({ value, onChange, onKeyDown }): ReactElement<Props> => {
   return (
     <div className="fixed bottom-0 left-0 right-0 border-solid border-t-2 border-zinc-900 bg-black">
       <input
         className="w-full h-12 text-white font-mono font-bold text-sm pl-6 pr-6 bg-transparent outline-none"
         value={value}
+        onKeyDown={(event) => onKeyDown(event.key)}
         onChange={(event) => {
 
           // Destructure the event and the event target
@@ -31,14 +32,6 @@ const TerminalInput: FunctionComponent<Props> = ({ value, onChange, onEnter }): 
           const { value } = target;
 
           onChange(value);
-        }}
-        onKeyDown={(event) => {
-
-          // If the key pressed was the enter
-          // key then call `onEnter`
-          if (event.key === 'Enter') {
-            onEnter();
-          }
         }}
       />
     </div>
