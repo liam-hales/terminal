@@ -21,7 +21,8 @@ const TerminalInput: FunctionComponent<Props> = ({ value, onChange, onKeyDown })
   return (
     <div className="fixed bottom-0 left-0 right-0 border-solid border-t-2 border-zinc-900 bg-black">
       <input
-        className="w-full h-12 text-white font-mono font-bold text-sm pl-6 pr-6 bg-transparent outline-none"
+        className="w-full h-12 text-white placeholder-zinc-700 font-mono font-bold text-sm pl-6 pr-6 bg-transparent outline-none"
+        placeholder="_ Enter command"
         value={value}
         onKeyDown={(event) => onKeyDown(event.key)}
         onChange={(event) => {
