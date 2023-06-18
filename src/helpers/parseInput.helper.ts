@@ -22,23 +22,23 @@ const parseInput = (input: string): ParsedInput => {
   });
 
   const [command] = _;
+  if (command != null) {
 
-  // If the command is not a string
-  // then throw an error
-  if (typeof command !== 'string') {
-    throw new Error('Command needs to be a string');
+    // If the command is not a string,
+    // then throw an error
+    if (typeof command !== 'string') {
+      throw new Error('Command needs to be a string');
+    }
   }
 
   const options = camelcaseKeys(rest);
   const hasOptions = Object.keys(options).length > 0;
 
   return {
-    ...(command !== '') && {
-      command: command,
-    },
     ...(hasOptions === true) && {
       options: options,
     },
+    command: command,
   };
 };
 
