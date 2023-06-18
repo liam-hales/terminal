@@ -6,6 +6,7 @@ import { TerminalBlock } from '../types';
  */
 export interface TerminalState {
   readonly blocks: TerminalBlock[];
+  readonly inputHistory: string[];
 }
 
 /**
