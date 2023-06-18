@@ -20,6 +20,10 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
     options: inputOptions = {},
   } = input;
 
+  if (inputCommand == null) {
+    throw new Error('No command input');
+  }
+
   // Attempt to find a feature with a command
   // that matches the input command
   const feature = features.find((feature) => {
@@ -30,7 +34,7 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
   // If a feature cannot be found for the
   // command, then throw an error
   if (feature == null) {
-    throw new Error(`Command "${inputCommand}" does not exist`);
+    throw new Error(`Command "${inputCommand}" not found`);
   }
 
   const { id, command, enabled } = feature;
@@ -40,7 +44,7 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
   // If the feature has not been
   // enabled, then throw an error
   if (enabled === false) {
-    throw new Error(`This "${name}" feature has been disabled`);
+    throw new Error(`Feature "${name}" has been disabled`);
   }
 
   const validated = schema
