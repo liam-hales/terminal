@@ -20,8 +20,10 @@ interface Props extends BaseProps {
  * @returns The `Terminal` component
  */
 const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
-  const { blocks, execute } = useTerminal();
+  const { blocks, inputHistory, execute } = useTerminal();
+
   const [inputValue, setInputValue] = useState<string>('');
+  const [historyIndex, setHistoryIndex] = useState<number>(-1);
 
   /**
    * Used to handle keyboard events from the `TerminalInput`
@@ -30,14 +32,47 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
    * @param key The key pressed
    */
   const onKeyDown = (key: string): void => {
-
     switch (key) {
       case 'Enter': {
+
+        // If the input is empty, return to
+        // avoid executing an empty input
+        if (inputValue === '') {
+          return;
+        }
 
         // Call the `execute` function with the user
         // input from state and clear the input
         execute(inputValue);
         setInputValue('');
+
+        break;
+      }
+
+      case 'ArrowUp': {
+        const index = historyIndex + 1;
+        const input = inputHistory[index];
+
+        if (index >= inputHistory.length) {
+          return;
+        }
+
+        setHistoryIndex(index);
+        setInputValue(input);
+
+        break;
+      }
+
+      case 'ArrowDown': {
+        const index = historyIndex - 1;
+        const input = inputHistory[index] ?? '';
+
+        if (index < -1) {
+          return;
+        }
+
+        setHistoryIndex(index);
+        setInputValue(input);
 
         break;
       }
