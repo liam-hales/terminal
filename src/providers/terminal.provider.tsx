@@ -86,6 +86,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
     <TerminalContext.Provider value={
       {
         blocks: blocks,
+        inputHistory: blocks.map((block) => block.input),
         execute: execute,
       }
     }
