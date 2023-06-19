@@ -58,10 +58,10 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
       const parsed = parseInput(input);
       const output = executeInput(parsed);
 
-      // Add the terminal output block
+      // Add the terminal executed block
       // for the feature output
       addBlock({
-        type: 'output',
+        type: 'executed',
         id: blockId,
         input: input,
         output: output,
