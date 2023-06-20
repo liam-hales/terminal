@@ -65,6 +65,7 @@ export interface Command<
   P extends object,
 > {
   readonly name: string;
+  readonly description: string;
   readonly options: CommandOptions<S>;
   readonly action: (options: z.infer<S>) => P;
 }
