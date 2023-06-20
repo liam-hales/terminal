@@ -85,7 +85,6 @@ export interface CommandOptions<T extends Schema> {
  * for a command option
  */
 export interface CommandOptionConfig {
-  readonly alias: string;
   readonly description: string;
 }
 
