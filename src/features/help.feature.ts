@@ -13,6 +13,7 @@ const helpFeature = buildFeature({
   },
   command: {
     name: 'help',
+    description: 'Used to display help for commands and give guidance on their options and how to use them',
     options: {
       schema: z.object({
         for: z.string().optional(),
