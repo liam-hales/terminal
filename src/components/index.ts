@@ -1,11 +1,11 @@
 import Terminal from './terminal/terminal';
 import TerminalInput from './terminal/terminalInput';
-import TerminalOutputBlock from './terminal/terminalOutputBlock';
+import TerminalExecutedBlock from './terminal/terminalExecutedBlock';
 import TerminalErrorBlock from './terminal/terminalErrorBlock';
 
 export {
   Terminal,
   TerminalInput,
-  TerminalOutputBlock,
+  TerminalExecutedBlock,
   TerminalErrorBlock,
 };

@@ -2,7 +2,7 @@
 
 import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { BaseProps } from '../../types';
-import { TerminalInput, TerminalErrorBlock, TerminalOutputBlock } from '..';
+import { TerminalInput, TerminalErrorBlock, TerminalExecutedBlock } from '..';
 import { useTerminal } from '../../hooks';
 
 /**
@@ -103,11 +103,11 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
               );
             }
 
-            // For the output block render the
-            // terminal output block component
+            // For the executed block render the
+            // terminal executed block component
             return (
-              <TerminalOutputBlock
-                key={`output-block-${id}`}
+              <TerminalExecutedBlock
+                key={`executed-block-${id}`}
                 input={input}
                 output={block.output}
               />

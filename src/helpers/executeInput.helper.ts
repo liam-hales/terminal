@@ -101,7 +101,7 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
   }
 
   // Call the feature action with the transformed and validated options
-  // and use the returned props for the terminal output block
+  // and use the returned props for the terminal executed block
   const props = action(validated.data);
   return {
     featureId: id,
