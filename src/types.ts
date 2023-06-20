@@ -6,7 +6,7 @@ import { Feature } from './features';
  * The feature ID used to differentiate
  * each individual feature
  */
-export type FeatureId = '';
+export type FeatureId = 'help';
 
 /**
  * The props that all component
