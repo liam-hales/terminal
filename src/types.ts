@@ -90,6 +90,20 @@ export interface CommandOptionConfig {
 }
 
 /**
+ * The utility type used to extract the
+ * type for a specific feature
+ *
+ * - Generic type `T` for the feature ID
+ */
+export type ExtractFeature<T extends FeatureId> =
+  Extract<
+    Feature,
+    {
+      readonly id: T;
+    }
+  >;
+
+/**
  * The utility type used to extract the feature `component`
  * props type for a specific feature
  *
@@ -97,22 +111,8 @@ export interface CommandOptionConfig {
  */
 export type ExtractProps<T extends FeatureId> =
   ReturnType<
-    ExtractCommand<T>['action']
+    ExtractFeature<T>['command']['action']
   >;
-
-/**
- * The utility type used to extract the feature
- * `command` type for a specific feature
- *
- * - Generic type `T` for the feature ID
- */
-export type ExtractCommand<T extends FeatureId> =
-  Extract<
-    Feature,
-    {
-      readonly id: T;
-    }
-  >['command'];
 
 /**
  * Used to build the feature output
