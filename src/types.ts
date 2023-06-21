@@ -48,7 +48,7 @@ export interface IFeature<
   P extends object,
 > {
   readonly id: F;
-  readonly command: Command<S, P>;
+  readonly command: ICommand<S, P>;
   readonly component: FunctionComponent<P>;
   readonly enabled: boolean;
 }
@@ -60,7 +60,7 @@ export interface IFeature<
  * - Generic type `S` for the schema
  * - Generic type `P` for the component props
  */
-export interface Command<
+export interface ICommand<
   S extends Schema,
   P extends object,
 > {
@@ -127,6 +127,12 @@ export type FeatureOutput<T extends Feature> =
         readonly props: ExtractProps<T['id']>;
       }
     : never;
+
+/**
+ * The command type used to describe
+ * all feature commands
+ */
+export type Command = Feature['command'];
 
 /**
  * Describes the parsed input which consists of
