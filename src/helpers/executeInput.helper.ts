@@ -25,9 +25,11 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
   }
 
   // Attempt to find a feature with a command
-  // that matches the input command
+  // name that matches the input command
   const feature = features.find((feature) => {
-    const { name } = feature.command;
+    const { command } = feature;
+    const { name } = command;
+
     return name === inputCommand;
   });
 
