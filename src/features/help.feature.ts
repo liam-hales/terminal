@@ -1,5 +1,7 @@
-import { z } from 'zod';
 import { buildFeature } from '../helpers';
+import { HelpFeature } from '../components';
+import { helpOptionsSchema } from '../schemas';
+import { helpAction } from '../actions';
 
 /**
  * The help feature, executed with `help`, used to display help for
@@ -7,27 +9,21 @@ import { buildFeature } from '../helpers';
  */
 const helpFeature = buildFeature({
   id: 'help',
-  enabled: true,
-  component: () => {
-    return null;
-  },
   command: {
     name: 'help',
     description: 'Used to display help for commands and give guidance on their options and how to use them',
     options: {
-      schema: z.object({
-        for: z.string().optional(),
-      }),
+      schema: helpOptionsSchema,
       config: {
         for: {
-          description: 'The command help is needed for',
+          description: 'The command to display help for',
         },
       },
     },
-    action: () => {
-      return {};
-    },
+    action: helpAction,
   },
+  component: HelpFeature,
+  enabled: true,
 });
 
 export default helpFeature;
