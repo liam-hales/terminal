@@ -41,10 +41,13 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
           return;
         }
 
-        // Call the `execute` function with the user
-        // input from state and clear the input
+        // Call the `execute` function with
+        // the user input from state
         execute(inputValue);
+
+        // Reset the input and history index state
         setInputValue('');
+        setHistoryIndex(-1);
 
         break;
       }
