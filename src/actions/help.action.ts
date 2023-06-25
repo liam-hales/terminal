@@ -21,8 +21,14 @@ type Props = ComponentProps<typeof HelpFeature>;
  * @param options The feature options
  * @returns The feature component props
  */
-const helpAction = (options: Options): Props => {
+const helpAction = (options: Options): Props | undefined => {
   const { for: commandName } = options;
+
+  // If there is no `for` option
+  // then return no props
+  if (commandName == null) {
+    return;
+  }
 
   // Attempt to find a feature with a command
   // name that matches the `for` option
