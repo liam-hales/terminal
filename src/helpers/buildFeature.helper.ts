@@ -1,4 +1,4 @@
-import { Schema } from 'zod';
+import { ZodSchema } from 'zod';
 import { FeatureId, IFeature } from '../types';
 
 /**
@@ -14,7 +14,7 @@ import { FeatureId, IFeature } from '../types';
  */
 const buildFeature = <
   F extends FeatureId,
-  S extends Schema,
+  S extends ZodSchema,
   P extends object,
 >(config: IFeature<F, S, P>) => {
   return config;

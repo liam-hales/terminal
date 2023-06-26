@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement, Ref } from 'react';
-import { Schema, z } from 'zod';
+import { ZodSchema, z } from 'zod';
 import { Feature } from './features';
 
 /**
@@ -44,7 +44,7 @@ export interface AsyncComponent<T extends object = never> {
  */
 export interface IFeature<
   F extends FeatureId,
-  S extends Schema,
+  S extends ZodSchema,
   P extends object,
 > {
   readonly id: F;
@@ -61,7 +61,7 @@ export interface IFeature<
  * - Generic type `P` for the component props
  */
 export interface ICommand<
-  S extends Schema,
+  S extends ZodSchema,
   P extends object,
 > {
   readonly name: string;
@@ -76,7 +76,7 @@ export interface ICommand<
  *
  * - Generic type `T` for the schema
  */
-export interface CommandOptions<T extends Schema> {
+export interface CommandOptions<T extends ZodSchema> {
   readonly schema: T;
   readonly config: Record<keyof z.infer<T>, CommandOptionConfig>;
 }
