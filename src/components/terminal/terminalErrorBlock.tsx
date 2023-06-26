@@ -16,7 +16,7 @@ const TerminalErrorBlock: FunctionComponent<Props> = ({ input, error }): ReactEl
 
   const inputText = `> ${input}`;
   return (
-    <div className="pt-4 pb-4 pl-6 pr-6 border-solid border-t-2 border-zinc-900">
+    <div className="pt-4 pb-4 pl-6 pr-6 rounded-lg bg-red-950 bg-opacity-40">
       <p className="font-mono font-bold text-sm text-zinc-500 pb-3">
         {inputText}
       </p>
