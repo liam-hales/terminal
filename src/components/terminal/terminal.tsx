@@ -87,9 +87,8 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   };
 
   return (
-    <div className="h-screen flex flex-col">
-      {children}
-      <div className="h-full flex flex-col-reverse pb-14 p-2 gap-y-2">
+    <>
+      <div className="h-full flex flex-col-reverse pb-14 p-2 gap-y-2 overflow-y-auto">
         {
           blocks.map((block) => {
             const { id, type, input } = block;
@@ -117,13 +116,14 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
             );
           })
         }
+        {children}
       </div>
       <TerminalInput
         value={inputValue}
         onChange={setInputValue}
         onKeyDown={onKeyDown}
       />
-    </div>
+    </>
   );
 };
 

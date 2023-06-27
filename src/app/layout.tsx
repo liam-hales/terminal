@@ -24,9 +24,9 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
   return (
     <html
       lang="en"
-      className={`${urbanist.variable} ${firaCode.variable}`}
+      className={`h-full ${urbanist.variable} ${firaCode.variable}`}
     >
-      <body className="bg-black">
+      <body className="h-full bg-black">
         <TerminalProvider>
           <Terminal>
             {children}
