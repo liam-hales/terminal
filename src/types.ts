@@ -1,12 +1,20 @@
 import { FunctionComponent, ReactElement, Ref } from 'react';
 import { ZodSchema, z } from 'zod';
-import { Feature } from './features';
+import { Feature, FeatureMap } from './features';
 
 /**
  * The feature ID used to differentiate
  * each individual feature
  */
 export type FeatureId = 'help';
+
+/**
+ * The utility type used to convert a type
+ * into an intersection type
+ *
+ * - Generic type `T` for the type to convert
+ */
+type Intersect<T> = (T extends T ? (k: T) => void : never) extends ((k: infer I) => void) ? I : never;
 
 /**
  * The props that all component
@@ -67,7 +75,7 @@ export interface ICommand<
   readonly name: string;
   readonly description: string;
   readonly options: CommandOptions<S>;
-  readonly action: (options: z.infer<S>) => P | undefined;
+  readonly action: (options: z.infer<S>) => P;
 }
 
 /**
@@ -90,29 +98,30 @@ export interface CommandOptionConfig {
 }
 
 /**
- * The utility type used to extract the
- * type for a specific feature
- *
- * - Generic type `T` for the feature ID
+ * The type used to describe
+ * all feature commands
  */
-export type ExtractFeature<T extends FeatureId> =
-  Extract<
-    Feature,
-    {
-      readonly id: T;
-    }
-  >;
+export type FeatureCommand = Feature['command'];
 
 /**
- * The utility type used to extract the feature `component`
- * props type for a specific feature
- *
- * - Generic type `T` for the feature ID
+ * The type used to describe
+ * all feature command options
  */
-export type ExtractProps<T extends FeatureId> =
+export type FeatureOption = Intersect<
+  z.infer<
+    Feature['command']['options']['schema']
+  >
+>;
+
+/**
+ * The type used to describe
+ * all feature props
+ */
+export type FeatureProp = Intersect<
   ReturnType<
-    ExtractFeature<T>['command']['action']
-  >;
+    Feature['command']['action']
+  >
+>;
 
 /**
  * Used to build the feature output
@@ -120,19 +129,12 @@ export type ExtractProps<T extends FeatureId> =
  *
  * - Generic type `T` for the feature union type
  */
-export type FeatureOutput<T extends Feature> =
-  T extends Feature
-    ? {
-        readonly featureId: T['id'];
-        readonly props: ExtractProps<T['id']>;
-      }
-    : never;
-
-/**
- * The command type used to describe
- * all feature commands
- */
-export type Command = Feature['command'];
+export type FeatureOutput = {
+  [K in keyof FeatureMap]: {
+    readonly featureId: K;
+    readonly props: ReturnType<FeatureMap[K]['command']['action']>;
+  }
+}[keyof FeatureMap];
 
 /**
  * Describes the parsed input which consists of
@@ -151,7 +153,7 @@ export interface TerminalExecutedBlock {
   readonly type: 'executed';
   readonly id: string;
   readonly input: string;
-  readonly output: FeatureOutput<Feature>;
+  readonly output: FeatureOutput;
 }
 
 /**
