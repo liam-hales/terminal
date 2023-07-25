@@ -1,8 +1,8 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
-import { HelpFeature } from '../components';
-import { helpOptionsSchema } from '../schemas';
-import { features } from '../features';
+import { HelpFeature } from '../../components';
+import { features } from '..';
+import { helpOptionsSchema } from '.';
 
 /**
  * The help feature options

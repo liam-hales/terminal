@@ -1,7 +1,6 @@
-import { buildFeature } from '../helpers';
-import { HelpFeature } from '../components';
-import { helpOptionsSchema } from '../schemas';
-import { helpAction } from '../actions';
+import { buildFeature } from '../../helpers';
+import { HelpFeature } from '../../components';
+import { helpOptionsSchema, helpAction } from '.';
 
 /**
  * The help feature, executed with `help`, used to display help for
