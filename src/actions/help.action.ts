@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 import { z } from 'zod';
 import { HelpFeature } from '../components';
 import { helpOptionsSchema } from '../schemas';
-import features from '../features';
+import { features } from '../features';
 
 /**
  * The help feature options
@@ -15,19 +15,19 @@ type Options = z.infer<typeof helpOptionsSchema>;
 type Props = ComponentProps<typeof HelpFeature>;
 
 /**
- * The help used to execute the logic
+ * The action used to execute the logic
  * for the help feature command
  *
  * @param options The feature options
  * @returns The feature component props
  */
-const helpAction = (options: Options): Props | undefined => {
+const helpAction = (options: Options): Props => {
   const { for: commandName } = options;
 
   // If there is no `for` option
   // then return no props
   if (commandName == null) {
-    return;
+    return {};
   }
 
   // Attempt to find a feature with a command

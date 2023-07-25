@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement } from 'react';
-import features from '../../features';
+import { features } from '../../features';
 
 /**
  * Used to render the help user interface

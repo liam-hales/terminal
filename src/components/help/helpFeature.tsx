@@ -1,12 +1,12 @@
 import { FunctionComponent, ReactElement } from 'react';
-import { BaseProps, Command } from '../../types';
+import { BaseProps, FeatureCommand } from '../../types';
 import { Help, CommandHelp } from '..';
 
 /**
  * The `HelpFeature` component props
  */
 interface Props extends BaseProps {
-  readonly command?: Command;
+  readonly command?: FeatureCommand;
 }
 
 /**
