@@ -1,6 +1,5 @@
 import { FeatureMap } from './types';
-import helpFeature from './help.feature';
-import base64Feature from './base64.feature';
+import { helpFeature } from './help';
 
 /**
  * Describes all the features
@@ -8,7 +7,6 @@ import base64Feature from './base64.feature';
  */
 export const features = [
   helpFeature,
-  base64Feature,
 ];
 
 /**
