@@ -1,7 +1,6 @@
 import { paramCase } from 'param-case';
-import features, { Feature } from '../features';
-import { FeatureOutput, ParsedInput } from '../types';
-import { extractKeys } from '.';
+import { features } from '../features';
+import { FeatureOption, FeatureOutput, ParsedInput } from '../types';
 
 /**
  * Used to execute a given parsed `input` that
@@ -14,7 +13,7 @@ import { extractKeys } from '.';
  * @param input The parsed input
  * @returns The feature output
  */
-const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
+const executeInput = (input: ParsedInput): FeatureOutput => {
   const {
     command: inputCommand,
     options: inputOptions = {},
@@ -76,27 +75,29 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
 
     const { fieldErrors } = error.flatten();
 
+    const keys = Object.keys(fieldErrors);
+    const values = Object.values(fieldErrors);
+
     // Map the validation errors into suitable messages and join
     // them together for the error that will be thrown
-    const message = extractKeys(fieldErrors)
-      .map((key) => {
-        const messages = fieldErrors[key] ?? [];
-        const isRequired = messages.includes('Required');
+    const message = keys.map((key, index) => {
+      const messages = values[index] ?? [];
+      const isRequired = messages.includes('Required');
 
-        // If the messages contains a "Required" error message
-        // then return a required option error message
-        if (isRequired === true) {
-          return `Option "--${paramCase(key)}" is required`;
-        }
+      // If the messages contains a "Required" error message
+      // then return a required option error message
+      if (isRequired === true) {
+        return `Option "--${paramCase(key)}" is required`;
+      }
 
-        // Format the error messages into a single
-        // invalid option error message
-        const formatted = messages
-          .map((message) => `  - ${message}`)
-          .join('\n');
+      // Format the error messages into a single
+      // invalid option error message
+      const formatted = messages
+        .map((message) => `  - ${message}`)
+        .join('\n');
 
-        return `Option "--${paramCase(key)}" is invalid\n${formatted}`;
-      })
+      return `Option "--${paramCase(key)}" is invalid\n${formatted}`;
+    })
       .join('\n\n');
 
     throw new Error(message);
@@ -104,11 +105,11 @@ const executeInput = (input: ParsedInput): FeatureOutput<Feature> => {
 
   // Call the feature action with the transformed and validated options
   // and use the returned props for the terminal executed block
-  const props = action(validated.data);
+  const props = action(validated.data as FeatureOption);
   return {
     featureId: id,
     props: props,
-  };
+  } as FeatureOutput;
 };
 
 export default executeInput;
