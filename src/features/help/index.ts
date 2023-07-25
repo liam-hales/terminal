@@ -1,9 +1,9 @@
-import helpFeature from './help.feature';
-import helpOptionsSchema from './helpOptions.schema';
 import helpAction from './help.action';
+import helpOptionsSchema from './helpOptions.schema';
+import helpFeature from './help.feature';
 
 export {
-  helpFeature,
-  helpOptionsSchema,
   helpAction,
+  helpOptionsSchema,
+  helpFeature,
 };
