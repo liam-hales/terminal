@@ -1,3 +1,4 @@
+import TextOutput from './textOutput';
 import HelpFeature from './help/helpFeature';
 import Terminal from './terminal/terminal';
 import TerminalInput from './terminal/terminalInput';
@@ -7,6 +8,7 @@ import Help from './help/help';
 import CommandHelp from './help/commandHelp';
 
 export {
+  TextOutput,
   HelpFeature,
   Terminal,
   TerminalInput,
