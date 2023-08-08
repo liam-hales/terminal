@@ -131,12 +131,6 @@
         ]
       }
     ],
-    "import/no-anonymous-default-export": [
-      "error",
-      {
-        "allowArray": true
-      }
-    ],
     "import/extensions": ["error", "never"],
     "react/jsx-boolean-value": ["error", "always"],
     "react/jsx-props-no-spreading": [
