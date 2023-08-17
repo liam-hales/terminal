@@ -11,6 +11,10 @@ import { features } from '../../features';
 const Help: FunctionComponent = (): ReactElement => {
   return (
     <>
+      <p className="font-mono font-bold text-sm text-white pb-8">
+        To get help for a specific command, use
+        {' "help --for <command>"'}
+      </p>
       <p className="font-mono font-bold text-sm text-white">
         Commands:
       </p>
