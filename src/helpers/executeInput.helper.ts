@@ -13,7 +13,7 @@ import { FeatureOption, FeatureOutput, ParsedInput } from '../types';
  * @param input The parsed input
  * @returns The feature output
  */
-const executeInput = (input: ParsedInput): FeatureOutput => {
+const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
   const {
     command: inputCommand,
     options: inputOptions = {},
@@ -105,7 +105,7 @@ const executeInput = (input: ParsedInput): FeatureOutput => {
 
   // Call the feature action with the transformed and validated options
   // and use the returned props for the terminal executed block
-  const props = action(validated.data as FeatureOption);
+  const props = await action(validated.data as FeatureOption);
   return {
     featureId: id,
     props: props,

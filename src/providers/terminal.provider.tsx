@@ -51,12 +51,12 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
    *
    * @param input The user input
    */
-  const execute = (input: string): void => {
+  const execute = async (input: string): Promise<void> => {
     const blockId = nanoid(16);
 
     try {
       const parsed = parseInput(input);
-      const output = executeInput(parsed);
+      const output = await executeInput(parsed);
 
       // Add the terminal executed block
       // for the feature output
