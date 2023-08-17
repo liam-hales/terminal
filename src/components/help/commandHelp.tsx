@@ -1,13 +1,13 @@
 import { FunctionComponent, ReactElement } from 'react';
 import { paramCase } from 'param-case';
-import { BaseProps, Command } from '../../types';
+import { BaseProps, FeatureCommand } from '../../types';
 import { extractKeys } from '../../helpers';
 
 /**
  * The `CommandHelp` component props
  */
 interface Props extends BaseProps {
-  readonly command: Command;
+  readonly command: FeatureCommand;
 }
 
 /**
