@@ -27,12 +27,19 @@ const ipAction = async (options: Options): Promise<Props> => {
     ? 'https://api.ipify.org'
     : 'https://api6.ipify.org';
 
-  const response = await fetch(url);
-  const ipAddress = await response.text();
+  try {
+    const response = await fetch(url);
+    const ipAddress = await response.text();
 
-  return {
-    value: ipAddress,
-  };
+    return {
+      value: ipAddress,
+    };
+  }
+  catch {
+    // There was an error resolving the IP address, this is most likely because
+    // the user does not have an IP for the specified version
+    throw new Error(`Cannot resolve IPv${version} address`);
+  }
 };
 
 export default ipAction;
