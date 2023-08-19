@@ -6,6 +6,7 @@ import { BaseProps } from '../../types';
  */
 interface Props extends BaseProps {
   readonly value: string;
+  readonly isDisabled?: boolean;
   readonly onChange: (value: string) => void;
   readonly onKeyDown: (key: string) => void;
 }
@@ -17,13 +18,21 @@ interface Props extends BaseProps {
  * @param props The component props
  * @returns The `TerminalInput` component
  */
-const TerminalInput: FunctionComponent<Props> = ({ value, onChange, onKeyDown }): ReactElement<Props> => {
+const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => {
+  const {
+    value,
+    isDisabled = false,
+    onChange,
+    onKeyDown,
+  } = props;
+
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-black">
       <input
         className="w-full h-14 text-white placeholder-zinc-700 font-mono font-bold text-sm pl-6 pr-6 bg-transparent outline-none"
         placeholder="_ Enter command"
         value={value}
+        disabled={isDisabled}
         onKeyDown={(event) => onKeyDown(event.key)}
         onChange={(event) => {
 
