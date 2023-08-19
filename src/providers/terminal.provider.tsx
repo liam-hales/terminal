@@ -29,6 +29,7 @@ interface Props extends BaseProps {
  */
 const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
   const [blocks, setBlocks] = useState<TerminalBlock[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   /**
    * Used to add a terminal block to
@@ -53,6 +54,8 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
    */
   const execute = async (input: string): Promise<void> => {
     const blockId = nanoid(16);
+
+    setIsLoading(true);
 
     try {
       const parsed = parseInput(input);
@@ -80,6 +83,12 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
         });
       }
     }
+    finally {
+
+      // Resets the loading state once the executed
+      // or error block has been added
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -87,6 +96,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
       {
         blocks: blocks,
         inputHistory: blocks.map((block) => block.input),
+        isLoading: isLoading,
         execute: execute,
       }
     }
