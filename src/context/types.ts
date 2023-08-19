@@ -7,6 +7,7 @@ import { TerminalBlock } from '../types';
 export interface TerminalState {
   readonly blocks: TerminalBlock[];
   readonly inputHistory: string[];
+  readonly isLoading: boolean;
 }
 
 /**
@@ -20,5 +21,5 @@ export interface TerminalActions {
    *
    * @param input The user input
    */
-  readonly execute: (input: string) => void;
+  readonly execute: (input: string) => Promise<void>;
 }
