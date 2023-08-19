@@ -20,7 +20,7 @@ interface Props extends BaseProps {
  * @returns The `Terminal` component
  */
 const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
-  const { blocks, inputHistory, execute } = useTerminal();
+  const { blocks, inputHistory, isLoading, execute } = useTerminal();
 
   const [inputValue, setInputValue] = useState<string>('');
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
@@ -31,7 +31,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
    *
    * @param key The key pressed
    */
-  const onKeyDown = (key: string): void => {
+  const onKeyDown = async (key: string): Promise<void> => {
     switch (key) {
       case 'Enter': {
 
@@ -43,7 +43,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
 
         // Call the `execute` function with
         // the user input from state
-        execute(inputValue);
+        await execute(inputValue);
 
         // Reset the input and history index state
         setInputValue('');
@@ -120,6 +120,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
       </div>
       <TerminalInput
         value={inputValue}
+        isDisabled={isLoading}
         onChange={setInputValue}
         onKeyDown={onKeyDown}
       />
