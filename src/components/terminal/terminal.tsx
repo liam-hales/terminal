@@ -41,6 +41,12 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
           return;
         }
 
+        // If the terminal is loading then return to avoid
+        // executing the same command multiple times
+        if (isLoading === true) {
+          return;
+        }
+
         // Call the `execute` function with
         // the user input from state
         await execute(inputValue);
