@@ -14,7 +14,7 @@ const Help: FunctionComponent = (): ReactElement => {
     <>
       <p className="font-mono text-sm text-white pb-8">
         To get help for a specific command, use
-        <CodeInline>
+        <CodeInline className="ml-2">
           {'help --for <command>'}
         </CodeInline>
       </p>
