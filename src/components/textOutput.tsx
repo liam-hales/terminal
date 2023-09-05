@@ -17,7 +17,7 @@ interface Props extends BaseProps {
  */
 const TextOutput: FunctionComponent<Props> = ({ value }): ReactElement<Props> => {
   return (
-    <p className="font-mono font-bold text-sm text-white">
+    <p className="font-mono text-sm text-white">
       {value}
     </p>
   );

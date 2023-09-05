@@ -14,8 +14,8 @@ type Props = Omit<ErrorBlock, 'id' | 'type'> & BaseProps;
  */
 const TerminalErrorBlock: FunctionComponent<Props> = ({ input, error }): ReactElement<Props> => {
   return (
-    <div className="pt-4 pb-4 pl-6 pr-6 rounded-lg bg-red-950 bg-opacity-40">
-      <p className="font-mono font-bold text-sm text-zinc-500 pb-3">
+    <div className="pt-4 pb-4 pl-6 pr-6 bg-red-950 bg-opacity-40">
+      <p className="font-mono text-sm text-zinc-500 pb-3">
         {`> ${input}`}
       </p>
       <pre className="font-mono font-bold text-sm text-red-400">

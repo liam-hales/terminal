@@ -20,8 +20,8 @@ const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, output }): Rea
   const inputText = `> ${input}`;
 
   return (
-    <div className="pt-4 pb-4 pl-6 pr-6 rounded-lg bg-zinc-950">
-      <p className="font-mono font-bold text-sm text-zinc-500 pb-3">
+    <div className="pt-4 pb-4 pl-6 pr-6">
+      <p className="font-mono text-sm text-zinc-500 pb-3">
         {inputText}
       </p>
       <feature.component {...props as FeatureProp} />

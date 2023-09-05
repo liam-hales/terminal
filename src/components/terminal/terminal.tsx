@@ -94,7 +94,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
 
   return (
     <>
-      <div className="h-full flex flex-col-reverse pb-14 p-2 gap-y-2 overflow-y-auto">
+      <div className="h-full flex flex-col-reverse gap-y-2 pb-14 overflow-y-auto">
         {
           blocks.map((block) => {
             const { id, type, input } = block;

@@ -23,13 +23,13 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
 
   return (
     <>
-      <p className="font-mono font-bold text-sm text-white">
+      <p className="font-mono text-sm text-white">
         {`Usage: ${name} [options]`}
       </p>
-      <p className="font-mono font-bold text-sm text-white pt-6 pb-8">
+      <p className="font-mono text-sm text-white pt-6 pb-8">
         {description}
       </p>
-      <p className="font-mono font-bold text-sm text-white">
+      <p className="font-mono text-sm text-white">
         Options:
       </p>
       {
@@ -43,10 +43,10 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                 className="flex flex-row pl-4"
                 key={`help-command-${option}`}
               >
-                <p className="w-28 shrink-0 font-mono font-bold text-sm text-white">
+                <p className="w-28 shrink-0 font-mono text-sm text-white">
                   {`--${option}`}
                 </p>
-                <p className="font-mono font-bold text-sm text-white">
+                <p className="font-mono text-sm text-white">
                   {description}
                 </p>
               </div>
