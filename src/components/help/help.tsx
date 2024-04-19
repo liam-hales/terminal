@@ -13,10 +13,11 @@ const Help: FunctionComponent = (): ReactElement => {
   return (
     <>
       <p className="font-mono text-sm text-white pb-8">
-        To get help for a specific command, use
-        <CodeInline className="ml-2">
-          {'help --for <command>'}
+        Use the
+        <CodeInline className="ml-2 mr-2">
+          {'--for <command>'}
         </CodeInline>
+        option to get help for a specific command
       </p>
       <p className="font-mono text-sm text-white">
         Commands:
