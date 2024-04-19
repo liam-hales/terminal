@@ -25,17 +25,17 @@
 # Getting Started (Prerequisites)
 
 1. Download and install [Node Version Manager]
-2. Install and use a version of Node.js `>= v18.12`
+2. Install and use a version of Node.js `>= v20.10`
 
 ```sh
-$ nvm install 18.12
-$ nvm use 18.12
+$ nvm install 20.10
+$ nvm use 20.10
 
 $ node --version
-v18.12.0
+v20.10.0
 
 $ npm --version
-v8.19.1
+v10.2.3
 ```
 
 3. Run `corepack enable` to enable [Corepack]
@@ -43,7 +43,7 @@ v8.19.1
 
 ```sh
 $ yarn --version
-v3.2.4
+v4.1.1
 ```
 
 > 📝 _**NOTE** - Yarn comes bundled with [Corepack] and is the preferred way to install/manage Yarn. Check out the [Yarn Installation Guide] for more info_
