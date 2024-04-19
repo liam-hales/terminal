@@ -16,6 +16,10 @@
 - [Dependency Management](#dependency-management)
 
 <br/>
+
+> ⚠️ _**WARNING** - Please make sure to read and follow the [Getting Started](#getting-started-prerequisites) section before continuing to the other sections to avoid running into any issues_
+
+<br/>
 <br/>
 
 # Getting Started (Prerequisites)
@@ -35,8 +39,16 @@ v8.19.1
 ```
 
 3. Run `corepack enable` to enable [Corepack]
+4. You should now be able to use the [`yarn`] package manager which you **MUST** use for this project
 
-> ⚠️ _**WARNING** - You must use the [`yarn`] package manager_
+```sh
+$ yarn --version
+v3.2.4
+```
+
+> 📝 _**NOTE** - Yarn comes bundled with [Corepack] and is the preferred way to install/manage Yarn. Check out the [Yarn Installation Guide] for more info_
+
+> 📝 _**NOTE** - The current version of Yarn should match the `packageManager` version in the [`package.json`](/package.json)_
 
 <br/>
 <br/>
