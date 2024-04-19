@@ -11,11 +11,9 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:jsx-a11y/recommended",
     "airbnb",
-    "airbnb/hooks",
     "airbnb-typescript",
     "next/core-web-vitals"
   ],
@@ -75,6 +73,12 @@
       {
         "selector": "default",
         "format": ["camelCase"],
+        "leadingUnderscore": "forbid",
+        "trailingUnderscore": "forbid"
+      },
+      {
+        "selector": "import",
+        "format": ["camelCase", "PascalCase"],
         "leadingUnderscore": "forbid",
         "trailingUnderscore": "forbid"
       },
