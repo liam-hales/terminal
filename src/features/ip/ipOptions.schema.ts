@@ -7,7 +7,7 @@ import { z } from 'zod';
  * The schema is used for validation
  * and type inference.
  */
-const base64OptionsSchema = z
+const ipOptionsSchema = z
   .object({
     version: z
       .union([
@@ -18,4 +18,4 @@ const base64OptionsSchema = z
       .default(4),
   });
 
-export default base64OptionsSchema;
+export default ipOptionsSchema;
