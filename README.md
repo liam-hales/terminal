@@ -1,10 +1,5 @@
 <div align="center">
-  <h1>
-    Liam Hales - Dev Tools
-  </h1>
-  <P>
-    Web-based developer tools with a developer friendly interface.
-  </p>
+  <img src="public/cover.webp"/>
 </div>
 
 <br/>
