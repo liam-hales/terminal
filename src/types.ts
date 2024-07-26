@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement, Ref } from 'react';
-import { ZodSchema, z } from 'zod';
+import { ZodObject, ZodRawShape, z } from 'zod';
 import { Feature, FeatureMap } from './features';
 
 /**
@@ -47,16 +47,16 @@ export interface AsyncComponent<T extends object = never> {
  * be used within the terminal
  *
  * - Generic type `F` for the feature ID
- * - Generic type `S` for the command schema
+ * - Generic type `O` for the command options
  * - Generic type `P` for the component props
  */
 export interface IFeature<
   F extends FeatureId,
-  S extends ZodSchema,
+  O extends ZodObject<ZodRawShape>,
   P extends object,
 > {
   readonly id: F;
-  readonly command: ICommand<S, P>;
+  readonly command: ICommand<O, P>;
   readonly component: FunctionComponent<P>;
   readonly enabled: boolean;
 }
@@ -65,17 +65,17 @@ export interface IFeature<
  * Used to describe a feature command which
  * can be executed in the terminal
  *
- * - Generic type `S` for the schema
+ * - Generic type `O` for the options
  * - Generic type `P` for the component props
  */
 export interface ICommand<
-  S extends ZodSchema,
+  O extends ZodObject<ZodRawShape>,
   P extends object,
 > {
   readonly name: string;
   readonly description: string;
-  readonly options: S;
-  readonly action: (options: z.infer<S>) => P | Promise<P>;
+  readonly options: O;
+  readonly action: (options: z.infer<O>) => P | Promise<P>;
 }
 
 /**
