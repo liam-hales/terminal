@@ -5,7 +5,7 @@ import { BaseProps } from '../../types';
  * The `CodeInline` component props
  */
 interface Props extends BaseProps {
-  readonly children: string;
+  readonly children: string | string[];
 }
 
 /**
