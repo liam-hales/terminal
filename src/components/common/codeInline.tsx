@@ -16,9 +16,9 @@ interface Props extends BaseProps {
  */
 const CodeInline: FunctionComponent<Props> = ({ className, children }): ReactElement<Props> => {
   return (
-    <p className={`${className} inline font-mono font-bold text-xs text-white bg-zinc-900 pt-1 pb-1 pl-2 pr-2 rounded-md`}>
+    <span className={`${className} font-mono font-bold text-xs text-white bg-zinc-900 pt-1 pb-1 pl-2 pr-2 rounded-md`}>
       {children}
-    </p>
+    </span>
   );
 };
 
