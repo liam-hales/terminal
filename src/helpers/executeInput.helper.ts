@@ -103,6 +103,20 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
     throw new Error(message);
   }
 
+  const { data } = validated;
+  const { help } = data;
+
+  // If the help option has been set to true, return
+  // the help feature output for said command
+  if (help === true) {
+    return {
+      featureId: 'help',
+      props: {
+        command: command,
+      },
+    };
+  }
+
   // Call the feature action with the transformed and validated options
   // and use the returned props for the terminal executed block
   const props = await action(validated.data as FeatureOption);
