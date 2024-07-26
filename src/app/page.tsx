@@ -10,18 +10,33 @@ import { CodeInline } from '../components/common';
 const AppPage: FunctionComponent = async (): Promise<ReactElement> => {
   return (
     <>
-      <div className="flex flex-col items-end pb-8">
-        <p className="font-sans font-bold text-7xl text-white">
-          Dev Tools
-        </p>
-        <p className="font-mono font-bold text-sm text-white">
-          By Liam Hales
-        </p>
+      <div className="flex flex-col">
+        <div className="flex flex-col items-end pb-7">
+          <p className="text-8xl text-white">
+            <span className="font-sans">
+              _
+            </span>
+            <span className="font-sans font-bold">
+              Dev Tools
+            </span>
+          </p>
+          <p className="font-sans font-bold text-md text-white">
+            By Liam Hales
+          </p>
+        </div>
+        <div className="flex flex-row gap-x-3">
+          <p className="font-mono font-bold text-zinc-500">
+            {'>'}
+            _
+          </p>
+          <p className="font-mono text-sm text-white">
+            Useful dev tools accessed via a browser
+            <br />
+            and used like a terminal
+          </p>
+        </div>
       </div>
-      <p className="max-w-sm font-mono text-sm text-white text-center">
-        Useful dev tools accessed via a browser and used like a terminal
-      </p>
-      <div className="flex flex-col pt-16">
+      <div className="flex flex-col pt-36">
         <p className="font-sans font-bold text-3xl text-white">
           Getting started...
         </p>
@@ -34,7 +49,14 @@ const AppPage: FunctionComponent = async (): Promise<ReactElement> => {
             command to display all available commands
           </p>
           <p className="font-mono text-sm text-white">
-            - Use
+            - Use the
+            <CodeInline className="ml-2 mr-2">
+              --help
+            </CodeInline>
+            command option to get help for a specific command
+          </p>
+          <p className="font-mono text-sm text-white">
+            - You can also use
             <CodeInline className="ml-2 mr-2">
               {'help --for <command>'}
             </CodeInline>
