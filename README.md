@@ -12,12 +12,55 @@
 
 # Content Index
 
+- [Built With](#built-with)
 - [Getting Started](#getting-started-prerequisites)
 - [Dependency Management](#dependency-management)
 
 <br/>
 
 > ⚠️ _**WARNING** - Please make sure to read and follow the [Getting Started](#getting-started-prerequisites) section before continuing to the other sections to avoid running into any issues_
+
+<br/>
+<br/>
+
+# Built With
+
+This app was built and hosted with the below. For a full list of dependencies used to build the app see the [`package.json`](/package.json) file.
+
+<br/>
+
+<div>
+  <a
+    href="https://typescriptlang.org"
+    target="_blank"
+  >
+    <img src="https://img.shields.io/badge/TypeScript-181c24?style=for-the-badge&logo=typescript&logoColor=ffffff"/>
+  </a>
+  <a
+    href="https://reactjs.org"
+    target="_blank"
+  >
+    <img src="https://img.shields.io/badge/React-181c24?style=for-the-badge&logo=react&logoColor=ffffff"/>
+  </a>
+  <a
+    href="https://nextjs.org"
+    target="_blank"
+  >
+    <img src="https://img.shields.io/badge/Next.js-181c24?style=for-the-badge&logo=next.js&logoColor=ffffff"/>
+  </a>
+  <a
+    href="https://tailwindcss.com"
+    target="_blank"
+  >
+    <img src="https://img.shields.io/badge/Tailwind-181c24?style=for-the-badge&logo=tailwindcss&logoColor=ffffff"/>
+  </a>
+  <a
+    href="https://vercel.com"
+    target="_blank"
+  >
+    <img src="https://img.shields.io/badge/Vercel-181c24?style=for-the-badge&logo=vercel&logoColor=ffffff"/>
+  </a>
+<div>
 
 <br/>
 <br/>
