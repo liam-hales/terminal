@@ -5,6 +5,7 @@ import { BaseProps } from '../types';
 import { urbanist, firaCode } from '../fonts';
 import { Terminal } from '../components';
 import { TerminalProvider } from '../providers';
+import { viewport, generateMetadata } from './metadata';
 
 /**
  * The `AppLayout` component props
@@ -40,3 +41,7 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
 };
 
 export default AppLayout;
+export {
+  viewport,
+  generateMetadata,
+};
