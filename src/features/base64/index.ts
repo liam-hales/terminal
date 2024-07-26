@@ -1,9 +1,9 @@
 import base64Action from './base64.action';
-import base64OptionsSchema from './base64Options.schema';
+import base64Options from './base64.options';
 import base64Feature from './base64.feature';
 
 export {
   base64Action,
-  base64OptionsSchema,
+  base64Options,
   base64Feature,
 };

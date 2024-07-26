@@ -1,12 +1,12 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
 import { TextOutput } from '../../components';
-import { base64OptionsSchema } from '.';
+import { base64Options } from '.';
 
 /**
  * The Base64 feature options
  */
-type Options = z.infer<typeof base64OptionsSchema>;
+type Options = z.infer<typeof base64Options>;
 
 /**
  * The Base64 feature component props

@@ -1,9 +1,9 @@
 import ipAction from './ip.action';
-import ipOptionsSchema from './ipOptions.schema';
+import ipOptions from './ip.options.';
 import ipFeature from './ip.feature';
 
 export {
   ipAction,
-  ipOptionsSchema,
+  ipOptions,
   ipFeature,
 };

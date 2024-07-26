@@ -4,10 +4,10 @@ import { z } from 'zod';
  * The IP options schema used to describe the
  * IP feature command options using `zod`.
  *
- * The schema is used for validation
- * and type inference.
+ * This options schema is used for
+ * validation and type inference.
  */
-const ipOptionsSchema = z
+const ipOptions = z
   .object({
     version: z
       .union([
@@ -18,4 +18,4 @@ const ipOptionsSchema = z
       .default(4),
   });
 
-export default ipOptionsSchema;
+export default ipOptions;

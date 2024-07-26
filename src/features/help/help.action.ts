@@ -2,12 +2,12 @@ import { ComponentProps } from 'react';
 import { z } from 'zod';
 import { HelpFeature } from '../../components';
 import { features } from '..';
-import { helpOptionsSchema } from '.';
+import { helpOptions } from '.';
 
 /**
  * The help feature options
  */
-type Options = z.infer<typeof helpOptionsSchema>;
+type Options = z.infer<typeof helpOptions>;
 
 /**
  * The help feature component props

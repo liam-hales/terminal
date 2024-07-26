@@ -1,6 +1,6 @@
 import { buildFeature } from '../../helpers';
 import { HelpFeature } from '../../components';
-import { helpOptionsSchema, helpAction } from '.';
+import { helpOptions, helpAction } from '.';
 
 /**
  * The help feature, executed with `help`, used to display help for
@@ -11,14 +11,7 @@ const helpFeature = buildFeature({
   command: {
     name: 'help',
     description: 'Used to display help for commands and give guidance on their options and how to use them',
-    options: {
-      schema: helpOptionsSchema,
-      config: {
-        for: {
-          description: 'The command to display help for',
-        },
-      },
-    },
+    options: helpOptions,
     action: helpAction,
   },
   component: HelpFeature,

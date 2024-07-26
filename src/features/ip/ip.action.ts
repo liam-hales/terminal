@@ -1,12 +1,12 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
 import { TextOutput } from '../../components';
-import { ipOptionsSchema } from '.';
+import { ipOptions } from '.';
 
 /**
  * The IP feature options
  */
-type Options = z.infer<typeof ipOptionsSchema>;
+type Options = z.infer<typeof ipOptions>;
 
 /**
  * The IP feature component props

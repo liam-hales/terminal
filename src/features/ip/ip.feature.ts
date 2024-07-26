@@ -1,6 +1,6 @@
 import { buildFeature } from '../../helpers';
 import { TextOutput } from '../../components';
-import { ipOptionsSchema, ipAction } from '.';
+import { ipOptions, ipAction } from '.';
 
 /**
  * The IP feature, executed with `ip`, used to
@@ -11,14 +11,7 @@ const ipFeature = buildFeature({
   command: {
     name: 'ip',
     description: 'Used to get the users public IP address',
-    options: {
-      schema: ipOptionsSchema,
-      config: {
-        version: {
-          description: 'The IP address version to resolve',
-        },
-      },
-    },
+    options: ipOptions,
     action: ipAction,
   },
   component: TextOutput,

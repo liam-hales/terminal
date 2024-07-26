@@ -1,6 +1,6 @@
 import { buildFeature } from '../../helpers';
 import { TextOutput } from '../../components';
-import { base64OptionsSchema, base64Action } from '.';
+import { base64Options, base64Action } from '.';
 
 /**
  * The Base64 feature, executed with `base64`, used to
@@ -11,17 +11,7 @@ const base64Feature = buildFeature({
   command: {
     name: 'base64',
     description: 'Used to Base64 encode or decode a given value',
-    options: {
-      schema: base64OptionsSchema,
-      config: {
-        value: {
-          description: 'The value to encode or decode',
-        },
-        decode: {
-          description: 'Specifies that the value should be decoded (encoded by default)',
-        },
-      },
-    },
+    options: base64Options,
     action: base64Action,
   },
   component: TextOutput,
