@@ -39,14 +39,11 @@ const Help: FunctionComponent = (): ReactElement => {
                       {name}
                     </CodeInline>
                   </div>
-                  <div className="flex flex-row mt-[2px]">
-                    <p className="font-mono text-sm font-bold text-white pl-2 pr-2">
-                      -
-                    </p>
-                    <p className="font-mono text-sm text-white">
-                      {description}
-                    </p>
-                  </div>
+                  <p className="font-mono text-sm text-white mt-[3px]">
+                    -
+                    {' '}
+                    {description}
+                  </p>
                 </div>
               );
             })

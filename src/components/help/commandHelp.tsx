@@ -2,6 +2,7 @@ import { FunctionComponent, ReactElement } from 'react';
 import { paramCase } from 'param-case';
 import { BaseProps, FeatureCommand } from '../../types';
 import { extractKeys } from '../../helpers';
+import { CodeInline } from '../common';
 
 /**
  * The `CommandHelp` component props
@@ -24,7 +25,12 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
   return (
     <>
       <p className="font-mono text-sm text-white">
-        {`Usage: ${name} [options]`}
+        Usage:
+        <CodeInline className="ml-2">
+          {name}
+          {' '}
+          [options]
+        </CodeInline>
       </p>
       <p className="font-mono text-sm text-white pt-6 pb-8">
         {description}
@@ -32,27 +38,33 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
       <p className="font-mono text-sm text-white">
         Options:
       </p>
-      {
-        extractKeys(shape)
-          .map((key) => {
-            const { description } = shape[key];
-            const option = paramCase(key);
+      <div className="flex flex-col gap-y-1 pt-2 pl-4">
+        {
+          extractKeys(shape)
+            .map((key) => {
+              const { description } = shape[key];
+              const option = paramCase(key);
 
-            return (
-              <div
-                className="flex flex-row pl-4"
-                key={`help-command-${option}`}
-              >
-                <p className="w-28 shrink-0 font-mono text-sm text-white">
-                  {`--${option}`}
-                </p>
-                <p className="font-mono text-sm text-white">
-                  {description}
-                </p>
-              </div>
-            );
-          })
-      }
+              return (
+                <div
+                  className="flex flex-row"
+                  key={`help-command-${option}`}
+                >
+                  <div className="w-24 shrink-0">
+                    <CodeInline>
+                      {`--${option}`}
+                    </CodeInline>
+                  </div>
+                  <p className="font-mono text-sm text-white mt-[3px]">
+                    -
+                    {' '}
+                    {description}
+                  </p>
+                </div>
+              );
+            })
+        }
+      </div>
     </>
   );
 };
