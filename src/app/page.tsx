@@ -30,9 +30,9 @@ const AppPage: FunctionComponent = async (): Promise<ReactElement> => {
             _
           </p>
           <p className="font-mono text-sm text-white">
-            Useful dev tools accessed via a browser
+            Web-based developer tools with a
             <br />
-            and used like a terminal
+            developer friendly interface
           </p>
         </div>
       </div>

@@ -3,7 +3,7 @@
     Liam Hales - Dev Tools
   </h1>
   <P>
-    Useful dev tools accessed via a browser and used like a terminal
+    Web-based developer tools with a developer friendly interface.
   </p>
 </div>
 

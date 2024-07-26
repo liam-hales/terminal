@@ -1,6 +1,6 @@
 {
   "name": "dev-tools",
-  "description": "Useful dev tools accessed via a browser and used like a terminal",
+  "description": "Web-based developer tools with a developer friendly interface.",
   "version": "1.0.0",
   "private": true,
   "engines": {
