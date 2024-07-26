@@ -8,11 +8,14 @@ import { z } from 'zod';
  * validation and type inference.
  */
 const base64Options = z.object({
-  value: z.string(),
+  value: z
+    .string()
+    .describe('The value to encode or decode'),
   decode: z
     .boolean()
     .optional()
-    .default(false),
+    .default(false)
+    .describe('Specifies that the value should be decoded'),
 });
 
 export default base64Options;

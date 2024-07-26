@@ -14,7 +14,8 @@ const ipOptions = z.object({
       z.literal(6),
     ])
     .optional()
-    .default(4),
+    .default(4)
+    .describe('The IP address version to resolve'),
 });
 
 export default ipOptions;

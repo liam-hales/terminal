@@ -10,7 +10,8 @@ import { z } from 'zod';
 const helpOptions = z.object({
   for: z
     .string()
-    .optional(),
+    .optional()
+    .describe('The command to display help for'),
 });
 
 export default helpOptions;

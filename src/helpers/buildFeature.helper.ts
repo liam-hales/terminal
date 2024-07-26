@@ -12,7 +12,8 @@ const commonOptions = z.object({
   help: z
     .boolean()
     .optional()
-    .default(false),
+    .default(false)
+    .describe('Display help for the command'),
 });
 
 /**
