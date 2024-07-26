@@ -79,24 +79,25 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
 
     // Map the validation errors into suitable messages and join
     // them together for the error that will be thrown
-    const message = keys.map((key, index) => {
-      const messages = values[index] ?? [];
-      const isRequired = messages.includes('Required');
+    const message = keys
+      .map((key, index) => {
+        const messages = values[index] ?? [];
+        const isRequired = messages.includes('Required');
 
-      // If the messages contains a "Required" error message
-      // then return a required option error message
-      if (isRequired === true) {
-        return `Option "--${paramCase(key)}" is required`;
-      }
+        // If the messages contains a "Required" error message
+        // then return a required option error message
+        if (isRequired === true) {
+          return `Option "--${paramCase(key)}" is required`;
+        }
 
-      // Format the error messages into a single
-      // invalid option error message
-      const formatted = messages
-        .map((message) => `  - ${message}`)
-        .join('\n');
+        // Format the error messages into a single
+        // invalid option error message
+        const formatted = messages
+          .map((message) => `  - ${message}`)
+          .join('\n');
 
-      return `Option "--${paramCase(key)}" is invalid\n${formatted}`;
-    })
+        return `Option "--${paramCase(key)}" is invalid\n${formatted}`;
+      })
       .join('\n\n');
 
     throw new Error(message);

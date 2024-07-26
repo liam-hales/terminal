@@ -7,9 +7,10 @@ import { z } from 'zod';
  * This options schema is used for
  * validation and type inference.
  */
-const helpOptions = z
-  .object({
-    for: z.string().optional(),
-  });
+const helpOptions = z.object({
+  for: z
+    .string()
+    .optional(),
+});
 
 export default helpOptions;

@@ -7,15 +7,14 @@ import { z } from 'zod';
  * This options schema is used for
  * validation and type inference.
  */
-const ipOptions = z
-  .object({
-    version: z
-      .union([
-        z.literal(4),
-        z.literal(6),
-      ])
-      .optional()
-      .default(4),
-  });
+const ipOptions = z.object({
+  version: z
+    .union([
+      z.literal(4),
+      z.literal(6),
+    ])
+    .optional()
+    .default(4),
+});
 
 export default ipOptions;
