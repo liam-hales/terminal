@@ -74,27 +74,8 @@ export interface ICommand<
 > {
   readonly name: string;
   readonly description: string;
-  readonly options: CommandOptions<S>;
+  readonly options: S;
   readonly action: (options: z.infer<S>) => P | Promise<P>;
-}
-
-/**
- * Used to describe the command options which consists of the `schema`
- * used for validation and a `config` for each option
- *
- * - Generic type `T` for the schema
- */
-export interface CommandOptions<T extends ZodSchema> {
-  readonly schema: T;
-  readonly config: Record<keyof z.infer<T>, CommandOptionConfig>;
-}
-
-/**
- * Used to describe the config
- * for a command option
- */
-export interface CommandOptionConfig {
-  readonly description: string;
 }
 
 /**
@@ -109,7 +90,7 @@ export type FeatureCommand = Feature['command'];
  */
 export type FeatureOption = Intersect<
   z.infer<
-    Feature['command']['options']['schema']
+    Feature['command']['options']
   >
 >;
 
