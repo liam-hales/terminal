@@ -40,7 +40,6 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
 
   const { id, command, enabled } = feature;
   const { name, options, action } = command;
-  const { schema } = options;
 
   // If the feature has not been
   // enabled, then throw an error
@@ -48,7 +47,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
     throw new Error(`Feature "${name}" has been disabled`);
   }
 
-  const validated = schema
+  const validated = options
     .strict()
     .safeParse(inputOptions);
 

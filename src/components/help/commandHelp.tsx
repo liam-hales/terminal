@@ -19,7 +19,7 @@ interface Props extends BaseProps {
  */
 const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props> => {
   const { name, description, options } = command;
-  const { config } = options;
+  const { shape } = options;
 
   return (
     <>
@@ -33,9 +33,9 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
         Options:
       </p>
       {
-        extractKeys(config)
+        extractKeys(shape)
           .map((key) => {
-            const { description } = config[key];
+            const { description } = shape[key];
             const option = paramCase(key);
 
             return (
