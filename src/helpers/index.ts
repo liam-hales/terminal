@@ -1,3 +1,4 @@
+import withRef from './withRef.helper';
 import buildFeature from './buildFeature.helper';
 import extractKeys from './extractKeys.helper';
 import parseInput from './parseInput.helper';
@@ -8,4 +9,5 @@ export {
   extractKeys,
   parseInput,
   executeInput,
+  withRef,
 };
