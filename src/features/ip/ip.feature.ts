@@ -4,13 +4,13 @@ import { ipOptions, ipAction } from '.';
 
 /**
  * The IP feature, executed with `ip`, used to
- * get the users public IP address
+ * resolve the users public IP address
  */
 const ipFeature = buildFeature({
   id: 'ip',
   command: {
     name: 'ip',
-    description: 'Used to get the users public IP address',
+    description: 'Used to resolve the users public IP address',
     options: ipOptions,
     action: ipAction,
   },
