@@ -126,6 +126,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
       </div>
       <TerminalInput
         value={inputValue}
+        isLoading={isLoading}
         isDisabled={isLoading}
         onChange={setInputValue}
         onKeyDown={onKeyDown}
