@@ -141,7 +141,8 @@
       "error",
       {
         "exceptions": [
-          "feature.component"
+          "feature.component",
+          "Component"
         ]
       }
     ],
