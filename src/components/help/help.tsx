@@ -12,17 +12,16 @@ import { CodeInline } from '../common';
 const Help: FunctionComponent = (): ReactElement => {
   return (
     <>
-      <p className="font-mono text-sm text-white pb-8">
-        Use the
-        <CodeInline className="ml-2 mr-2">
-          {'--for <command>'}
+      <p className="font-mono text-sm text-white pb-6">
+        Usage:
+        <CodeInline className="ml-2">
+          {'<command> [options]'}
         </CodeInline>
-        option to get help for a specific command
       </p>
       <p className="font-mono text-sm text-white">
         Commands:
       </p>
-      <div className="flex flex-col gap-y-1 pt-2 pl-4">
+      <div className="flex flex-col gap-y-1 pt-2 pb-8 pl-4">
         {
           features
             .map((feature) => feature.command)
@@ -49,6 +48,17 @@ const Help: FunctionComponent = (): ReactElement => {
             })
         }
       </div>
+      <p className="font-mono text-sm text-white">
+        Use the
+        <CodeInline className="ml-2 mr-2">
+          --help
+        </CodeInline>
+        command option or
+        <CodeInline className="ml-2 mr-2">
+          {'help --for <command>'}
+        </CodeInline>
+        to get help for a specific command
+      </p>
     </>
   );
 };
