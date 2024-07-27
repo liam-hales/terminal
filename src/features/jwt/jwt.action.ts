@@ -30,12 +30,14 @@ const jwtAction = async (options: Options): Promise<Props> => {
     complete: true,
   });
 
-  // Chekc if the token was successfully deocded
+  // Check if the token was successfully deocded
   // If not then throw an error
   if (decoded == null) {
     throw new Error('Failed to decode token');
   }
 
+  // Format the decoded token
+  // header and payload
   const header = JSON.stringify(decoded.header, undefined, 2);
   const payload = JSON.stringify(decoded.payload, undefined, 2);
 
