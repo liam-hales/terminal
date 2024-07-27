@@ -47,6 +47,17 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
     throw new Error(`Feature "${name}" has been disabled`);
   }
 
+  // If the help option has been set to true, return
+  // the help feature output for said command
+  if (inputOptions.help === true) {
+    return {
+      featureId: 'help',
+      props: {
+        command: command,
+      },
+    };
+  }
+
   const validated = options
     .strict()
     .safeParse(inputOptions);
@@ -101,20 +112,6 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
       .join('\n\n');
 
     throw new Error(message);
-  }
-
-  const { data } = validated;
-  const { help } = data;
-
-  // If the help option has been set to true, return
-  // the help feature output for said command
-  if (help === true) {
-    return {
-      featureId: 'help',
-      props: {
-        command: command,
-      },
-    };
   }
 
   // Call the feature action with the transformed and validated options
