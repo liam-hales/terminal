@@ -21,7 +21,7 @@ const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, output }): Rea
 
   return (
     <div className="pt-4 pb-4 pl-6 pr-6">
-      <p className="font-mono text-sm text-zinc-500 pb-3">
+      <p className="font-mono text-sm text-zinc-500 pb-3 break-all">
         {inputText}
       </p>
       <feature.component {...props as FeatureProp} />
