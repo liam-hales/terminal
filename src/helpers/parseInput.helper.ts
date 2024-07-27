@@ -12,9 +12,10 @@ import { ParsedInput } from '../types';
  * @returns The parsed input
  */
 const parseInput = (input: string): ParsedInput => {
-  const args = input.split(' ');
 
-  const { _, ...rest } = Parser(args, {
+  // Parse the input using `yargs-parser` with the config
+  // to disable things such as dot notation
+  const { _, ...rest } = Parser(input, {
     configuration: {
       'dot-notation': false,
       'camel-case-expansion': false,
