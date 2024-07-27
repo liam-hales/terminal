@@ -1,6 +1,6 @@
 'use client';
 
-import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
+import { FunctionComponent, ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
 import { BaseProps } from '../../types';
 import { TerminalInput, TerminalErrorBlock, TerminalExecutedBlock } from '..';
 import { useTerminal } from '../../hooks';
@@ -21,9 +21,23 @@ interface Props extends BaseProps {
  */
 const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
   const { blocks, inputHistory, isLoading, execute } = useTerminal();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [inputValue, setInputValue] = useState<string>('');
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
+
+  /**
+   * Used to focus the `TerminalInput` when the
+   * `inputValue` state changes to an empty string
+   */
+  useEffect(() => {
+
+    // Only focus the input if the input
+    // value state is an empty string
+    if (inputValue === '') {
+      inputRef.current?.focus();
+    }
+  }, [inputValue]);
 
   /**
    * Used to handle keyboard events from the `TerminalInput`
@@ -51,7 +65,6 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
         // the user input from state
         await execute(inputValue);
 
-        // Reset the input and history index state
         setInputValue('');
         setHistoryIndex(-1);
 
@@ -125,6 +138,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
         {children}
       </div>
       <TerminalInput
+        ref={inputRef}
         value={inputValue}
         isLoading={isLoading}
         isDisabled={isLoading}

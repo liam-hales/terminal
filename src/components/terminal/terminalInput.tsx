@@ -1,11 +1,12 @@
 import { FunctionComponent, ReactElement } from 'react';
 import { BaseProps } from '../../types';
 import { Loader } from '../common';
+import { withRef } from '../../helpers';
 
 /**
  * The `TerminalInput` component props
  */
-interface Props extends BaseProps {
+interface Props extends BaseProps<HTMLInputElement> {
   readonly value: string;
   readonly isLoading?: boolean;
   readonly isDisabled?: boolean;
@@ -22,6 +23,7 @@ interface Props extends BaseProps {
  */
 const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => {
   const {
+    internalRef,
     value,
     isLoading = false,
     isDisabled = false,
@@ -38,6 +40,7 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
           ))
         }
         <input
+          ref={internalRef}
           className="w-full h-14 text-white placeholder-zinc-700 font-mono text-sm bg-transparent outline-none"
           placeholder=">_ Enter command"
           value={value}
@@ -58,4 +61,4 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
   );
 };
 
-export default TerminalInput;
+export default withRef(TerminalInput);
