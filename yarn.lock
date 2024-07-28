@@ -1970,44 +1970,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dev-tools@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "dev-tools@workspace:."
-  dependencies:
-    "@next/bundle-analyzer": "npm:^14.2.5"
-    "@types/jsonwebtoken": "npm:^9.0.6"
-    "@types/node": "npm:^20.14.12"
-    "@types/react": "npm:^18.3.3"
-    "@types/react-dom": "npm:^18.3.0"
-    "@types/yargs-parser": "npm:^21.0.3"
-    "@typescript-eslint/eslint-plugin": "npm:^7.17.0"
-    "@typescript-eslint/parser": "npm:^7.17.0"
-    autoprefixer: "npm:10.4.19"
-    camelcase-keys: "npm:^9.1.3"
-    cli-spinners: "npm:^3.1.0"
-    eslint: "npm:^8.57.0"
-    eslint-config-airbnb: "npm:^19.0.4"
-    eslint-config-airbnb-typescript: "npm:^18.0.0"
-    eslint-config-next: "npm:^14.2.2"
-    eslint-plugin-import: "npm:^2.29.1"
-    eslint-plugin-jsx-a11y: "npm:^6.8.0"
-    eslint-plugin-react: "npm:^7.33.2"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    jsonwebtoken: "npm:^9.0.2"
-    nanoid: "npm:^5.0.7"
-    next: "npm:14.2.5"
-    npm-check-updates: "npm:^16.14.20"
-    param-case: "npm:^3.0.4"
-    postcss: "npm:8.4.40"
-    react: "npm:18.3.1"
-    react-dom: "npm:18.3.1"
-    tailwindcss: "npm:3.4.7"
-    typescript: "npm:^5.5.0"
-    yargs-parser: "npm:^21.1.1"
-    zod: "npm:^3.23.8"
-  languageName: unknown
-  linkType: soft
-
 "didyoumean@npm:^1.2.2":
   version: 1.2.2
   resolution: "didyoumean@npm:1.2.2"
@@ -6926,6 +6888,44 @@ __metadata:
   checksum: 10/5bf69e135e82b6135767654940b8b4cdb984d1e01b3a2e1cb28d27ef4a9e2db8e4b305dac8fa0c26d18d5cea00d13bf85349a19998d0ead91393d8b9939910ac
   languageName: node
   linkType: hard
+
+"terminal@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "terminal@workspace:."
+  dependencies:
+    "@next/bundle-analyzer": "npm:^14.2.5"
+    "@types/jsonwebtoken": "npm:^9.0.6"
+    "@types/node": "npm:^20.14.12"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    "@types/yargs-parser": "npm:^21.0.3"
+    "@typescript-eslint/eslint-plugin": "npm:^7.17.0"
+    "@typescript-eslint/parser": "npm:^7.17.0"
+    autoprefixer: "npm:10.4.19"
+    camelcase-keys: "npm:^9.1.3"
+    cli-spinners: "npm:^3.1.0"
+    eslint: "npm:^8.57.0"
+    eslint-config-airbnb: "npm:^19.0.4"
+    eslint-config-airbnb-typescript: "npm:^18.0.0"
+    eslint-config-next: "npm:^14.2.2"
+    eslint-plugin-import: "npm:^2.29.1"
+    eslint-plugin-jsx-a11y: "npm:^6.8.0"
+    eslint-plugin-react: "npm:^7.33.2"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    jsonwebtoken: "npm:^9.0.2"
+    nanoid: "npm:^5.0.7"
+    next: "npm:14.2.5"
+    npm-check-updates: "npm:^16.14.20"
+    param-case: "npm:^3.0.4"
+    postcss: "npm:8.4.40"
+    react: "npm:18.3.1"
+    react-dom: "npm:18.3.1"
+    tailwindcss: "npm:3.4.7"
+    typescript: "npm:^5.5.0"
+    yargs-parser: "npm:^21.1.1"
+    zod: "npm:^3.23.8"
+  languageName: unknown
+  linkType: soft
 
 "text-table@npm:^0.2.0":
   version: 0.2.0

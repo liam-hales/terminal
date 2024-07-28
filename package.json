@@ -1,6 +1,6 @@
 {
-  "name": "dev-tools",
-  "description": "Web-based developer tools with a developer friendly interface.",
+  "name": "terminal",
+  "description": "Web-based developer tools with a dev-friendly terminal interface.",
   "version": "1.0.0",
   "private": true,
   "engines": {
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/liam-hales/dev-tools.git"
+    "url": "https://github.com/liam-hales/terminal.git"
   },
   "packageManager": "yarn@4.1.1",
   "scripts": {

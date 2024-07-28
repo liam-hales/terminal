@@ -17,11 +17,11 @@ const AppPage: FunctionComponent = async (): Promise<ReactElement> => {
               _
             </span>
             <span className="font-sans font-bold">
-              Dev Tools
+              Terminal
             </span>
           </p>
-          <p className="font-sans font-bold text-md text-white">
-            By Liam Hales
+          <p className="font-sans text-md text-white">
+            Built by Liam Hales
           </p>
         </div>
         <div className="flex flex-row gap-x-3">
@@ -29,10 +29,8 @@ const AppPage: FunctionComponent = async (): Promise<ReactElement> => {
             {'>'}
             _
           </p>
-          <p className="font-mono text-sm text-white">
-            Web-based developer tools with a
-            <br />
-            developer friendly interface
+          <p className="font-mono text-sm text-white max-w-96">
+            Web-based developer tools with a dev-friendly terminal interface.
           </p>
         </div>
       </div>

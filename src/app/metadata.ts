@@ -22,8 +22,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const { serverRuntimeConfig } = getConfig();
   const { siteUrl } = serverRuntimeConfig;
 
-  const title = 'Dev Tools - By Liam Hales';
-  const description = 'Web-based developer tools with a developer friendly interface.';
+  const title = 'Terminal - Liam Hales';
+  const description = 'Web-based developer tools with a dev-friendly terminal interface.';
 
   return {
     metadataBase: new URL(siteUrl),
@@ -50,12 +50,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
       title: title,
       description: description,
       type: 'website',
-      siteName: 'Dev Tools',
+      siteName: 'Terminal',
       images: [
         {
           type: 'image/webp',
           url: '/cover.webp',
-          alt: 'Dev Tools Cover',
+          alt: 'Terminal Cover',
         },
       ],
     },
