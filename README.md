@@ -9,11 +9,20 @@
 
 - [Built With](#built-with)
 - [Getting Started](#getting-started-prerequisites)
+- [First Steps](#first-steps)
+- [Local Development](#local-development)
+  - [Development Server](#development-server)
+  - [Production Server](#production-server)
+- [Production](#production)
+  - [Building](#building)
+  - [Deploying](#deploying)
+  - [Bundle Analysing](#bundle-analysing)
 - [Dependency Management](#dependency-management)
 
 <br/>
 
-> ⚠️ _**WARNING** - Please make sure to read and follow the [Getting Started](#getting-started-prerequisites) section before continuing to the other sections to avoid running into any issues_
+> ⚠️ _**WARNING** - Please make sure to read and follow the [Getting Started](#getting-started-prerequisites) and [First Steps](#first-steps) sections before continuing to the other sections to avoid running into any issues_
+
 
 <br/>
 <br/>
@@ -91,6 +100,85 @@ v4.1.1
 <br/>
 <br/>
 
+# First Steps
+
+1. Run `yarn` in the project root
+2. Create a `.env` file in the project root
+
+```sh
+SITE_URL = 'https://cli.liamhales.dev'
+```
+
+<br/>
+<br/>
+
+# Local Development
+
+For local development there are two ways to build and start the app depending on your specific needs...
+
+* [Development Server](#development-server) - Should be used when developing the app
+* [Production Server](#production-server) - Should be used to simulate how the app will run in production
+
+<br/>
+
+## Development Server
+
+1. Run `yarn start:dev` to start the development server
+
+```sh
+$ yarn start:dev
+```
+
+## Production Server
+
+1. Follow the steps in the [Production -> Building](#building) section
+2. Run `yarn start:prod` to start the production server
+
+```sh
+$ yarn build
+$ yarn start:prod
+```
+
+<br/>
+<br/>
+
+# Production
+
+## Building
+
+1. Run `yarn build` to build the app for production
+
+```sh
+$ yarn build
+```
+
+## Deploying
+
+The app is hosted on [Vercel] and is built and deployed using Vercel Git Deployments. When code is pushed to the repos `main` branch, a production build and deployment is triggered. No need to manually build or deploy.
+
+```sh
+$ git checkout main
+$ git add --all
+$ git commit -m "Fixed bugs"
+$ git push
+```
+
+## Bundle Analysing
+
+Analysing a production bundle is done using `@next/bundle-analyzer` under the hood and is used to inspect the app and the size each page, component and dependency takes up within the bundle.
+
+1. Run `yarn build:analyse` to build and analyse the app for production
+2. Open the generated `.html` files located in `.next/analyze`
+
+```sh
+$ yarn build:analyse
+```
+
+> ⚠️ _**WARNING** - The bundle analyser will automatically open the generated `.html` files in your default browser_
+
+<br/>
+<br/>
+
 # Dependency Management
 
 Managing dependencies is done using `npm-check-updates` under the hood which has the ability to check for new dependency versions and upgrade dependencies to a specified target version.
@@ -108,4 +196,5 @@ Check out the [`npm-check-updates`] docs or run `yarn ncu --help` for more info.
 [Node Version Manager]: https://github.com/nvm-sh/nvm
 [`yarn`]: https://yarnpkg.com
 [Corepack]: https://nodejs.org/api/corepack.html
+[Vercel]: https://vercel.com
 [`npm-check-updates`]: https://npmjs.com/package/npm-check-updates
