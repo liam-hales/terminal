@@ -13,6 +13,23 @@ const tailwindConfig = {
       sans: 'var(--sans-font)',
       mono: 'var(--mono-font)',
     },
+    extend: {
+      keyframes: {
+        cursor: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'from, to': {
+            opacity: 0,
+          },
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          '50%': {
+            opacity: 1,
+          },
+        },
+      },
+      animation: {
+        cursor: 'cursor 800ms infinite',
+      },
+    },
   },
 };
 
