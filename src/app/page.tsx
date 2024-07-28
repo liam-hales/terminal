@@ -10,7 +10,7 @@ import { CodeInline } from '../components/common';
 const AppPage: FunctionComponent = async (): Promise<ReactElement> => {
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col pb-24">
         <div className="flex flex-col items-end pb-7">
           <p className="text-8xl text-white">
             <span className="font-sans">
@@ -30,11 +30,11 @@ const AppPage: FunctionComponent = async (): Promise<ReactElement> => {
             _
           </p>
           <p className="font-mono text-sm text-white max-w-96">
-            Web-based developer tools with a dev-friendly terminal interface.
+            Web-based developer tools with a dev-friendly terminal interface
           </p>
         </div>
       </div>
-      <div className="flex flex-col pt-36">
+      <div className="flex flex-col pt-7 pb-7 pl-9 pr-9 rounded-xl border-solid border-2 border-zinc-900">
         <p className="font-sans font-bold text-3xl text-white">
           Getting started...
         </p>
