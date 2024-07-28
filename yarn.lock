@@ -6937,7 +6937,7 @@ __metadata:
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     tailwindcss: "npm:3.4.7"
-    typescript: "npm:^5.5.0"
+    typescript: "npm:^5.5.4"
     typewriter-effect: "npm:^2.21.0"
     yargs-parser: "npm:^21.1.1"
     zod: "npm:^3.23.8"
@@ -7211,7 +7211,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.5.0":
+"typescript@npm:^5.5.4":
   version: 5.5.4
   resolution: "typescript@npm:5.5.4"
   bin:
@@ -7221,7 +7221,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.5.0#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.5.4#optional!builtin<compat/typescript>":
   version: 5.5.4
   resolution: "typescript@patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=5adc0c"
   bin:
