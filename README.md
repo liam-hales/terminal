@@ -195,6 +195,7 @@ Check out the [`npm-check-updates`] docs or run `yarn ncu --help` for more info.
 
 [Node Version Manager]: https://github.com/nvm-sh/nvm
 [`yarn`]: https://yarnpkg.com
+[Yarn Installation Guide]: https://yarnpkg.com/getting-started/install
 [Corepack]: https://nodejs.org/api/corepack.html
 [Vercel]: https://vercel.com
 [`npm-check-updates`]: https://npmjs.com/package/npm-check-updates
