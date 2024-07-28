@@ -20,7 +20,7 @@ const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, output }): Rea
   const inputText = `> ${input}`;
 
   return (
-    <div className="pt-4 pb-4 pl-6 pr-6">
+    <div className="pt-4 pb-5 pl-6 pr-6 border-solid border-t-[1px] border-zinc-900">
       <p className="font-mono text-sm text-zinc-500 pb-3 break-all">
         {inputText}
       </p>

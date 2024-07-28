@@ -30,7 +30,7 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
       <body className="h-full bg-black">
         <TerminalProvider>
           <Terminal>
-            <div className="flex flex-col items-center pt-20 pb-20 pl-6 pr-6 border-solid border-b-[1px] border-zinc-900">
+            <div className="flex flex-col items-center pt-20 pb-20 pl-6 pr-6">
               {children}
             </div>
           </Terminal>
