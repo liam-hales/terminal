@@ -1,5 +1,7 @@
+'use client';
+
 import { FunctionComponent, ReactElement } from 'react';
-import { CodeInline } from '../components/common';
+import { CodeInline, Typewriter } from '../components/common';
 
 /**
  * The entry point for the `/` app route,
@@ -7,30 +9,29 @@ import { CodeInline } from '../components/common';
  *
  * @returns The `AppPage` component
  */
-const AppPage: FunctionComponent = async (): Promise<ReactElement> => {
+const AppPage: FunctionComponent = (): ReactElement => {
   return (
     <>
-      <div className="flex flex-col pb-24">
-        <div className="flex flex-col items-end pb-7">
-          <p className="text-8xl text-white">
-            <span className="font-sans">
-              _
-            </span>
-            <span className="font-sans font-bold">
-              Terminal
-            </span>
-          </p>
-          <p className="font-sans text-md text-white">
-            Built by Liam Hales
-          </p>
+      <div className="flex flex-col pb-28">
+        <div className="flex flex-col pb-7">
+          <Typewriter
+            className="font-sans font-bold text-9xl text-white"
+            onInit={(typewriter) => {
+              typewriter
+                .pauseFor(400)
+                .typeString('Terminal')
+                .pauseFor(200)
+                .typeString('.')
+                .start();
+            }}
+          />
         </div>
-        <div className="flex flex-row gap-x-3">
-          <p className="font-mono font-bold text-zinc-500">
-            {'>'}
-            _
-          </p>
+        <div className="flex flex-col pl-6">
           <p className="font-mono text-sm text-white max-w-96">
-            Web-based developer tools with a dev-friendly terminal interface
+            Web-based developer tools with a dev-friendly terminal interface.
+          </p>
+          <p className="font-mono italic text-xs text-white pt-8">
+            - Built by Liam Hales
           </p>
         </div>
       </div>
