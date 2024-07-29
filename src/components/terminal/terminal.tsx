@@ -1,6 +1,6 @@
 'use client';
 
-import { FunctionComponent, ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
 import { BaseProps } from '../../types';
 import { TerminalInput, TerminalErrorBlock, TerminalExecutedBlock } from '..';
 import { useTerminal } from '../../hooks';
@@ -43,9 +43,11 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
    * Used to handle keyboard events from the `TerminalInput`
    * component underlying `input` HTML element
    *
-   * @param key The key pressed
+   * @param event The keyboard event
    */
-  const onKeyDown = async (key: string): Promise<void> => {
+  const onKeyDown = async (event: KeyboardEvent<HTMLInputElement>): Promise<void> => {
+    const { key } = event;
+
     switch (key) {
       case 'Enter': {
 
@@ -72,6 +74,10 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
       }
 
       case 'ArrowUp': {
+        // Prevent the default input behavior to
+        // provent incorrect cursor position
+        event.preventDefault();
+
         const index = historyIndex + 1;
         const input = inputHistory[index];
 
