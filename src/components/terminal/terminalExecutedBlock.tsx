@@ -13,18 +13,23 @@ type Props = Omit<ExecutedBlock, 'id' | 'type'> & BaseProps;
  * @param props The component props
  * @returns The `TerminalExecutedBlock` component
  */
-const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, output }): ReactElement<Props> => {
+const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, duration, output }): ReactElement<Props> => {
   const { featureId, props } = output;
 
   const feature = featureMap[featureId];
-  const inputText = `> ${input}`;
 
   return (
-    <div className="pt-4 pb-5 pl-6 pr-6 border-solid border-t-[1px] border-zinc-900">
+    <div className="pt-4 pb-5 pl-6 pr-4 border-solid border-t-[1px] border-zinc-900">
       <p className="font-mono text-sm text-zinc-500 pb-3 break-all">
-        {inputText}
+        {`> ${input}`}
       </p>
-      <feature.component {...props as FeatureProp} />
+      <div className="flex flex-row items-end justify-between">
+        <feature.component {...props as FeatureProp} />
+        <p className="font-mono text-xs text-zinc-500">
+          {duration.toFixed(0)}
+          <span className="pl-1">ms</span>
+        </p>
+      </div>
     </div>
   );
 };

@@ -12,15 +12,21 @@ type Props = Omit<ErrorBlock, 'id' | 'type'> & BaseProps;
  * @param props The component props
  * @returns The `TerminalErrorBlock` component
  */
-const TerminalErrorBlock: FunctionComponent<Props> = ({ input, error }): ReactElement<Props> => {
+const TerminalErrorBlock: FunctionComponent<Props> = ({ input, duration, error }): ReactElement<Props> => {
   return (
-    <div className="pt-4 pb-4 pl-6 pr-6 bg-red-950 bg-opacity-40">
+    <div className="pt-4 pb-4 pl-6 pr-4 bg-red-950 bg-opacity-40">
       <p className="font-mono text-sm text-zinc-500 pb-3 break-all">
         {`> ${input}`}
       </p>
-      <pre className="font-mono font-bold text-sm text-red-400 whitespace-pre-wrap break-all">
-        {error.message}
-      </pre>
+      <div className="flex flex-row items-end justify-between">
+        <pre className="font-mono font-bold text-sm text-red-400 whitespace-pre-wrap break-all">
+          {error.message}
+        </pre>
+        <p className="font-mono text-xs text-zinc-500">
+          {duration.toFixed(0)}
+          <span className="pl-1">ms</span>
+        </p>
+      </div>
     </div>
   );
 };
