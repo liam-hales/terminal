@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, KeyboardEvent, ReactElement } from 'react';
 import { BaseProps } from '../../types';
 import { Loader } from '../common';
 import { withRef } from '../../helpers';
@@ -11,7 +11,7 @@ interface Props extends BaseProps<HTMLInputElement> {
   readonly isLoading?: boolean;
   readonly isDisabled?: boolean;
   readonly onChange: (value: string) => void;
-  readonly onKeyDown: (key: string) => void;
+  readonly onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 /**
@@ -45,7 +45,7 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
           placeholder=">_ Enter command"
           value={value}
           disabled={isDisabled}
-          onKeyDown={(event) => onKeyDown(event.key)}
+          onKeyDown={(event) => onKeyDown(event)}
           onChange={(event) => {
 
             // Destructure the event and the event target
