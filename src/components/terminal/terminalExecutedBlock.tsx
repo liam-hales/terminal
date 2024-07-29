@@ -24,7 +24,9 @@ const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, duration, outp
         {`> ${input}`}
       </p>
       <div className="flex flex-row items-end justify-between">
-        <feature.component {...props as FeatureProp} />
+        <div className="flex flex-col">
+          <feature.component {...props as FeatureProp} />
+        </div>
         <p className="font-mono text-xs text-zinc-500">
           {duration.toFixed(0)}
           <span className="pl-1">ms</span>
