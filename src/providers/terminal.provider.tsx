@@ -57,9 +57,17 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
 
     setIsLoading(true);
 
+    // Get the start time stamp which will be used to
+    // capture the time it takes to execute the input
+    const startTime = performance.now();
+
     try {
       const parsed = parseInput(input);
       const output = await executeInput(parsed);
+
+      // Get the end time stamp which along with the start time can be
+      // used to capture the time it took for the input to be executed
+      const endTime = performance.now();
 
       // Add the terminal executed block
       // for the feature output
@@ -67,11 +75,16 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
         type: 'executed',
         id: blockId,
         input: input,
+        duration: endTime - startTime,
         output: output,
       });
     }
     catch (error) {
       if (error instanceof Error) {
+
+        // Get the end time stamp which along with the start time can be
+        // used to capture the time it took for the input execution to fail
+        const endTime = performance.now();
 
         // Add the terminal error block
         // for the caught error
@@ -79,6 +92,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
           type: 'error',
           id: blockId,
           input: input,
+          duration: endTime - startTime,
           error: error,
         });
       }

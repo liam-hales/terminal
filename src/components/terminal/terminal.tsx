@@ -110,7 +110,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
       <div className="h-full flex flex-col-reverse pb-14 overflow-y-auto">
         {
           blocks.map((block) => {
-            const { id, type, input } = block;
+            const { id, type, input, duration } = block;
 
             // For the error block render the
             // terminal error block component
@@ -119,6 +119,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
                 <TerminalErrorBlock
                   key={`error-block-${id}`}
                   input={input}
+                  duration={duration}
                   error={block.error}
                 />
               );
@@ -130,6 +131,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
               <TerminalExecutedBlock
                 key={`executed-block-${id}`}
                 input={input}
+                duration={duration}
                 output={block.output}
               />
             );

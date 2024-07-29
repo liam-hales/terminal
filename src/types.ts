@@ -134,6 +134,7 @@ export interface TerminalExecutedBlock {
   readonly type: 'executed';
   readonly id: string;
   readonly input: string;
+  readonly duration: number;
   readonly output: FeatureOutput;
 }
 
@@ -145,6 +146,7 @@ export interface TerminalErrorBlock {
   readonly type: 'error';
   readonly id: string;
   readonly input: string;
+  readonly duration: number;
   readonly error: Error;
 }
 
