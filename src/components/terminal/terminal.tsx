@@ -1,6 +1,6 @@
 'use client';
 
-import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef } from 'react';
 import { BaseProps } from '../../types';
 import { TerminalInput, TerminalErrorBlock, TerminalExecutedBlock } from '..';
 import { useTerminal } from '../../hooks';
@@ -20,11 +20,18 @@ interface Props extends BaseProps {
  * @returns The `Terminal` component
  */
 const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
-  const { blocks, inputHistory, isLoading, execute } = useTerminal();
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  const [inputValue, setInputValue] = useState<string>('');
-  const [historyIndex, setHistoryIndex] = useState<number>(-1);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const {
+    inputValue,
+    blocks,
+    inputHistory,
+    inputHistoryIndex,
+    isLoading,
+    setInputValue,
+    setInputHistoryIndex,
+    execute,
+  } = useTerminal();
 
   /**
    * Used to focus the `TerminalInput` when the
@@ -68,7 +75,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
         await execute(inputValue);
 
         setInputValue('');
-        setHistoryIndex(-1);
+        setInputHistoryIndex(-1);
 
         break;
       }
@@ -78,28 +85,28 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
         // provent incorrect cursor position
         event.preventDefault();
 
-        const index = historyIndex + 1;
+        const index = inputHistoryIndex + 1;
         const input = inputHistory[index];
 
         if (index >= inputHistory.length) {
           return;
         }
 
-        setHistoryIndex(index);
+        setInputHistoryIndex(index);
         setInputValue(input);
 
         break;
       }
 
       case 'ArrowDown': {
-        const index = historyIndex - 1;
+        const index = inputHistoryIndex - 1;
         const input = inputHistory[index] ?? '';
 
         if (index < -1) {
           return;
         }
 
-        setHistoryIndex(index);
+        setInputHistoryIndex(index);
         setInputValue(input);
 
         break;

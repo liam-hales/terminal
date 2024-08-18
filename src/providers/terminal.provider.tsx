@@ -28,8 +28,10 @@ interface Props extends BaseProps {
  * );
  */
 const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
+  const [inputValue, setInputValue] = useState<string>('');
   const [blocks, setBlocks] = useState<TerminalBlock[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [inputHistoryIndex, setInputHistoryIndex] = useState<number>(-1);
 
   /**
    * Used to add a terminal block to
@@ -108,9 +110,13 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
   return (
     <TerminalContext.Provider value={
       {
+        inputValue: inputValue,
         blocks: blocks,
         inputHistory: blocks.map((block) => block.input),
+        inputHistoryIndex: inputHistoryIndex,
         isLoading: isLoading,
+        setInputValue: setInputValue,
+        setInputHistoryIndex: setInputHistoryIndex,
         execute: execute,
       }
     }
