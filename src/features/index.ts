@@ -1,6 +1,6 @@
 import { FeatureMap } from './types';
 import { helpFeature } from './help';
-import { base64Feature } from './base64';
+import { encodeFeature } from './encode';
 import { ipFeature } from './ip';
 import { jwtFeature } from './jwt';
 
@@ -10,7 +10,7 @@ import { jwtFeature } from './jwt';
  */
 export const features = [
   helpFeature,
-  base64Feature,
+  encodeFeature,
   ipFeature,
   jwtFeature,
 ];
