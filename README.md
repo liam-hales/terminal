@@ -1,5 +1,13 @@
-<div align="center">
+<div>
   <img src="public/cover.webp"/>
+  <br/>
+  <br/>
+  <a
+    href="https://github.com/liam-hales/terminal/deployments?environment=Production"
+    target="_blank"
+  >
+    <img src="https://img.shields.io/github/deployments/liam-hales/terminal/production?style=for-the-badge&label=Build&labelColor=181c24&logo=github&logoColor=ffffff"/>
+  </a>
 </div>
 
 <br/>
