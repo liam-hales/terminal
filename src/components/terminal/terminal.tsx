@@ -75,7 +75,6 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   }, [
     searchParams,
     setInputValue,
-    execute,
   ]);
 
   /**
