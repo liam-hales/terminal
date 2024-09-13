@@ -38,6 +38,26 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   } = useTerminal();
 
   /**
+   * Used to monitor the terminal `inputValue`
+   * and set the `input` URL query param
+   */
+  useEffect(() => {
+    const { history } = window;
+
+    // Build the URL query based on
+    // the terminal input value
+    const urlQuery = (inputValue !== '')
+      ? `?input=${
+        Buffer
+          .from(inputValue, 'utf8')
+          .toString('base64')
+      }`
+      : '/';
+
+    history.pushState({}, '', urlQuery);
+  }, [inputValue]);
+
+  /**
    * Used to monitor the the
    * `input` URL search param
    */
