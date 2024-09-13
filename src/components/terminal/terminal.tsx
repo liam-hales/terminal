@@ -1,9 +1,11 @@
 'use client';
 
 import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { BaseProps } from '../../types';
 import { TerminalInput, TerminalErrorBlock, TerminalExecutedBlock } from '..';
 import { useTerminal } from '../../hooks';
+import { decodeParam } from '../../helpers';
 
 /**
  * The `Terminal` component props
@@ -22,6 +24,8 @@ interface Props extends BaseProps {
 const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
+
   const {
     inputValue,
     blocks,
@@ -32,6 +36,27 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
     setInputHistoryIndex,
     execute,
   } = useTerminal();
+
+  /**
+   * Used to monitor the the
+   * `input` URL search param
+   */
+  useEffect(() => {
+
+    // Get and decode the input
+    // search param from the URL
+    const inputParam = decodeParam(searchParams.get('input') ?? '');
+
+    // If the `input` param has been set, set
+    // the terminal input value to it's value
+    if (inputParam != null) {
+      setInputValue(inputParam);
+    }
+  }, [
+    searchParams,
+    setInputValue,
+    execute,
+  ]);
 
   /**
    * Used to focus the `TerminalInput` when the
