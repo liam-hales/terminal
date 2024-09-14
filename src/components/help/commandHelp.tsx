@@ -50,16 +50,19 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                   className="flex flex-row"
                   key={`help-command-${option}`}
                 >
-                  <div className="w-24 shrink-0">
+                  <div className="min-w-24">
                     <CodeInline>
                       {`--${option}`}
                     </CodeInline>
                   </div>
-                  <p className="font-mono text-sm text-white mt-[3px]">
-                    -
-                    {' '}
-                    {description}
-                  </p>
+                  <div className="flex flex-row gap-x-2">
+                    <p className="font-mono text-sm text-white">
+                      -
+                    </p>
+                    <p className="font-mono text-sm text-white">
+                      {description}
+                    </p>
+                  </div>
                 </div>
               );
             })

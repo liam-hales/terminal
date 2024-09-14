@@ -54,8 +54,8 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, data }): ReactEleme
                         </p>
                         {
                           (typeof value === 'string') && (
-                            <div className="flex flex-row">
-                              <p className="font-mono text-sm text-white pr-2">
+                            <div className="flex flex-row gap-x-2">
+                              <p className="font-mono text-sm text-white">
                                 |
                               </p>
                               {
@@ -83,14 +83,17 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, data }): ReactEleme
                               {
                                 value.map((item) => {
                                   return (
-                                    <p
-                                      className="font-mono text-sm text-white"
+                                    <div
+                                      className="flex flex-row gap-x-2"
                                       key={`whois-${serverKey}-${itemKey}-${item}`}
                                     >
-                                      -
-                                      {' '}
-                                      {item}
-                                    </p>
+                                      <p className="font-mono text-sm text-white">
+                                        -
+                                      </p>
+                                      <p className="font-mono text-sm text-white">
+                                        {item}
+                                      </p>
+                                    </div>
                                   );
                                 })
                               }
