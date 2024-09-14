@@ -1,6 +1,6 @@
 import './globals.css';
 
-import { FunctionComponent, ReactElement, ReactNode } from 'react';
+import { FunctionComponent, ReactElement, ReactNode, Suspense } from 'react';
 import { BaseProps } from '../types';
 import { urbanist, firaCode } from '../fonts';
 import { Terminal } from '../components';
@@ -28,13 +28,21 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
       className={`h-full ${urbanist.variable} ${firaCode.variable}`}
     >
       <body className="h-full bg-black">
-        <TerminalProvider>
-          <Terminal>
-            <div className="flex flex-col items-center pt-28 pb-28 pl-6 pr-6">
-              {children}
-            </div>
-          </Terminal>
-        </TerminalProvider>
+        {
+        /**
+         * `<Suspense>` is reuqired here because the `Terminal` component
+         * uses the `useSearchParams` hook which requires it
+         */
+        }
+        <Suspense>
+          <TerminalProvider>
+            <Terminal>
+              <div className="flex flex-col items-center pt-28 pb-28 pl-6 pr-6">
+                {children}
+              </div>
+            </Terminal>
+          </TerminalProvider>
+        </Suspense>
       </body>
     </html>
   );
