@@ -4812,6 +4812,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"punycode@npm:^2.1.1":
+  version: 2.3.1
+  resolution: "punycode@npm:2.3.1"
+  checksum: 10/febdc4362bead22f9e2608ff0171713230b57aff9dddc1c273aa2a651fbd366f94b7d6a71d78342a7c0819906750351ca7f2edd26ea41b626d87d6a13d1bd059
+  languageName: node
+  linkType: hard
+
 "queue-microtask@npm:^1.2.2":
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
@@ -5680,6 +5687,7 @@ __metadata:
     tailwindcss: "npm:3.4.11"
     typescript: "npm:^5.6.2"
     typewriter-effect: "npm:^2.21.0"
+    whoiser: "npm:^1.18.0"
     yargs-parser: "npm:^21.1.1"
     zod: "npm:^3.23.8"
   languageName: unknown
@@ -6148,6 +6156,15 @@ __metadata:
   bin:
     node-which: ./bin/node-which
   checksum: 10/4782f8a1d6b8fc12c65e968fea49f59752bf6302dc43036c3bf87da718a80710f61a062516e9764c70008b487929a73546125570acea95c5b5dcc8ac3052c70f
+  languageName: node
+  linkType: hard
+
+"whoiser@npm:^1.18.0":
+  version: 1.18.0
+  resolution: "whoiser@npm:1.18.0"
+  dependencies:
+    punycode: "npm:^2.1.1"
+  checksum: 10/844720f329dcef210b211fcd70f0eec7cd3231d1e40e3f6e7310b14da5e207afa31e41b55a26e9c378030db01d72bcad5e7cf82c2e7770c88159f72cc33ce390
   languageName: node
   linkType: hard
 
