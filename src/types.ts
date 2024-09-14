@@ -6,7 +6,7 @@ import { Feature, FeatureMap } from './features';
  * The feature ID used to differentiate
  * each individual feature
  */
-export type FeatureId = 'help' | 'encode' | 'ip' | 'jwt';
+export type FeatureId = 'help' | 'encode' | 'ip' | 'jwt' | 'whois';
 
 /**
  * The utility type used to convert a type

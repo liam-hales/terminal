@@ -1,5 +1,6 @@
 import TextOutput from './textOutput';
 import JWTFeature from './jwtFeature';
+import WhoisFeature from './whoisFeature';
 import HelpFeature from './help/helpFeature';
 import Terminal from './terminal/terminal';
 import TerminalInput from './terminal/terminalInput';
@@ -11,6 +12,7 @@ import CommandHelp from './help/commandHelp';
 export {
   TextOutput,
   JWTFeature,
+  WhoisFeature,
   HelpFeature,
   Terminal,
   TerminalInput,

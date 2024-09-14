@@ -3,6 +3,7 @@ import { helpFeature } from './help';
 import { encodeFeature } from './encode';
 import { ipFeature } from './ip';
 import { jwtFeature } from './jwt';
+import { whoisFeature } from './whois';
 
 /**
  * Describes all the features
@@ -13,6 +14,7 @@ export const features = [
   encodeFeature,
   ipFeature,
   jwtFeature,
+  whoisFeature,
 ];
 
 /**
