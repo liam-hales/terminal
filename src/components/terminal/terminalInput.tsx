@@ -35,9 +35,9 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
     <div className="fixed bottom-0 left-0 right-0 bg-black border-solid border-t-[1px] border-zinc-900">
       <div className="flex flex-row items-center pl-6 pr-6">
         {
-          (isLoading === true && (
+          (isLoading === true) && (
             <Loader className="pr-2" />
-          ))
+          )
         }
         <input
           ref={internalRef}
