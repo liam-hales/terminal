@@ -31,7 +31,7 @@ const withRef = <
   return forwardRef<T, P>((props, ref) => {
     return (
       <Component
-        {...props}
+        {...props as P}
         internalRef={ref}
       />
     );
