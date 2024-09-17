@@ -21,7 +21,7 @@ const JWTFeature: FunctionComponent<Props> = ({ header, payload, signature }): R
   return (
     <>
       <p className="font-mono text-sm text-white">
-        Decoded:
+        Decoded Token
       </p>
       <pre className="font-mono text-sm text-red-300 pt-4">
         header:
@@ -36,7 +36,7 @@ const JWTFeature: FunctionComponent<Props> = ({ header, payload, signature }): R
       <pre className="font-mono text-sm text-blue-300 pt-4">
         signature:
         {' '}
-        {signature}
+        {`"${signature}"`}
       </pre>
     </>
   );

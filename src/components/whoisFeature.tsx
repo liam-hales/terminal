@@ -39,7 +39,7 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, data }): ReactEleme
                 {' '}
                 {serverKey}
               </p>
-              <div className="flex flex-col gap-y-1 pt-2 pl-4">
+              <div className="flex flex-col gap-y-1 pt-2">
                 {
                   itemKeys.map((itemKey, itemIndex) => {
                     const value = itemValues[itemIndex];
