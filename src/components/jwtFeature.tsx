@@ -11,11 +11,11 @@ interface Props extends BaseProps {
 }
 
 /**
- * Used to render the deocded JSON Web Token
- * used for the JWT feature
+ * Used to render the output UI
+ * for the JWT feature
  *
  * @param props The component props
- * @returns The `TextOutput` component
+ * @returns The `JWTFeature` component
  */
 const JWTFeature: FunctionComponent<Props> = ({ header, payload, signature }): ReactElement<Props> => {
   return (

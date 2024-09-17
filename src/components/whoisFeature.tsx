@@ -10,11 +10,11 @@ interface Props extends BaseProps {
 }
 
 /**
- * Used to render the deocded JSON Web Token
- * used for the Whois feature
+ * Used to render the output UI
+ * for the Whois feature
  *
  * @param props The component props
- * @returns The `TextOutput` component
+ * @returns The `WhoisFeature` component
  */
 const WhoisFeature: FunctionComponent<Props> = ({ className, data }): ReactElement<Props> => {
 
