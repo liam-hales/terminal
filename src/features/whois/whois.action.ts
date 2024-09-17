@@ -25,11 +25,11 @@ type Props = ComponentProps<typeof WhoisFeature>;
  * @returns The feature component props
  */
 const whoisAction = async (options: Options): Promise<Props> => {
-  const { query, server, follow } = options;
+  const { search, server, follow } = options;
 
   // Make a call to `whoiser` to perform a whois
   // search using the command options
-  const data = await whoiser(query, {
+  const data = await whoiser(search, {
     host: server,
     follow: follow + 1,
     ignorePrivacy: true,

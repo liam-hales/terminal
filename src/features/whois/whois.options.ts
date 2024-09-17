@@ -8,7 +8,7 @@ import { z } from 'zod';
  * validation and type inference.
  */
 const whoisOptions = z.object({
-  query: z
+  search: z
     .string()
     .describe('The domain or IP address to search'),
   server: z
