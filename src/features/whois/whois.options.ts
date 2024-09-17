@@ -21,6 +21,11 @@ const whoisOptions = z.object({
     .optional()
     .default(0)
     .describe('The number of times to follow redirects'),
+  excludeRedacted: z
+    .boolean()
+    .optional()
+    .default(false)
+    .describe('Excludes the redacted data points from the output'),
 });
 
 export default whoisOptions;

@@ -4,7 +4,7 @@ import { ComponentProps } from 'react';
 import { z } from 'zod';
 import whoiser from 'whoiser';
 import { WhoisFeature } from '../../components';
-import { WhoisData } from '../../components/types';
+import { WhoiserData, WhoisResult } from '../../components/types';
 import { whoisOptions } from '.';
 
 /**
@@ -25,7 +25,7 @@ type Props = ComponentProps<typeof WhoisFeature>;
  * @returns The feature component props
  */
 const whoisAction = async (options: Options): Promise<Props> => {
-  const { search, server, follow } = options;
+  const { search, server, follow, excludeRedacted } = options;
 
   // Make a call to `whoiser` to perform a whois
   // search using the command options
@@ -35,10 +35,41 @@ const whoisAction = async (options: Options): Promise<Props> => {
     ignorePrivacy: true,
   // This type casting is more accurate to what
   // is actually returned from `whoiser`
-  }) as WhoisData;
+  }) as WhoiserData;
+
+  // Map the data into results for
+  // the feature component props
+  const results: WhoisResult[] = Object
+    .keys(data)
+    .map((key) => {
+
+      // Extract the item from the data using it's key
+      // and reduce the item to correctly map it
+      const item = data[key];
+      return {
+        serverName: key,
+        data: Object
+          .keys(item)
+          .reduce((map, key) => {
+
+            // Remove any empty strings from the data or set their value
+            // to `REDACTED` depending on the command options set
+            const value = item[key];
+            return {
+              ...map,
+              ...(value !== '') && {
+                [key]: value,
+              },
+              ...(value === '' && excludeRedacted === false) && {
+                [key]: 'REDACTED',
+              },
+            };
+          }, {}),
+      };
+    });
 
   return {
-    data: data,
+    results: results,
   };
 };
 
