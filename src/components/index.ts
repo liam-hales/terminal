@@ -2,6 +2,7 @@ import TextOutput from './textOutput';
 import JWTFeature from './jwtFeature';
 import WhoisFeature from './whoisFeature';
 import HelpFeature from './help/helpFeature';
+import DatetimeFeature from './datetimeFeature';
 import Terminal from './terminal/terminal';
 import TerminalInput from './terminal/terminalInput';
 import TerminalExecutedBlock from './terminal/terminalExecutedBlock';
@@ -13,6 +14,7 @@ export {
   TextOutput,
   JWTFeature,
   WhoisFeature,
+  DatetimeFeature,
   HelpFeature,
   Terminal,
   TerminalInput,

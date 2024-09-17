@@ -4,6 +4,7 @@ import { encodeFeature } from './encode';
 import { ipFeature } from './ip';
 import { jwtFeature } from './jwt';
 import { whoisFeature } from './whois';
+import { datetimeFeature } from './datetime';
 
 /**
  * Describes all the features
@@ -15,6 +16,7 @@ export const features = [
   ipFeature,
   jwtFeature,
   whoisFeature,
+  datetimeFeature,
 ];
 
 /**
