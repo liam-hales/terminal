@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement } from 'react';
-import { paramCase } from 'param-case';
+import { kebabCase } from 'change-case';
 import { BaseProps, FeatureCommand } from '../../types';
 import { extractKeys } from '../../helpers';
 import { CodeInline } from '../common';
@@ -43,7 +43,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
           extractKeys(shape)
             .map((key) => {
               const { description } = shape[key];
-              const option = paramCase(key);
+              const option = kebabCase(key);
 
               return (
                 <div

@@ -1,4 +1,4 @@
-import { paramCase } from 'param-case';
+import { kebabCase } from 'change-case';
 import { features } from '../features';
 import { FeatureOption, FeatureOutput, ParsedInput } from '../types';
 
@@ -76,7 +76,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
 
         const plural = (keys.length > 1) ? 's' : '';
         const optons = keys
-          .map((key) => `"--${paramCase(key)}"`)
+          .map((key) => `"--${kebabCase(key)}"`)
           .join(', ');
 
         throw new Error(`Unknown option${plural}: ${optons}`);
@@ -98,7 +98,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
         // If the messages contains a "Required" error message
         // then return a required option error message
         if (isRequired === true) {
-          return `Option "--${paramCase(key)}" is required`;
+          return `Option "--${kebabCase(key)}" is required`;
         }
 
         // Format the error messages into a single
@@ -107,7 +107,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
           .map((message) => `  - ${message}`)
           .join('\n');
 
-        return `Option "--${paramCase(key)}" is invalid\n${formatted}`;
+        return `Option "--${kebabCase(key)}" is invalid\n${formatted}`;
       })
       .join('\n\n');
 
