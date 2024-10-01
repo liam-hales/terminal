@@ -13,7 +13,8 @@ const dateOptions = z.object({
       z.string(),
       z
         .number()
-        .int(),
+        .int()
+        .min(0),
     ])
     .optional()
     .describe('The UTC datetime value in any format such as an ISO string or UNIX time in milliseonds. If omitted, the current datetime is used'),
