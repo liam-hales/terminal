@@ -23,7 +23,9 @@
     "arrow-body-style": "off",
     "no-confusing-arrow": "off",
     "consistent-return": "off",
+    "no-underscore-dangle": "off",
     "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/lines-between-class-members": "off",
     "import/prefer-default-export": "off",
     "import/no-cycle": "off",
     "react/require-default-props": "off",
@@ -98,6 +100,18 @@
         "selector": ["enum", "interface", "typeAlias", "typeParameter"],
         "format": ["PascalCase"],
         "leadingUnderscore": "forbid",
+        "trailingUnderscore": "forbid"
+      },
+      {
+        "selector": "class",
+        "format": ["PascalCase"],
+        "leadingUnderscore": "forbid",
+        "trailingUnderscore": "forbid"
+      },
+      {
+        "selector": "classProperty",
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow",
         "trailingUnderscore": "forbid"
       }
     ],
