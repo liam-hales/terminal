@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 import { TerminalContext } from '../context';
 import { BaseProps, TerminalBlock } from '../types';
 import { parseInput, executeInput } from '../helpers';
+import { ValidationException } from '../exceptions';
 
 /**
  * The `TerminalProvider` component props
@@ -82,14 +83,29 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
       });
     }
     catch (error) {
+      // Get the end time stamp which along with the start time can be
+      // used to capture the time it took for the input execution to fail
+      const endTime = performance.now();
+
+      // If the error is a valdation exception
+      // Add the terminal validation error block
+      if (error instanceof ValidationException) {
+        const { errors } = error;
+
+        addBlock({
+          type: 'validation-error',
+          id: blockId,
+          input: input,
+          duration: endTime - startTime,
+          errors: errors,
+        });
+
+        return;
+      }
+
+      // If the error is a generic error
+      // Add the terminal error block
       if (error instanceof Error) {
-
-        // Get the end time stamp which along with the start time can be
-        // used to capture the time it took for the input execution to fail
-        const endTime = performance.now();
-
-        // Add the terminal error block
-        // for the caught error
         addBlock({
           type: 'error',
           id: blockId,
@@ -97,6 +113,8 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
           duration: endTime - startTime,
           error: error,
         });
+
+        return;
       }
     }
     finally {

@@ -1,6 +1,7 @@
 import { kebabCase } from 'change-case';
 import { features } from '../features';
-import { FeatureOption, FeatureOutput, ParsedInput } from '../types';
+import { FeatureOption, FeatureOutput, ParsedInput, ValidationError } from '../types';
+import { ValidationException } from '../exceptions';
 
 /**
  * Used to execute a given parsed `input` that
@@ -32,19 +33,31 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
     return name === inputCommand;
   });
 
-  // If a feature cannot be found for the
-  // command, then throw an error
+  // If a feature cannot be found for the command,
+  // then throw a validation exception
   if (feature == null) {
-    throw new Error(`Command "${inputCommand}" not found`);
+    throw new ValidationException(input, [
+      {
+        name: 'Unknown command',
+        match: inputCommand,
+        details: 'This command does not exist',
+      },
+    ]);
   }
 
   const { id, command, enabled } = feature;
-  const { name, options, action } = command;
+  const { options, action } = command;
 
   // If the feature has not been
   // enabled, then throw an error
   if (enabled === false) {
-    throw new Error(`Feature "${name}" has been disabled`);
+    throw new ValidationException(input, [
+      {
+        name: 'Feature disabled',
+        match: inputCommand,
+        details: 'This feature has been disabled',
+      },
+    ]);
   }
 
   // If the help option has been set to true, return
@@ -68,50 +81,90 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
     const { error } = validated;
     const { issues } = error;
 
-    // Check to see if there is an `unrecognized_keys` error and
-    // if so throw an unknown options error
-    issues.forEach((issue) => {
-      if (issue.code === 'unrecognized_keys') {
-        const { keys } = issue;
+    // Map the validation issues into validation errors which
+    // will be used for the `ValidationException`
+    const errors = issues.reduce<ValidationError[]>((map, issue) => {
+      const { path, code } = issue;
 
-        const plural = (keys.length > 1) ? 's' : '';
-        const optons = keys
-          .map((key) => `"--${kebabCase(key)}"`)
-          .join(', ');
+      // Switch for the validation
+      // issues `code`
+      switch (code) {
 
-        throw new Error(`Unknown option${plural}: ${optons}`);
-      }
-    });
+        // For an unrecognized keys
+        // validation issue
+        case 'unrecognized_keys': {
+          const { keys } = issue;
 
-    const { fieldErrors } = error.flatten();
-
-    const keys = Object.keys(fieldErrors);
-    const values = Object.values(fieldErrors);
-
-    // Map the validation errors into suitable messages and join
-    // them together for the error that will be thrown
-    const message = keys
-      .map((key, index) => {
-        const messages = values[index] ?? [];
-        const isRequired = messages.includes('Required');
-
-        // If the messages contains a "Required" error message
-        // then return a required option error message
-        if (isRequired === true) {
-          return `Option "--${kebabCase(key)}" is required`;
+          return [
+            ...map,
+            {
+              name: 'Unknown options',
+              match: keys.map((key) => `--${kebabCase(key)}`),
+              details: 'Unknown command options have been found',
+            },
+          ];
         }
 
-        // Format the error messages into a single
-        // invalid option error message
-        const formatted = messages
-          .map((message) => `  - ${message}`)
-          .join('\n');
+        // For any other
+        // validation issue
+        default: {
+          const { message } = issue;
 
-        return `Option "--${kebabCase(key)}" is invalid\n${formatted}`;
-      })
-      .join('\n\n');
+          // Join the paths to make the key and find the existing error in the map
+          // The `path` from the issue will mostly always be a single item array
+          const key = path.join('.');
+          const existing = map.find((error) => error.key === key);
 
-    throw new Error(message);
+          const isRequired = message
+            .toLowerCase()
+            .includes('required');
+
+          // If there is an existing validation error in the
+          // map then combine it with the current one
+          if (existing != null) {
+            const { suggestion, details } = existing;
+
+            return [
+              ...map,
+              (isRequired === true)
+                ? {
+                    ...existing,
+                    suggestion: [existing.suggestion, suggestion].join(' '),
+                  }
+                : {
+                    ...existing,
+                    details: [
+                      ...(Array.isArray(details) === true ? details : [details]),
+                      message,
+                    ],
+                  },
+            ];
+          }
+
+          return [
+            ...map,
+            (isRequired === true)
+              ? {
+                  key: key,
+                  name: 'Required options',
+                  match: [inputCommand],
+                  details: 'Command is missing required options',
+                  suggestion: `--${kebabCase(key)} <${kebabCase(key)}>`,
+                }
+              : {
+                  key: key,
+                  name: 'Invalid option',
+                  match: [`--${kebabCase(key)} ${inputOptions[key]}`],
+                  details: message,
+                },
+          ];
+        }
+      }
+    }, []);
+
+    // Throw the `ValidationException` with the
+    // parsed input and mapped errors
+    throw new ValidationException(input, errors);
   }
 
   // Call the feature action with the transformed and validated options

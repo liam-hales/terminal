@@ -127,6 +127,18 @@ export interface ParsedInput {
 }
 
 /**
+ * Describes a validation error used
+ * within the `ValidationException`
+ */
+export interface ValidationError {
+  readonly name: string;
+  readonly match: string | string[];
+  readonly details: string | string[];
+  readonly key?: string;
+  readonly suggestion?: string;
+}
+
+/**
  * Describes the terminal executed block used
  * to store data for an executed command
  */
@@ -136,6 +148,18 @@ export interface TerminalExecutedBlock {
   readonly input: string;
   readonly duration: number;
   readonly output: FeatureOutput;
+}
+
+/**
+ * Describes the terminal validation error block
+ * used to store data for an input error
+ */
+export interface TerminalValidationErrorBlock {
+  readonly type: 'validation-error';
+  readonly id: string;
+  readonly input: string;
+  readonly duration: number;
+  readonly errors: ValidationError[];
 }
 
 /**
@@ -154,4 +178,4 @@ export interface TerminalErrorBlock {
  * The union type for all
  * terminal block types
  */
-export type TerminalBlock = TerminalExecutedBlock | TerminalErrorBlock;
+export type TerminalBlock = TerminalExecutedBlock | TerminalValidationErrorBlock | TerminalErrorBlock;

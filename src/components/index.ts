@@ -7,6 +7,7 @@ import KeyPairFeature from './keyPairFeature';
 import Terminal from './terminal/terminal';
 import TerminalInput from './terminal/terminalInput';
 import TerminalExecutedBlock from './terminal/terminalExecutedBlock';
+import TerminalValidationErrorBlock from './terminal/terminalValidationErrorBlock';
 import TerminalErrorBlock from './terminal/terminalErrorBlock';
 import Help from './help/help';
 import CommandHelp from './help/commandHelp';
@@ -21,6 +22,7 @@ export {
   Terminal,
   TerminalInput,
   TerminalExecutedBlock,
+  TerminalValidationErrorBlock,
   TerminalErrorBlock,
   Help,
   CommandHelp,

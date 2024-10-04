@@ -3,7 +3,7 @@
 import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { BaseProps } from '../../types';
-import { TerminalInput, TerminalErrorBlock, TerminalExecutedBlock } from '..';
+import { TerminalInput, TerminalValidationErrorBlock, TerminalErrorBlock, TerminalExecutedBlock } from '..';
 import { useTerminal } from '../../hooks';
 import { decodeParam } from '../../helpers';
 
@@ -168,6 +168,19 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
         {
           blocks.map((block) => {
             const { id, type, input, duration } = block;
+
+            // For the validation error block render the
+            // terminal validation error block component
+            if (type === 'validation-error') {
+              return (
+                <TerminalValidationErrorBlock
+                  key={`validation-error-block-${id}`}
+                  input={input}
+                  duration={duration}
+                  errors={block.errors}
+                />
+              );
+            }
 
             // For the error block render the
             // terminal error block component
