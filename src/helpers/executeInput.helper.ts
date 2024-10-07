@@ -75,105 +75,106 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
     .strict()
     .safeParse(inputOptions);
 
-  // Check if the validation failed, if so map the errors
-  // into an a single message and throw an error
-  if (validated.success === false) {
-    const { error } = validated;
-    const { issues } = error;
+  // Check if the validation was successful, if so then call the feature action with the transformed
+  // and validated options and use the returned props for the terminal executed block
+  if (validated.success === true) {
 
-    // Map the validation issues into validation errors which
-    // will be used for the `ValidationException`
-    const errors = issues.reduce<ValidationError[]>((map, issue) => {
-      const { path, code } = issue;
+    const props = await action(validated.data as FeatureOption);
+    return {
+      featureId: id,
+      props: props,
+    } as FeatureOutput;
+  }
 
-      // Switch for the validation
-      // issues `code`
-      switch (code) {
+  // The validation failed, extract the error
+  // and issues from the validation data
+  const { error } = validated;
+  const { issues } = error;
 
-        // For an unrecognized keys
-        // validation issue
-        case 'unrecognized_keys': {
-          const { keys } = issue;
+  // Map the validation issues into validation errors which
+  // will be used for the `ValidationException`
+  const errors = issues.reduce<ValidationError[]>((map, issue) => {
+    const { path, code } = issue;
 
-          return [
-            ...map,
-            {
-              name: 'Unknown options',
-              match: keys.map((key) => `--${kebabCase(key)}`),
-              details: 'Unknown command options have been found',
-            },
-          ];
-        }
+    // Switch for the validation
+    // issues `code`
+    switch (code) {
 
-        // For any other
-        // validation issue
-        default: {
-          const { message } = issue;
+      // For an unrecognized keys
+      // validation issue
+      case 'unrecognized_keys': {
+        const { keys } = issue;
 
-          // Join the paths to make the key and find the existing error in the map
-          // The `path` from the issue will mostly always be a single item array
-          const key = path.join('.');
-          const existing = map.find((error) => error.key === key);
+        return [
+          ...map,
+          {
+            name: 'Unknown options',
+            match: keys.map((key) => `--${kebabCase(key)}`),
+            details: 'Unknown command options have been found',
+          },
+        ];
+      }
 
-          const isRequired = message
-            .toLowerCase()
-            .includes('required');
+      // For any other
+      // validation issue
+      default: {
+        const { message } = issue;
 
-          // If there is an existing validation error in the
-          // map then combine it with the current one
-          if (existing != null) {
-            const { suggestion, details } = existing;
+        // Join the paths to make the key and find the existing error in the map
+        // The `path` from the issue will mostly always be a single item array
+        const key = path.join('.');
+        const existing = map.find((error) => error.key === key);
 
-            return [
-              ...map,
-              (isRequired === true)
-                ? {
-                    ...existing,
-                    suggestion: [existing.suggestion, suggestion].join(' '),
-                  }
-                : {
-                    ...existing,
-                    details: [
-                      ...(Array.isArray(details) === true ? details : [details]),
-                      message,
-                    ],
-                  },
-            ];
-          }
+        const isRequired = message
+          .toLowerCase()
+          .includes('required');
+
+        // If there is an existing validation error in the
+        // map then combine it with the current one
+        if (existing != null) {
+          const { suggestion, details } = existing;
 
           return [
             ...map,
             (isRequired === true)
               ? {
-                  key: key,
-                  name: 'Required options',
-                  match: [inputCommand],
-                  details: 'Command is missing required options',
-                  suggestion: `--${kebabCase(key)} <${kebabCase(key)}>`,
+                  ...existing,
+                  suggestion: [existing.suggestion, suggestion].join(' '),
                 }
               : {
-                  key: key,
-                  name: 'Invalid option',
-                  match: [`--${kebabCase(key)} ${inputOptions[key]}`],
-                  details: message,
+                  ...existing,
+                  details: [
+                    ...(Array.isArray(details) === true ? details : [details]),
+                    message,
+                  ],
                 },
           ];
         }
+
+        return [
+          ...map,
+          (isRequired === true)
+            ? {
+                key: key,
+                name: 'Required options',
+                match: inputCommand,
+                details: 'Command is missing required options',
+                suggestion: `--${kebabCase(key)} <${kebabCase(key)}>`,
+              }
+            : {
+                key: key,
+                name: 'Invalid option',
+                match: `--${kebabCase(key)} ${inputOptions[key]}`,
+                details: message,
+              },
+        ];
       }
-    }, []);
+    }
+  }, []);
 
-    // Throw the `ValidationException` with the
-    // parsed input and mapped errors
-    throw new ValidationException(input, errors);
-  }
-
-  // Call the feature action with the transformed and validated options
-  // and use the returned props for the terminal executed block
-  const props = await action(validated.data as FeatureOption);
-  return {
-    featureId: id,
-    props: props,
-  } as FeatureOutput;
+  // Throw the `ValidationException` with the
+  // parsed input and mapped errors
+  throw new ValidationException(input, errors);
 };
 
 export default executeInput;
