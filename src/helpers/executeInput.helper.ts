@@ -164,7 +164,16 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
             : {
                 key: key,
                 name: 'Invalid option',
-                match: `--${kebabCase(key)} ${inputOptions[key]}`,
+                // If the input value is `true` then make sure to add a match for the option
+                // key on it's own as boolean options can be set with no explicit value
+                match: (inputOptions[key] === true)
+                  ? [
+                      `--${kebabCase(key)}`,
+                      `--${kebabCase(key)} ${inputOptions[key]}`,
+                    ]
+                  : [
+                      `--${kebabCase(key)} ${inputOptions[key]}`,
+                    ],
                 details: message,
               },
         ];
