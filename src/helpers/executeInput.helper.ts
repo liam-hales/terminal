@@ -96,8 +96,11 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
   const errors = issues.reduce<ValidationError[]>((map, issue) => {
     const { path, code } = issue;
 
-    // Switch for the validation
-    // issues `code`
+    // Join the `path` to create the key. The `path` from
+    // the issue will mostly always be a single item array
+    const key = path.join('.');
+
+    // Switch for the validation `issueCode`
     switch (code) {
 
       // For an unrecognized keys
@@ -115,16 +118,54 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
         ];
       }
 
+      // For an invalid union
+      // validation issue
+      case 'invalid_union': {
+        const { unionErrors } = issue;
+
+        // Flat map the union errors into
+        // the `invalid_literal` issues
+        const issues = unionErrors.flatMap((error) => {
+          const { issues } = error;
+          return issues.filter((issue) => issue.code === 'invalid_literal');
+        });
+
+        // If every issue from the unuin errors has a missing `received` value
+        // then the issue is considerd a required options error
+        const isRequired = issues.every((issue) => issue.received == null);
+        const expectedValues = issues
+          .map((issue) => `"${issue.expected}"`)
+          .join(', ');
+
+        return [
+          ...map,
+          (isRequired === true)
+            ? {
+                key: key,
+                name: 'Required options',
+                match: inputCommand,
+                details: 'Command is missing required options',
+                suggestion: `--${kebabCase(key)} <${kebabCase(key)}>`,
+              }
+            : {
+                name: 'Invalid option',
+                match: `--${kebabCase(key)} ${inputOptions[key]}`,
+                details: `Expected one of the following values: ${expectedValues}`,
+              },
+        ];
+      }
+
       // For any other
       // validation issue
       default: {
         const { message } = issue;
 
-        // Join the paths to make the key and find the existing error in the map
-        // The `path` from the issue will mostly always be a single item array
-        const key = path.join('.');
+        // Find the existing error in
+        // the map to merge with
         const existing = map.find((error) => error.key === key);
 
+        // If the issue message contains `required` then the
+        // issue is considerd a required options error
         const isRequired = message
           .toLowerCase()
           .includes('required');
