@@ -38,7 +38,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                     <p className="font-mono text-sm text-zinc-500">
                       {name}
                     </p>
-                    <p className="whitespace-pre-wrap break-all pt-2 pb-4">
+                    <p className="font-mono font-bold text-sm whitespace-pre-wrap break-all pt-2 pb-4">
                       {
                         input
                           .split(regex)
@@ -53,7 +53,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                             if (isMatch === true) {
                               return (
                                 <span
-                                  className="font-mono font-bold text-sm text-white underline underline-offset-4 decoration-2 decoration-wavy decoration-red-400"
+                                  className="text-white underline underline-offset-4 decoration-2 decoration-wavy decoration-red-400"
                                   key={`validation-error-${pattern}-input-${part}`}
                                 >
                                   {part}
@@ -63,7 +63,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
 
                             return (
                               <span
-                                className="font-mono font-bold text-sm text-white"
+                                className="text-white"
                                 key={`validation-error-${pattern}-input-${part}`}
                               >
                                 {part}
@@ -73,7 +73,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                       }
                       {
                         (suggestion != null) && (
-                          <span className="font-mono font-bold text-sm text-zinc-700">
+                          <span className="text-zinc-700">
                             {' '}
                             {suggestion}
                           </span>
