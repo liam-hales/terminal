@@ -4,6 +4,7 @@ import extractKeys from './extractKeys.helper';
 import parseInput from './parseInput.helper';
 import executeInput from './executeInput.helper';
 import decodeParam from './decodeParam.helper';
+import unwrapType from './unwrapType.helper';
 
 export {
   buildFeature,
@@ -12,4 +13,5 @@ export {
   executeInput,
   withRef,
   decodeParam,
+  unwrapType,
 };
