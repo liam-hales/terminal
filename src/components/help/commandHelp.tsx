@@ -1,7 +1,7 @@
 import { FunctionComponent, ReactElement } from 'react';
 import { kebabCase } from 'change-case';
 import { BaseProps, FeatureCommand } from '../../types';
-import { extractKeys } from '../../helpers';
+import { extractKeys, unwrapType } from '../../helpers';
 import { CodeInline } from '../common';
 
 /**
@@ -42,26 +42,51 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
         {
           extractKeys(shape)
             .map((key) => {
+
+              // Fully unwrap the Zod type to
+              // extract the option details
               const { description } = shape[key];
+              const { _def } = unwrapType(shape[key]);
+
               const option = kebabCase(key);
 
               return (
                 <div
                   className="flex flex-row"
-                  key={`help-command-${option}`}
+                  key={`help-command-option-${option}`}
                 >
                   <div className="min-w-24">
                     <CodeInline>
                       {`--${option}`}
                     </CodeInline>
                   </div>
-                  <div className="flex flex-row gap-x-2">
+                  <div className="flex flex-row gap-x-2 pt-0.5">
                     <p className="font-mono text-sm text-white">
                       -
                     </p>
-                    <p className="font-mono text-sm text-white">
-                      {description}
-                    </p>
+                    <div className="flex flex-col">
+                      <p className="font-mono text-sm text-white">
+                        {description}
+                      </p>
+                      {(() => {
+                        if (_def.typeName === 'ZodUnion') {
+
+                          // Map the union options into all possible option
+                          // values to display for the command help
+                          const values = _def.options
+                            .map((option) => option.value)
+                            .join(' | ');
+
+                          return (
+                            <p className="mt-1 mb-2">
+                              <CodeInline>
+                                {values}
+                              </CodeInline>
+                            </p>
+                          );
+                        }
+                      })()}
+                    </div>
                   </div>
                 </div>
               );
