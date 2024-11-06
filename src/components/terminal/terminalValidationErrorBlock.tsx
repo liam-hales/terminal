@@ -25,7 +25,8 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
             errors.map((error) => {
               const { name, match, details, suggestion } = error;
 
-              // Turn the `match` from the error into a regex pattern qhich will then be used to split the input string
+              // Turn the `match` from the error into a regex pattern
+              // which will then be used to split the input string
               const pattern = `(${(Array.isArray(match) === true) ? match.join('|') : match})`;
               const regex = new RegExp(pattern, 'g');
 
@@ -42,6 +43,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                       {
                         input
                           .split(regex)
+                          .filter((part) => part !== '')
                           .map((part) => {
 
                             const isMatch = (Array.isArray(match) === true)
