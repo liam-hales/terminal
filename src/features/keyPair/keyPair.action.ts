@@ -25,7 +25,7 @@ type Props = ComponentProps<typeof KeyPairFeature>;
  * @param options The feature options
  * @returns The feature component props
  */
-const keysAction = async (options: Options): Promise<Props> => {
+const keyPairAction = async (options: Options): Promise<Props> => {
   const { alg, format, size } = options;
 
   /**
@@ -90,4 +90,4 @@ const keysAction = async (options: Options): Promise<Props> => {
   };
 };
 
-export default keysAction;
+export default keyPairAction;

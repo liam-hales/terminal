@@ -7,7 +7,7 @@ import { keyPairOptions, keyPairAction } from '.';
  * public and private key pairs using `crypto` under the hood
  */
 const keyPairFeature = buildFeature({
-  id: 'keyPair',
+  id: 'key-pair',
   command: {
     name: 'keypair',
     description: 'Used to generate public and private key pairs',
