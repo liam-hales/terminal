@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 /**
  * The key pair options schema used to describe the
- * keys feature command options using `zod`.
+ * key pair feature command options using `zod`.
  *
  * This options schema is used for
  * validation and type inference.
