@@ -19,14 +19,35 @@ const parseInput = (input: string): ParsedInput => {
     configuration: {
       'dot-notation': false,
       'camel-case-expansion': false,
+      'boolean-negation': false,
     },
   });
 
   // Join the commands together with a space
   // to form a single command
   const command = _.join(' ');
+  const mapped = Object
+    .keys(rest)
+    .reduce((map, key) => {
 
-  const options = camelcaseKeys(rest);
+      // See if the value is infact a boolean
+      // that has been set as a string
+      const value = rest[key];
+      const isBoolean =
+        value === 'true' ||
+        value === 'false';
+
+      // Return the map with the value
+      // correctly set as a boolean
+      return {
+        ...map,
+        [key]: (isBoolean === true)
+          ? value === 'true'
+          : value,
+      };
+    }, {});
+
+  const options = camelcaseKeys(mapped);
   const hasOptions = Object.keys(options).length > 0;
 
   return {
