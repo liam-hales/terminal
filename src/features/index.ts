@@ -7,6 +7,7 @@ import { whoisFeature } from './whois';
 import { datetimeFeature } from './datetime';
 import { keyPairFeature } from './keyPair';
 import { passGenFeature } from './passGen';
+import { uuidFeature } from './uuid';
 
 /**
  * Describes all the features
@@ -21,6 +22,7 @@ export const features = [
   datetimeFeature,
   keyPairFeature,
   passGenFeature,
+  uuidFeature,
 ];
 
 /**
