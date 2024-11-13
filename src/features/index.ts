@@ -6,6 +6,7 @@ import { jwtFeature } from './jwt';
 import { whoisFeature } from './whois';
 import { datetimeFeature } from './datetime';
 import { keyPairFeature } from './keyPair';
+import { passGenFeature } from './passGen';
 
 /**
  * Describes all the features
@@ -19,6 +20,7 @@ export const features = [
   whoisFeature,
   datetimeFeature,
   keyPairFeature,
+  passGenFeature,
 ];
 
 /**
