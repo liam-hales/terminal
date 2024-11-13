@@ -3,8 +3,8 @@ import { TextOutput } from '../../components';
 import { uuidOptions, uuidAction } from '.';
 
 /**
- * The UUID feature, executed with `uuid`,
- * used to generate a UUID
+ * The UUID feature, executed with `uuid`, used to generate
+ * a UUID using the `uuid` package under the hood
  */
 const uuidFeature = buildFeature({
   id: 'uuid',

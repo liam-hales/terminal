@@ -11,7 +11,7 @@ type Props = BaseProps;
 
 /**
  * Used to render the loader which provides UI during data
- * loading using `cli-spinners` under the hood
+ * loading using the `cli-spinners` package under the hood
  *
  * @param props The component props
  * @returns The `Loader` component

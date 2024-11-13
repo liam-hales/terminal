@@ -4,7 +4,7 @@ import { jwtOptions, jwtAction } from '.';
 
 /**
  * The JWT feature, executed with `jwt`, used to decode and inspect
- * a JSON Web Token using `jsonwebtoken` under the hood
+ * a JSON Web Token using the `jsonwebtoken` package under the hood
  */
 const jwtFeature = buildFeature({
   id: 'jwt',

@@ -6,7 +6,7 @@ import { ParsedInput } from '../types';
 
 /**
  * Used to parse a given `input` using
- * `yargs-parser` under the hood
+ * the `yargs-parser` package under the hood
  *
  * @param input The input to parse
  * @returns The parsed input

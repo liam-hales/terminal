@@ -4,7 +4,7 @@ import { keyPairOptions, keyPairAction } from '.';
 
 /**
  * The key pair feature, executed with `keypair`, used to generate
- * public and private key pairs using `crypto` under the hood
+ * public and private key pairs using the `crypto` package under the hood
  */
 const keyPairFeature = buildFeature({
   id: 'key-pair',

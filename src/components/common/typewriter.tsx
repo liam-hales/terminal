@@ -12,8 +12,8 @@ interface Props extends BaseProps {
 }
 
 /**
- * Used to render the typewriter text effect
- * using `typewriter-effect` under the hood
+ * Used to render the typewriter text effect using
+ * the `typewriter-effect` package under the hood
  *
  * @param props The component props
  * @returns The `Typewriter` component
