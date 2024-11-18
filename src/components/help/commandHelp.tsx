@@ -65,7 +65,24 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                           // Map the union options into all possible option
                           // values to display for the command help
                           const values = unwrappedDef.options
-                            .map((option) => option.value)
+                            .map((option) => {
+                              const { _def } = option;
+                              const { typeName } = _def;
+
+                              // If the option is a Zod literal then it
+                              // will have a value we can use
+                              if (typeName === 'ZodLiteral') {
+                                return _def.value;
+                              }
+
+                              // There is no value so instead we can extract
+                              // the type from the Zod definition type name
+                              const type = typeName
+                                .replace('Zod', '')
+                                .toLowerCase();
+
+                              return type;
+                            })
                             .join(' | ');
 
                           return (

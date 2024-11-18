@@ -6,7 +6,7 @@ import { ZodBoolean, ZodLiteral, ZodNumber, ZodString, ZodTypeAny, ZodUnion } fr
  * @param type The type to unwrap
  * @returns The unwrapped type
  */
-const unwrapType = (type: ZodTypeAny): ZodString | ZodNumber | ZodBoolean | ZodUnion<[ZodLiteral<string> | ZodLiteral<number>]> => {
+const unwrapType = (type: ZodTypeAny): ZodString | ZodNumber | ZodBoolean | ZodUnion<[ZodString | ZodNumber | ZodLiteral<string> | ZodLiteral<number>]> => {
   const { _def } = type;
 
   // If the type definition contains an `innerType` then call the
