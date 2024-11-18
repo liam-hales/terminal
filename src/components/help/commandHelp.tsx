@@ -60,30 +60,6 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                   <div className="w-[32%]">
                     {
                       (() => {
-                        if (unwrappedDef.typeName === 'ZodString') {
-                          return (
-                            <CodeInline>
-                              [string]
-                            </CodeInline>
-                          );
-                        }
-
-                        if (unwrappedDef.typeName === 'ZodNumber') {
-                          return (
-                            <CodeInline>
-                              [number]
-                            </CodeInline>
-                          );
-                        }
-
-                        if (unwrappedDef.typeName === 'ZodBoolean') {
-                          return (
-                            <CodeInline>
-                              [boolean]
-                            </CodeInline>
-                          );
-                        }
-
                         if (unwrappedDef.typeName === 'ZodUnion') {
 
                           // Map the union options into all possible option
@@ -98,6 +74,20 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                             </CodeInline>
                           );
                         }
+
+                        const { typeName } = unwrappedDef;
+
+                        // Extract the type from the
+                        // Zod definition type name
+                        const type = typeName
+                          .replace('Zod', '')
+                          .toLowerCase();
+
+                        return (
+                          <CodeInline>
+                            {`[${type}]`}
+                          </CodeInline>
+                        );
                       })()
                     }
                     {
