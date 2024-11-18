@@ -4,6 +4,7 @@ import WhoisFeature from './whoisFeature';
 import HelpFeature from './help/helpFeature';
 import DatetimeFeature from './datetimeFeature';
 import KeyPairFeature from './keyPairFeature';
+import MacLookupFeature from './macLookupFeature';
 import Terminal from './terminal/terminal';
 import TerminalInput from './terminal/terminalInput';
 import TerminalExecutedBlock from './terminal/terminalExecutedBlock';
@@ -18,6 +19,7 @@ export {
   WhoisFeature,
   DatetimeFeature,
   KeyPairFeature,
+  MacLookupFeature,
   HelpFeature,
   Terminal,
   TerminalInput,

@@ -8,6 +8,7 @@ import { datetimeFeature } from './datetime';
 import { keyPairFeature } from './keyPair';
 import { passGenFeature } from './passGen';
 import { uuidFeature } from './uuid';
+import { macLookupFeature } from './macLookup';
 
 /**
  * Describes all the features
@@ -23,6 +24,7 @@ export const features = [
   keyPairFeature,
   passGenFeature,
   uuidFeature,
+  macLookupFeature,
 ];
 
 /**
