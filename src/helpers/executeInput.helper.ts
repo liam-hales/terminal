@@ -1,4 +1,5 @@
 import { kebabCase } from 'change-case';
+import { search } from 'fast-fuzzy';
 import { features } from '../features';
 import { FeatureOption, FeatureOutput, ParsedInput, ValidationError } from '../types';
 import { ValidationException } from '../exceptions';
@@ -36,11 +37,28 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
   // If a feature cannot be found for the command,
   // then throw a validation exception
   if (feature == null) {
+
+    // Attempt to search for features that are
+    // a close match to the input command
+    const names = features.map((feature) => feature.command.name);
+    const matches = search(inputCommand, names);
+
     throw new ValidationException(input, [
       {
         name: 'Unknown command',
         match: inputCommand,
-        details: 'This command does not exist',
+
+        // If there are matches then use them to
+        // build the validation error details
+        details: (matches.length > 0)
+          ? [`Command not found, did you mean ${matches.map((match) => `"${match}"`).join(' or ')}?`]
+          : ['Command not found, use "help" to list available commands'],
+
+        // If there are matches then use them to build a
+        // validation error suggestion for the user
+        ...(matches.length > 0) && {
+          suggestion: `${matches.join(' | ')}`,
+        },
       },
     ]);
   }
