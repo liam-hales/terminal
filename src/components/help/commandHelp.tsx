@@ -38,57 +38,85 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
       <p className="font-mono text-sm text-white">
         Options:
       </p>
-      <div className="flex flex-col gap-y-1 pt-2 pl-4">
+      <div className="flex flex-wrap gap-y-2 pt-2 pl-4">
         {
           extractKeys(shape)
             .map((key) => {
 
               // Fully unwrap the Zod type to
               // extract the option details
-              const { description } = shape[key];
-              const { _def } = unwrapType(shape[key]);
+              const { _def: def, description } = shape[key];
+              const { _def: unwrappedDef } = unwrapType(shape[key]);
 
               const option = kebabCase(key);
 
               return (
-                <div
-                  className="flex flex-row"
-                  key={`help-command-option-${option}`}
-                >
-                  <div className="min-w-24">
+                <>
+                  <div className="w-[18%]">
                     <CodeInline>
                       {`--${option}`}
                     </CodeInline>
                   </div>
-                  <div className="flex flex-row gap-x-2 pt-0.5">
-                    <p className="font-mono text-sm text-white">
-                      -
-                    </p>
-                    <div className="flex flex-col">
-                      <p className="font-mono text-sm text-white">
-                        {description}
-                      </p>
-                      {(() => {
-                        if (_def.typeName === 'ZodUnion') {
+                  <div className="w-[32%]">
+                    {
+                      (() => {
+                        if (unwrappedDef.typeName === 'ZodString') {
+                          return (
+                            <CodeInline>
+                              [string]
+                            </CodeInline>
+                          );
+                        }
+
+                        if (unwrappedDef.typeName === 'ZodNumber') {
+                          return (
+                            <CodeInline>
+                              [number]
+                            </CodeInline>
+                          );
+                        }
+
+                        if (unwrappedDef.typeName === 'ZodBoolean') {
+                          return (
+                            <CodeInline>
+                              [boolean]
+                            </CodeInline>
+                          );
+                        }
+
+                        if (unwrappedDef.typeName === 'ZodUnion') {
 
                           // Map the union options into all possible option
                           // values to display for the command help
-                          const values = _def.options
+                          const values = unwrappedDef.options
                             .map((option) => option.value)
                             .join(' | ');
 
                           return (
-                            <p className="mt-1 mb-2">
-                              <CodeInline>
-                                {values}
-                              </CodeInline>
-                            </p>
+                            <CodeInline>
+                              {`[${values}]`}
+                            </CodeInline>
                           );
                         }
-                      })()}
-                    </div>
+                      })()
+                    }
+                    {
+                      (def.typeName === 'ZodDefault') && (
+                        <CodeInline className="ml-2 text-zinc-500">
+                          {`default: ${def.defaultValue()}`}
+                        </CodeInline>
+                      )
+                    }
                   </div>
-                </div>
+                  <div className="w-[50%] flex flex-row gap-x-2 pt-0.5">
+                    <p className="font-mono text-sm text-white">
+                      -
+                    </p>
+                    <p className="font-mono text-sm text-white">
+                      {description}
+                    </p>
+                  </div>
+                </>
               );
             })
         }
