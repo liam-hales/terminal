@@ -72,7 +72,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                               // If the option is a Zod literal then it
                               // will have a value we can use
                               if (typeName === 'ZodLiteral') {
-                                return _def.value;
+                                return (typeof _def.value === 'string') ? `"${_def.value}"` : _def.value;
                               }
 
                               // There is no value so instead we can extract
@@ -108,11 +108,21 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                       })()
                     }
                     {
-                      (def.typeName === 'ZodDefault') && (
-                        <CodeInline className="ml-2 text-zinc-500">
-                          {`default: ${def.defaultValue()}`}
-                        </CodeInline>
-                      )
+                      (() => {
+                        if (def.typeName === 'ZodDefault') {
+
+                          // Extract the default value from the definition and wrap said
+                          // value in quotes if it is a string to display it correctly
+                          const defaultValue = def.defaultValue();
+                          const value = (typeof defaultValue === 'string') ? `"${defaultValue}"` : defaultValue;
+
+                          return (
+                            <CodeInline className="ml-2 text-zinc-500">
+                              {`default: ${value}`}
+                            </CodeInline>
+                          );
+                        }
+                      })()
                     }
                   </div>
                   <div className="w-[50%] flex flex-row gap-x-2 pt-0.5">
