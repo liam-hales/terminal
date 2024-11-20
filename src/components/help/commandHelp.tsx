@@ -125,7 +125,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                       })()
                     }
                   </div>
-                  <div className="w-[50%] flex flex-row gap-x-2 pt-0.5">
+                  <div className="w-[50%] flex flex-row gap-x-2">
                     <p className="font-mono text-sm text-white">
                       -
                     </p>

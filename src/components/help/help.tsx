@@ -21,7 +21,7 @@ const Help: FunctionComponent = (): ReactElement => {
       <p className="font-mono text-sm text-white">
         Commands:
       </p>
-      <div className="flex flex-col gap-y-1 pt-2 pb-8 pl-4">
+      <div className="flex flex-wrap gap-y-2 pt-2 pb-8 pl-4">
         {
           features
             .map((feature) => feature.command)
@@ -29,16 +29,13 @@ const Help: FunctionComponent = (): ReactElement => {
               const { name, description } = command;
 
               return (
-                <div
-                  className="flex flex-row"
-                  key={`help-command-${name}`}
-                >
-                  <div className="min-w-24">
+                <>
+                  <div className="w-[18%]">
                     <CodeInline>
                       {name}
                     </CodeInline>
                   </div>
-                  <div className="flex flex-row gap-x-2">
+                  <div className="w-[82%] flex flex-row gap-x-2">
                     <p className="font-mono text-sm text-white">
                       -
                     </p>
@@ -46,7 +43,7 @@ const Help: FunctionComponent = (): ReactElement => {
                       {description}
                     </p>
                   </div>
-                </div>
+                </>
               );
             })
         }
