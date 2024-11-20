@@ -3,8 +3,8 @@ import { JWTFeature } from '../../components';
 import { jwtOptions, jwtAction } from '.';
 
 /**
- * The JWT feature, executed with `jwt`, used to decode and inspect
- * a JSON Web Token using the `jsonwebtoken` package under the hood
+ * The JWT feature, executed with `jwt`, used to
+ * decode and inspect a JSON Web Token
  */
 const jwtFeature = buildFeature({
   id: 'jwt',

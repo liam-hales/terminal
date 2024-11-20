@@ -1,6 +1,5 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
-import { decode } from 'jsonwebtoken';
 import { JWTFeature } from '../../components';
 import { jwtOptions } from '.';
 
@@ -24,28 +23,40 @@ type Props = ComponentProps<typeof JWTFeature>;
 const jwtAction = async (options: Options): Promise<Props> => {
   const { token } = options;
 
-  // Decode the token value
-  // using `jsonwebtoken`
-  const decoded = decode(token, {
-    complete: true,
-  });
+  try {
+    // Split the token at the `.` and for each part of
+    // the token, base64 decode, parse and format it
+    const [header, payload, signature] = token
+      .split('.')
+      .map((part, index) => {
 
-  // Check if the token was successfully deocded
-  // If not then throw an error
-  if (decoded == null) {
+        // If the part is the signature,
+        // just return as is at this stage
+        if (index === 2) {
+          return part;
+        }
+
+        const decoded = Buffer
+          .from(part, 'base64')
+          .toString('utf8');
+
+        const parsed = JSON.parse(decoded);
+        const formatted = JSON.stringify(parsed, undefined, 2);
+
+        return formatted;
+      });
+
+    return {
+      header: header,
+      payload: payload,
+      signature: signature,
+    };
+  }
+  // If any error occurs, it is most likely
+  // due to the token being invalid
+  catch {
     throw new Error('Failed to decode token');
   }
-
-  // Format the decoded token
-  // header and payload
-  const header = JSON.stringify(decoded.header, undefined, 2);
-  const payload = JSON.stringify(decoded.payload, undefined, 2);
-
-  return {
-    header: header,
-    payload: payload,
-    signature: decoded.signature,
-  };
 };
 
 export default jwtAction;
