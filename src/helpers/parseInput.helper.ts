@@ -1,6 +1,8 @@
+'use server';
+
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import Parser from 'yargs-parser/browser';
+import Parser from 'yargs-parser';
 import camelcaseKeys from 'camelcase-keys';
 import { ParsedInput } from '../types';
 
@@ -11,7 +13,7 @@ import { ParsedInput } from '../types';
  * @param input The input to parse
  * @returns The parsed input
  */
-const parseInput = (input: string): ParsedInput => {
+const parseInput = async (input: string): Promise<ParsedInput> => {
 
   // Parse the input using `yargs-parser` with the config
   // to disable things such as dot notation
