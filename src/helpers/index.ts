@@ -5,6 +5,7 @@ import parseInput from './parseInput.helper';
 import executeInput from './executeInput.helper';
 import decodeParam from './decodeParam.helper';
 import unwrapType from './unwrapType.helper';
+import execute from './execute.helper';
 
 export {
   buildFeature,
@@ -14,4 +15,5 @@ export {
   withRef,
   decodeParam,
   unwrapType,
+  execute,
 };
