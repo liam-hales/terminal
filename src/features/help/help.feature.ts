@@ -12,6 +12,7 @@ const helpFeature = buildFeature({
     name: 'help',
     description: 'Used to display help for commands and give guidance on their options and how to use them',
     options: helpOptions,
+    execution: 'client',
     action: helpAction,
   },
   component: HelpFeature,

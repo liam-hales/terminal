@@ -12,6 +12,7 @@ const ipFeature = buildFeature({
     name: 'ip',
     description: 'Used to resolve the users public IP address',
     options: ipOptions,
+    execution: 'client',
     action: ipAction,
   },
   component: TextOutput,

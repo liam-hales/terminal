@@ -12,6 +12,7 @@ const datetimeFeature = buildFeature({
     name: 'datetime',
     description: 'Used to display the current, or a specific date and time in multipe different formats',
     options: datetimeOptions,
+    execution: 'client',
     action: datetimeAction,
   },
   component: DatetimeFeature,

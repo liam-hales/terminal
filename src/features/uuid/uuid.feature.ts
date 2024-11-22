@@ -12,6 +12,7 @@ const uuidFeature = buildFeature({
     name: 'uuid',
     description: 'Used to generate a UUID',
     options: uuidOptions,
+    execution: 'client',
     action: uuidAction,
   },
   component: TextOutput,

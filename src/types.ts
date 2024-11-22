@@ -75,6 +75,7 @@ export interface ICommand<
   readonly name: string;
   readonly description: string;
   readonly options: O;
+  readonly execution: 'server' | 'client';
   readonly action: (options: z.infer<O>) => P | Promise<P>;
 }
 

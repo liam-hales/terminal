@@ -12,6 +12,7 @@ const encodeFeature = buildFeature({
     name: 'encode',
     description: 'Used to encode a given value from one encoding to another',
     options: encodeOptions,
+    execution: 'client',
     action: encodeAction,
   },
   component: TextOutput,

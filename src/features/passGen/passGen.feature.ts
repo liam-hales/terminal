@@ -12,6 +12,7 @@ const passGenFeature = buildFeature({
     name: 'passgen',
     description: 'Used to generate strong and secure passwords',
     options: passGenOptions,
+    execution: 'client',
     action: passGenAction,
   },
   component: TextOutput,

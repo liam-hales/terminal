@@ -12,6 +12,7 @@ const whoisFeature = buildFeature({
     name: 'whois',
     description: 'Used to perform a whois search on domain names and IP addresses to obtain owner information',
     options: whoisOptions,
+    execution: 'server',
     action: whoisAction,
   },
   component: WhoisFeature,

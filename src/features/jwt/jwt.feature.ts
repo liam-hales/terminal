@@ -12,6 +12,7 @@ const jwtFeature = buildFeature({
     name: 'jwt',
     description: 'Used to decode and inspect a JSON Web Token',
     options: jwtOptions,
+    execution: 'client',
     action: jwtAction,
   },
   component: JWTFeature,

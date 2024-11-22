@@ -12,6 +12,7 @@ const keyPairFeature = buildFeature({
     name: 'keypair',
     description: 'Used to generate public and private key pairs',
     options: keyPairOptions,
+    execution: 'server',
     action: keyPairAction,
   },
   component: KeyPairFeature,

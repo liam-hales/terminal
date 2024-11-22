@@ -12,6 +12,7 @@ const macLookupFeature = buildFeature({
     name: 'maclookup',
     description: 'Used to lookup the vendor/manufacturer for a given MAC address',
     options: macLookupOptions,
+    execution: 'server',
     action: macLookupAction,
   },
   component: MacLookupFeature,
