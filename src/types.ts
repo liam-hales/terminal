@@ -127,6 +127,26 @@ export interface ParsedInput {
 }
 
 /**
+ * Describes the server action response
+ * used within the `serverAction` helper.
+ *
+ * Generic type `T` for the data
+ */
+export interface ServerActionResponse<T> {
+  readonly status: 'success';
+  readonly data: T;
+}
+
+/**
+ * Describes the server action error response
+ * used within the `serverAction` helper.
+ */
+export interface ServerActionErrorResponse {
+  readonly status: 'error';
+  readonly errorMessage: string;
+}
+
+/**
  * Describes a validation error used
  * within the `ValidationException`
  */
