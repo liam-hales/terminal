@@ -3,6 +3,7 @@ import { search } from 'fast-fuzzy';
 import { features } from '../features';
 import { FeatureOption, FeatureOutput, ParsedInput, ValidationError } from '../types';
 import { ValidationException } from '../exceptions';
+import { serverAction } from './';
 
 /**
  * Used to execute a given parsed `input` that
@@ -58,7 +59,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
   }
 
   const { id, command, enabled } = feature;
-  const { options, action } = command;
+  const { options, execution, action } = command;
 
   // If the feature has not been
   // enabled, then throw an error
@@ -90,6 +91,23 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
   // Check if the validation was successful, if so then call the feature action with the transformed
   // and validated options and use the returned props for the terminal executed block
   if (validated.success === true) {
+
+    // If the command execution needs to be done on the server, wrap the
+    // action in the `serverAction` helper to execute this correctly
+    if (execution === 'server') {
+      const response = await serverAction(action, validated.data as FeatureOption);
+
+      // Check the response status and if there was an error, throw
+      // a new error using the error message from the response
+      if (response.status === 'error') {
+        throw new Error(response.errorMessage);
+      }
+
+      return {
+        featureId: id,
+        props: response.data,
+      } as FeatureOutput;
+    }
 
     const props = await action(validated.data as FeatureOption);
     return {
