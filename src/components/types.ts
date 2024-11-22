@@ -4,7 +4,7 @@
  */
 export interface WhoiserData {
   readonly [key: string]: {
-    readonly [key: string]: string | string[]
+    readonly [key: string]: string | string[];
   };
 }
 
@@ -14,5 +14,5 @@ export interface WhoiserData {
  */
 export interface WhoisResult {
   readonly serverName: string;
-  readonly data: Record<string, 'REDACTED' | string | string[] | undefined>;
+  readonly data: Record<string, string | string[] | undefined>;
 }

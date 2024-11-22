@@ -3,6 +3,7 @@ import { kebabCase } from 'change-case';
 import { BaseProps, FeatureCommand } from '../../types';
 import { extractKeys, unwrapType } from '../../helpers';
 import { CodeInline } from '../common';
+import { ZodFirstPartyTypeKind } from 'zod';
 
 /**
  * The `CommandHelp` component props
@@ -60,7 +61,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                   <div className="w-[32%]">
                     {
                       (() => {
-                        if (unwrappedDef.typeName === 'ZodUnion') {
+                        if (unwrappedDef.typeName === ZodFirstPartyTypeKind.ZodUnion) {
 
                           // Map the union options into all possible option
                           // values to display for the command help
@@ -71,7 +72,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
 
                               // If the option is a Zod literal then it
                               // will have a value we can use
-                              if (typeName === 'ZodLiteral') {
+                              if (typeName === ZodFirstPartyTypeKind.ZodLiteral) {
                                 return (typeof _def.value === 'string') ? `"${_def.value}"` : _def.value;
                               }
 
@@ -109,7 +110,8 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                     }
                     {
                       (() => {
-                        if (def.typeName === 'ZodDefault') {
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                        if (def.typeName === ZodFirstPartyTypeKind.ZodDefault) {
 
                           // Extract the default value from the definition and wrap said
                           // value in quotes if it is a string to display it correctly

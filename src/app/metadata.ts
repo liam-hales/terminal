@@ -17,7 +17,7 @@ export const viewport: Viewport = {
  *
  * @returns The app metadata
  */
-export const generateMetadata = async (): Promise<Metadata> => {
+export const generateMetadata = (): Metadata => {
 
   const { serverRuntimeConfig } = getConfig();
   const { siteUrl } = serverRuntimeConfig;
@@ -26,7 +26,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const description = 'Web-based developer tools with a dev-friendly terminal interface.';
 
   return {
-    metadataBase: new URL(siteUrl),
+    metadataBase: new URL(siteUrl as string),
     title: title,
     description: description,
     icons: {

@@ -1,4 +1,4 @@
-/* eslint-disable object-curly-newline */
+/* eslint-disable @stylistic/object-curly-newline */
 
 'use server';
 
@@ -43,10 +43,6 @@ const keyPairAction = async (options: Options): Promise<Props> => {
       case 'rsa-pss': return generateKeyPairSync(alg, { modulusLength: size });
       case 'ed25519': return generateKeyPairSync(alg);
       case 'x25519': return generateKeyPairSync(alg);
-
-      default: {
-        throw new Error(`Unknown algorithm "${alg}"`);
-      }
     }
   };
 

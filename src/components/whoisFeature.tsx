@@ -18,7 +18,7 @@ interface Props extends BaseProps {
  */
 const WhoisFeature: FunctionComponent<Props> = ({ className, results }): ReactElement<Props> => {
   return (
-    <div className={`${className} flex flex-col`}>
+    <div className={`${className ?? ''} flex flex-col`}>
       {
         results.map((result) => {
           const { serverName, data } = result;

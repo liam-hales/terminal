@@ -57,7 +57,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
         // If there are matches then use them to build a
         // validation error suggestion for the user
         ...(matches.length > 0) && {
-          suggestion: `${matches.join(' | ')}`,
+          suggestion: matches.join(' | '),
         },
       },
     ]);
@@ -212,7 +212,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
               : {
                   ...existing,
                   details: [
-                    ...(Array.isArray(details) === true ? details : [details]),
+                    ...(Array.isArray(details) === true) ? details : [details],
                     message,
                   ],
                 },

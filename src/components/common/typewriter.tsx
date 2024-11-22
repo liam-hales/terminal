@@ -20,7 +20,7 @@ interface Props extends BaseProps {
  */
 const Typewriter: FunctionComponent<Props> = ({ className, onInit }): ReactElement<Props> => {
   return (
-    <div className={`${className} [&>div>.TypewriterCursor]:font-normal [&>div>.TypewriterCursor]:animate-cursor`}>
+    <div className={`${className ?? ''} [&>div>.TypewriterCursor]:font-normal [&>div>.TypewriterCursor]:animate-cursor`}>
       <TypewriterEffect
         onInit={onInit}
         options={{

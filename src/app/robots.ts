@@ -17,7 +17,7 @@ const buildRobots = (): MetadataRoute.Robots => {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: `${siteUrl}/sitemap.xml`,
+    sitemap: `${siteUrl as string}/sitemap.xml`,
   };
 };
 

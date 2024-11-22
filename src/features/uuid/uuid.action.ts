@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { ComponentProps } from 'react';
 import { z } from 'zod';
 import { v1, v4, v6, v7 } from 'uuid';

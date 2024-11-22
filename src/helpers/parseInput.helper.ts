@@ -1,6 +1,6 @@
-'use server';
-
 /* eslint-disable @typescript-eslint/naming-convention */
+
+'use server';
 
 import Parser from 'yargs-parser';
 import camelcaseKeys from 'camelcase-keys';

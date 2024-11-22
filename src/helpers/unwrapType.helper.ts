@@ -7,12 +7,11 @@ import { ZodBoolean, ZodLiteral, ZodNumber, ZodString, ZodTypeAny, ZodUnion } fr
  * @returns The unwrapped type
  */
 const unwrapType = (type: ZodTypeAny): ZodString | ZodNumber | ZodBoolean | ZodUnion<[ZodString | ZodNumber | ZodLiteral<string> | ZodLiteral<number>]> => {
-  const { _def } = type;
 
   // If the type definition contains an `innerType` then call the
   // `unwrapType` function until the zod type has been fully unwrapped
-  if ('innerType' in _def) {
-    return unwrapType(_def.innerType);
+  if ('innerType' in type._def) {
+    return unwrapType(type._def.innerType as ZodTypeAny);
   }
 
   // The type must be full unwrapped
