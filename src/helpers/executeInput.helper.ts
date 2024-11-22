@@ -53,12 +53,6 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
         details: (matches.length > 0)
           ? [`Command not found, did you mean ${matches.map((match) => `"${match}"`).join(' or ')}?`]
           : ['Command not found, use "help" to list available commands'],
-
-        // If there are matches then use them to build a
-        // validation error suggestion for the user
-        ...(matches.length > 0) && {
-          suggestion: matches.join(' | '),
-        },
       },
     ]);
   }
