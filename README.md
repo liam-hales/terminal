@@ -80,17 +80,17 @@ This app was built and hosted with the below. For a full list of dependencies us
 # Getting Started (Prerequisites)
 
 1. Download and install [Node Version Manager]
-2. Install and use a version of Node.js `>= v20.10`
+2. Install and use a version of Node.js `>= v22.11`
 
 ```sh
-$ nvm install 20.10
-$ nvm use 20.10
+$ nvm install 22.11
+$ nvm use 22.11
 
 $ node --version
-v20.10.0
+v22.11.0
 
 $ npm --version
-v10.2.3
+v10.9.0
 ```
 
 3. Run `corepack enable` to enable [Corepack]

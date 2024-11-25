@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=20.10",
-    "npm": ">=10.2"
+    "node": ">=22.11",
+    "npm": ">=10.9"
   },
   "os": [
     "darwin",
