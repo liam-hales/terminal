@@ -28,6 +28,7 @@
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/prefer-reduce-type-parameter": "off",
     "import/named": "off",
+    "react/display-name": "off",
     "@stylistic/padded-blocks": "off",
 
     "no-console": ["error"],

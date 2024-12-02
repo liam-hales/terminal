@@ -1,5 +1,3 @@
-/* eslint-disable react/display-name */
-
 import { FunctionComponent, forwardRef } from 'react';
 import { BaseProps } from '../types';
 
