@@ -100,8 +100,10 @@ export type FeatureOption = Intersect<
  * all feature props
  */
 export type FeatureProp = Intersect<
-  ReturnType<
-    Feature['command']['action']
+  Awaited<
+    ReturnType<
+      Feature['command']['action']
+    >
   >
 >;
 
@@ -114,7 +116,7 @@ export type FeatureProp = Intersect<
 export type FeatureOutput = {
   [K in keyof FeatureMap]: {
     readonly featureId: K;
-    readonly props: ReturnType<FeatureMap[K]['command']['action']>;
+    readonly props: Awaited<ReturnType<FeatureMap[K]['command']['action']>>;
   }
 }[keyof FeatureMap];
 
