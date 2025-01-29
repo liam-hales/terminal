@@ -44,7 +44,7 @@ const execute = async (input: string): Promise<TerminalBlock> => {
     // used to capture the time it took for the input execution to fail
     const endTime = performance.now();
 
-    // If the error is a valdation exception
+    // If the error is a validation exception
     // Add the terminal validation error block
     if (error instanceof ValidationException) {
       const { errors } = error;

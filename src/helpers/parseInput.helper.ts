@@ -32,7 +32,7 @@ const parseInput = async (input: string): Promise<ParsedInput> => {
     .keys(rest)
     .reduce((map, key) => {
 
-      // See if the value is infact a boolean
+      // See if the value is in fact a boolean
       // that has been set as a string
       const value = rest[key];
       const isBoolean =

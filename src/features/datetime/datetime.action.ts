@@ -28,12 +28,12 @@ const datetimeAction = (options: Options): Props => {
   const { value, timezone } = options;
 
   // Apply the Day.js plugins to `dayjs` in order
-  // to extend it's functionality
+  // to extend its functionality
   dayjs.extend(utcPlugin);
   dayjs.extend(timezonePlugin);
   dayjs.extend(relativeTimePlugin);
 
-  // Guess the users current timezone and the actaul
+  // Guess the users current timezone and the actual
   // timezone based on the `timezone` option
   const currentTimezone = dayjs.tz.guess();
   const actualTimezone = (timezone === 'current')
@@ -45,8 +45,8 @@ const datetimeAction = (options: Options): Props => {
   const date = (actualTimezone == null)
     ? dayjs.utc(value)
     : dayjs
-      .utc(value)
-      .tz(actualTimezone);
+        .utc(value)
+        .tz(actualTimezone);
 
   // Get the data from the date object required for the
   // feature component props and return said data

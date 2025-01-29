@@ -30,7 +30,7 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
       <body className="h-full bg-black">
         {
         /**
-         * `<Suspense>` is reuqired here because the `Terminal` component
+         * `<Suspense>` is required here because the `Terminal` component
          * uses the `useSearchParams` hook which requires it
          */
         }

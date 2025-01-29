@@ -126,7 +126,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
 
       case 'ArrowUp': {
         // Prevent the default input behavior to
-        // provent incorrect cursor position
+        // proven incorrect cursor position
         event.preventDefault();
 
         const index = inputHistoryIndex + 1;

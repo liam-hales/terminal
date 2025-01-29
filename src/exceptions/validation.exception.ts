@@ -1,8 +1,8 @@
 import { ParsedInput, ValidationError } from '../types';
 
 /**
- * Used to store infomation about errors that have
- * occured during command validation
+ * Used to store information about errors that have
+ * occurred during command validation
  */
 class ValidationException extends Error {
   private readonly _parsedInput: ParsedInput;

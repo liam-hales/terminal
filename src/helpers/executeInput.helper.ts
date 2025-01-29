@@ -160,8 +160,8 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
           return issues.filter((issue) => issue.code === 'invalid_literal');
         });
 
-        // If every issue from the unuin errors has a missing `received` value
-        // then the issue is considerd a required options error
+        // If every issue from the union errors has a missing `received` value
+        // then the issue is considered a required options error
         const isRequired = issues.every((issue) => issue.received == null);
         const expectedValues = issues
           .map((issue) => `"${issue.expected}"`)
@@ -204,7 +204,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
         const existing = map.find((error) => error.key === key);
 
         // If the issue message contains `required` then the
-        // issue is considerd a required options error
+        // issue is considered a required options error
         const isRequired = message
           .toLowerCase()
           .includes('required');

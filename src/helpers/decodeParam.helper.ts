@@ -17,7 +17,7 @@ const decodeParam = (value: string): string | undefined => {
     return;
   }
 
-  // Base64 deocde the
+  // Base64 decode the
   // value and return it
   return Buffer
     .from(value, 'base64')
