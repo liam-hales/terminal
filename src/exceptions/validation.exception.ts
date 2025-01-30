@@ -1,4 +1,4 @@
-import { ParsedInput, ValidationError } from '../types';
+import { ParsedInput, ValidationErrorDetails } from '../types';
 
 /**
  * Used to store information about errors that have
@@ -6,22 +6,22 @@ import { ParsedInput, ValidationError } from '../types';
  */
 class ValidationException extends Error {
   private readonly _parsedInput: ParsedInput;
-  private readonly _errors: ValidationError[];
+  private readonly _details: ValidationErrorDetails;
 
   /**
    * Construct the `ValidationException`
    *
    * @param parsedInput The parsed command input
-   * @param errors The command validation errors
+   * @param details The details for the validation error
    */
   constructor(
     parsedInput: ParsedInput,
-    errors: ValidationError[],
+    details: ValidationErrorDetails,
   ) {
     super('Validation Exception');
 
     this._parsedInput = parsedInput;
-    this._errors = errors;
+    this._details = details;
   }
 
   /**
@@ -32,10 +32,11 @@ class ValidationException extends Error {
   }
 
   /**
-   * The command validation errors
+   * The details used to describe
+   * the validation error
    */
-  public get errors(): ValidationError[] {
-    return this._errors;
+  public get details(): ValidationErrorDetails {
+    return this._details;
   }
 }
 

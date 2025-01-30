@@ -177,7 +177,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
                   key={`validation-error-block-${id}`}
                   input={input}
                   duration={duration}
-                  errors={block.errors}
+                  details={block.details}
                 />
               );
             }

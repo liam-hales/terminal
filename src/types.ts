@@ -150,14 +150,12 @@ export interface ServerActionErrorResponse {
 }
 
 /**
- * Describes a validation error used
+ * Describes a validation error details used
  * within the `ValidationException`
  */
-export interface ValidationError {
-  readonly name: string;
-  readonly match: string | string[];
-  readonly details: string | string[];
-  readonly key?: string;
+export interface ValidationErrorDetails {
+  readonly matches: string[];
+  readonly messages: string[];
   readonly suggestion?: string;
 }
 
@@ -182,7 +180,7 @@ export interface TerminalValidationErrorBlock {
   readonly id: string;
   readonly input: string;
   readonly duration: number;
-  readonly errors: ValidationError[];
+  readonly details: ValidationErrorDetails;
 }
 
 /**

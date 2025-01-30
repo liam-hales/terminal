@@ -47,14 +47,14 @@ const execute = async (input: string): Promise<TerminalBlock> => {
     // If the error is a validation exception
     // Add the terminal validation error block
     if (error instanceof ValidationException) {
-      const { errors } = error;
+      const { details } = error;
 
       return {
         type: 'validation-error',
         id: blockId,
         input: input,
         duration: endTime - startTime,
-        errors: errors,
+        details: details,
       };
     }
 

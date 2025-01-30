@@ -1,7 +1,7 @@
 import { kebabCase } from 'change-case';
 import { search } from 'fast-fuzzy';
 import { features } from '../features';
-import { FeatureOption, FeatureOutput, ParsedInput, ValidationError } from '../types';
+import { FeatureOption, FeatureOutput, ParsedInput, ValidationErrorDetails } from '../types';
 import { ValidationException } from '../exceptions';
 import { serverAction } from './';
 
@@ -44,18 +44,15 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
     const names = features.map((feature) => feature.command.name);
     const matches = search(inputCommand, names);
 
-    throw new ValidationException(input, [
-      {
-        name: 'Unknown command',
-        match: inputCommand,
+    throw new ValidationException(input, {
+      matches: [inputCommand],
 
-        // If there are matches then use them to
-        // build the validation error details
-        details: (matches.length > 0)
-          ? [`Command not found, did you mean ${matches.map((match) => `"${match}"`).join(' or ')}?`]
-          : ['Command not found, use "help" to list available commands'],
-      },
-    ]);
+      // If there are matches then use
+      // them to build the messages
+      messages: (matches.length > 0)
+        ? [`Command not found, did you mean ${matches.map((match) => `"${match}"`).join(' or ')}?`]
+        : ['Command not found, use "help" to list available commands'],
+    });
   }
 
   const { id, command, enabled } = feature;
@@ -64,13 +61,10 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
   // If the feature has not been
   // enabled, then throw an error
   if (enabled === false) {
-    throw new ValidationException(input, [
-      {
-        name: 'Feature disabled',
-        match: inputCommand,
-        details: 'This feature has been disabled',
-      },
-    ]);
+    throw new ValidationException(input, {
+      matches: [inputCommand],
+      messages: ['This feature has been disabled'],
+    });
   }
 
   // If the help option has been set to true, return
@@ -121,9 +115,10 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
   const { error } = validated;
   const { issues } = error;
 
-  // Map the validation issues into validation errors which
-  // will be used for the `ValidationException`
-  const errors = issues.reduce<ValidationError[]>((map, issue) => {
+  // Map the validation issues into validation error details
+  // which will be used for the `ValidationException`
+  const details = issues.reduce<ValidationErrorDetails>((map, issue) => {
+    const { matches, messages } = map;
     const { path, code } = issue;
 
     // Join the `path` to create the key. The `path` from
@@ -138,14 +133,17 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
       case 'unrecognized_keys': {
         const { keys } = issue;
 
-        return [
+        return {
           ...map,
-          {
-            name: 'Unknown options',
-            match: keys.map((key) => `--${kebabCase(key)}`),
-            details: 'Unknown command options have been found',
-          },
-        ];
+          matches: [
+            ...matches,
+            ...keys.map((key) => `--${kebabCase(key)}`),
+          ],
+          messages: [
+            ...messages,
+            'Unknown command options have been found',
+          ],
+        };
       }
 
       // For an invalid union
@@ -167,31 +165,37 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
           .map((issue) => `"${issue.expected}"`)
           .join(', ');
 
-        return [
+        return {
           ...map,
-          (isRequired === true)
+          ...(isRequired === true)
             ? {
-                key: key,
-                name: 'Required options',
-                match: inputCommand,
-                details: 'Command is missing required options',
-                suggestion: `--${kebabCase(key)} <${kebabCase(key)}>`,
+                matches: [
+                  ...matches,
+                  inputCommand,
+                ],
+                messages: [
+                  ...messages,
+                  `Command is missing required option --${kebabCase(key)} <${kebabCase(key)}>`,
+                ],
               }
             : {
-                name: 'Invalid option',
-                // If the input value is `true` then make sure to add a match for the option
-                // key on it's own as boolean options can be set with no explicit value
-                match: (inputOptions[key] === true)
-                  ? [
-                      `--${kebabCase(key)}`,
-                      `--${kebabCase(key)} ${inputOptions[key]}`,
-                    ]
-                  : [
-                      `--${kebabCase(key)} ${inputOptions[key]}`,
-                    ],
-                details: `Expected one of the following values: ${expectedValues}`,
+                matches: [
+                  ...matches,
+                  ...(inputOptions[key] === true)
+                    ? [
+                        `--${kebabCase(key)}`,
+                        `--${kebabCase(key)} ${inputOptions[key]}`,
+                      ]
+                    : [
+                        `--${kebabCase(key)} ${inputOptions[key]}`,
+                      ],
+                ],
+                messages: [
+                  ...messages,
+                  `Expected one of the following values: ${expectedValues}`,
+                ],
               },
-        ];
+        };
       }
 
       // For any other
@@ -199,71 +203,53 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
       default: {
         const { message } = issue;
 
-        // Find the existing error in
-        // the map to merge with
-        const existing = map.find((error) => error.key === key);
-
         // If the issue message contains `required` then the
         // issue is considered a required options error
         const isRequired = message
           .toLowerCase()
           .includes('required');
 
-        // If there is an existing validation error in the
-        // map then combine it with the current one
-        if (existing != null) {
-          const { suggestion, details } = existing;
-
-          return [
-            ...map,
-            (isRequired === true)
-              ? {
-                  ...existing,
-                  suggestion: [existing.suggestion, suggestion].join(' '),
-                }
-              : {
-                  ...existing,
-                  details: [
-                    ...(Array.isArray(details) === true) ? details : [details],
-                    message,
-                  ],
-                },
-          ];
-        }
-
-        return [
+        return {
           ...map,
-          (isRequired === true)
+          ...(isRequired === true)
             ? {
-                key: key,
-                name: 'Required options',
-                match: inputCommand,
-                details: 'Command is missing required options',
-                suggestion: `--${kebabCase(key)} <${kebabCase(key)}>`,
+                matches: [
+                  ...matches,
+                  inputCommand,
+                ],
+                messages: [
+                  ...messages,
+                  `Command is missing required option --${kebabCase(key)} <${kebabCase(key)}>`,
+                ],
               }
             : {
-                key: key,
-                name: 'Invalid option',
-                // If the input value is `true` then make sure to add a match for the option
-                // key on it's own as boolean options can be set with no explicit value
-                match: (inputOptions[key] === true)
-                  ? [
-                      `--${kebabCase(key)}`,
-                      `--${kebabCase(key)} ${inputOptions[key]}`,
-                    ]
-                  : [
-                      `--${kebabCase(key)} ${inputOptions[key]}`,
-                    ],
-                details: message,
+                matches: [
+                  ...matches,
+                  ...(inputOptions[key] === true)
+                    ? [
+                        `--${kebabCase(key)}`,
+                        `--${kebabCase(key)} ${inputOptions[key]}`,
+                      ]
+                    : [
+                        `--${kebabCase(key)} ${inputOptions[key]}`,
+                      ],
+                ],
+                messages: [
+                  ...messages,
+                  message,
+                ],
               },
-        ];
+        };
       }
     }
-  }, []);
+  }, {
+    matches: [],
+    messages: [],
+  });
 
   // Throw the `ValidationException` with the
-  // parsed input and mapped errors
-  throw new ValidationException(input, errors);
+  // parsed input and mapped error details
+  throw new ValidationException(input, details);
 };
 
 export default executeInput;
