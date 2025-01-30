@@ -13,105 +13,87 @@ type Props = Omit<ValidationErrorBlock, 'id' | 'type'> & BaseProps;
  * @param props The component props
  * @returns The `TerminalValidationErrorBlock` component
  */
-const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duration, errors }): ReactElement<Props> => {
+const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duration, details }): ReactElement<Props> => {
+  const { matches, messages, suggestion } = details;
+
+  // Turn the `matches` from the details into a regex pattern
+  // which will then be used to split the input string
+  const pattern = `(${matches.join('|')})`;
+  const regex = new RegExp(pattern, 'g');
+
   return (
     <div className="pt-4 pb-4 pl-6 pr-4 border-solid border-t-[1px] border-zinc-900">
       <p className="font-mono text-sm text-zinc-500 pb-3 break-all">
         {`> ${input}`}
       </p>
-      <div className="flex flex-row items-end justify-between pt-2">
-        <div className="w-full flex flex-col pr-6 gap-y-4">
-          {
-            errors.map((error) => {
-              const { name, match, details, suggestion } = error;
+      <div className="flex flex-row items-end justify-between">
+        <div className="w-full pt-2 pb-4 pl-5 pr-5">
+          <p className="font-mono font-bold text-sm whitespace-pre-wrap break-all pb-6">
+            {
+              input
+                .split(regex)
+                .filter((part) => part !== '')
+                .map((part) => {
 
-              // Turn the `match` from the error into a regex pattern
-              // which will then be used to split the input string
-              const pattern = `(${(Array.isArray(match) === true) ? match.join('|') : match})`;
-              const regex = new RegExp(pattern, 'g');
+                  // If the part of the input string is a match
+                  // then render the text underlined
+                  if (matches.includes(part) === true) {
+                    return (
+                      <span
+                        className="text-white underline underline-offset-4 decoration-2 decoration-wavy decoration-red-400"
+                        key={`validation-error-input-${part}`}
+                      >
+                        {part}
+                      </span>
+                    );
+                  }
 
-              return (
-                <div
-                  className="flex flex-col"
-                  key={`validation-error-${pattern}`}
-                >
-                  <div className="pt-4 pb-4 pl-5 pr-5 rounded-lg bg-zinc-900 bg-opacity-45">
-                    <p className="font-mono text-sm text-zinc-500">
-                      {name}
+                  return (
+                    <span
+                      className="text-white"
+                      key={`validation-error-input-${part}`}
+                    >
+                      {part}
+                    </span>
+                  );
+                })
+            }
+            {
+              (suggestion != null) && (
+                <span className="text-zinc-700">
+                  {' '}
+                  {suggestion}
+                </span>
+              )
+            }
+          </p>
+          <p className="font-mono text-sm text-red-400">
+            {`${messages.length} problem${(messages.length > 1) ? 's' : ''} ...`}
+          </p>
+          <div className="flex flex-col gap-y-2 pt-2 pl-4">
+            {
+              messages.map((message, index) => {
+                const position = input.indexOf(matches[index]) + 1;
+
+                return (
+                  <div
+                    className="flex flex-row"
+                    key={`validation-error-message-${message}`}
+                  >
+                    <p className="font-mono text-sm text-white">
+                      {`[1:${position}]`}
                     </p>
-                    <p className="font-mono font-bold text-sm whitespace-pre-wrap break-all pt-2 pb-4">
-                      {
-                        input
-                          .split(regex)
-                          .filter((part) => part !== '')
-                          .map((part) => {
-
-                            const isMatch = (Array.isArray(match) === true)
-                              ? match.includes(part)
-                              : match === part;
-
-                            // If the part of the input string is a match
-                            // then render the text underlined
-                            if (isMatch === true) {
-                              return (
-                                <span
-                                  className="text-white underline underline-offset-4 decoration-2 decoration-wavy decoration-red-400"
-                                  key={`validation-error-${pattern}-input-${part}`}
-                                >
-                                  {part}
-                                </span>
-                              );
-                            }
-
-                            return (
-                              <span
-                                className="text-white"
-                                key={`validation-error-${pattern}-input-${part}`}
-                              >
-                                {part}
-                              </span>
-                            );
-                          })
-                      }
-                      {
-                        (suggestion != null) && (
-                          <span className="text-zinc-700">
-                            {' '}
-                            {suggestion}
-                          </span>
-                        )
-                      }
+                    <p className={`font-mono text-sm text-red-400 pl-${(position >= 10) ? '4' : '6'} pr-5`}>
+                      error
                     </p>
-                    {
-                      (typeof details === 'string') && (
-                        <pre className="font-mono text-sm text-red-400 pl-4 whitespace-pre-wrap break-all">
-                          {details}
-                        </pre>
-                      )
-                    }
-                    {
-                      (Array.isArray(details) === true) && (
-                        <div className="flex flex-col pl-4">
-                          {
-                            details.map((detail) => {
-                              return (
-                                <pre
-                                  className="font-mono text-sm text-red-400 whitespace-pre-wrap break-all"
-                                  key={`validation-error-${pattern}-detail-${detail}`}
-                                >
-                                  {detail}
-                                </pre>
-                              );
-                            })
-                          }
-                        </div>
-                      )
-                    }
+                    <pre className="font-mono text-sm text-red-400 whitespace-pre-wrap break-all">
+                      {message}
+                    </pre>
                   </div>
-                </div>
-              );
-            })
-          }
+                );
+              })
+            }
+          </div>
         </div>
         <p className="font-mono text-xs text-zinc-500">
           {duration.toFixed(0)}
