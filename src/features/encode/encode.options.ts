@@ -9,7 +9,10 @@ import { z } from 'zod';
  */
 const encodeOptions = z.object({
   value: z
-    .string()
+    .union([
+      z.string(),
+      z.number(),
+    ])
     .describe('The value to encode'),
   from: z
     .union([

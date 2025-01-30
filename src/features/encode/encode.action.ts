@@ -24,7 +24,7 @@ const encodeAction = (options: Options): Props => {
   const { value, from, to } = options;
 
   const output = Buffer
-    .from(value, from)
+    .from(value.toString(), from)
     .toString(to);
 
   return {
