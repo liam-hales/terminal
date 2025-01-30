@@ -4,9 +4,8 @@ import { CodeInline } from '../common';
 
 /**
  * Used to render the help user interface
- * for a all feature commands
+ * for all feature commands
  *
- * @param props The component props
  * @returns The `Help` component
  */
 const Help: FunctionComponent = (): ReactElement => {

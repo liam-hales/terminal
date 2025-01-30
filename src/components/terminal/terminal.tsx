@@ -58,7 +58,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   }, [inputValue]);
 
   /**
-   * Used to monitor the the
+   * Used to monitor the
    * `input` URL search param
    */
   useEffect(() => {
