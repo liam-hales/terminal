@@ -8,7 +8,7 @@ import { Feature, FeatureMap } from './features';
  */
 export type FeatureId = 'help' | 'encode' | 'ip' | 'jwt' | 'whois' | 'datetime' | 'key-pair' | 'pass-gen' | 'uuid' | 'mac-lookup';
 
-/**
+/*
  * The utility type used to convert a type
  * into an intersection type
  *
@@ -125,6 +125,7 @@ export type FeatureOutput = {
  * the `command` and the `options`
  */
 export interface ParsedInput {
+  readonly rawInput: string;
   readonly command?: string;
   readonly options?: Record<string, unknown>;
 }
@@ -150,13 +151,14 @@ export interface ServerActionErrorResponse {
 }
 
 /**
- * Describes a validation error details used
+ * Describes a validation error used
  * within the `ValidationException`
  */
-export interface ValidationErrorDetails {
-  readonly matches: string[];
-  readonly messages: string[];
-  readonly suggestion?: string;
+export interface ValidationError {
+  readonly match: string | RegExp;
+  readonly message: string;
+  readonly line: number;
+  readonly position: number;
 }
 
 /**
@@ -180,7 +182,8 @@ export interface TerminalValidationErrorBlock {
   readonly id: string;
   readonly input: string;
   readonly duration: number;
-  readonly details: ValidationErrorDetails;
+  readonly regex: RegExp;
+  readonly errors: ValidationError[];
 }
 
 /**
