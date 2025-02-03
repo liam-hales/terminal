@@ -13,14 +13,7 @@ type Props = Omit<ValidationErrorBlock, 'id' | 'type'> & BaseProps;
  * @param props The component props
  * @returns The `TerminalValidationErrorBlock` component
  */
-const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duration, details }): ReactElement<Props> => {
-  const { matches, messages, suggestion } = details;
-
-  // Turn the `matches` from the details into a regex pattern
-  // which will then be used to split the input string
-  const pattern = `(${matches.join('|')})`;
-  const regex = new RegExp(pattern, 'g');
-
+const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duration, regex, errors }): ReactElement<Props> => {
   return (
     <div className="pt-4 pb-4 pl-6 pr-4 border-solid border-t-[1px] border-zinc-900">
       <p className="font-mono text-sm text-zinc-500 pb-3 break-all">
@@ -31,13 +24,17 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
           <p className="font-mono font-bold text-sm whitespace-pre-wrap break-all pb-6">
             {
               input
-                .split(regex)
+                // Split the input string at the spaces while
+                // grouping command options and their values
+                .split(/("[^"]*"|--\S+="[^"]*"|--\S+=\S+|--\S+\s\S+|--\S+|\S+)/g)
                 .filter((part) => part !== '')
                 .map((part) => {
 
+                  const isMatch = regex.test(part);
+
                   // If the part of the input string is a match
                   // then render the text underlined
-                  if (matches.includes(part) === true) {
+                  if (isMatch === true) {
                     return (
                       <span
                         className="text-white underline underline-offset-4 decoration-2 decoration-wavy decoration-red-400"
@@ -58,30 +55,21 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                   );
                 })
             }
-            {
-              (suggestion != null) && (
-                <span className="text-zinc-700">
-                  {' '}
-                  {suggestion}
-                </span>
-              )
-            }
           </p>
           <p className="font-mono text-sm text-red-400">
-            {`${messages.length} problem${(messages.length > 1) ? 's' : ''} ...`}
+            {`${errors.length} problem${(errors.length > 1) ? 's' : ''} ...`}
           </p>
           <div className="flex flex-col gap-y-2 pt-2 pl-4">
             {
-              messages.map((message, index) => {
-                const position = input.indexOf(matches[index]) + 1;
-
+              errors.map((error) => {
+                const { message, line, position } = error;
                 return (
                   <div
                     className="flex flex-row"
                     key={`validation-error-message-${message}`}
                   >
                     <p className="font-mono text-sm text-white">
-                      {`[1:${position}]`}
+                      {`[${line}:${position}]`}
                     </p>
                     <p className={`font-mono text-sm text-red-400 pl-${(position >= 10) ? '4' : '6'} pr-5`}>
                       error

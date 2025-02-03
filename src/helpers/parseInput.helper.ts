@@ -53,6 +53,7 @@ const parseInput = async (input: string): Promise<ParsedInput> => {
   const hasOptions = Object.keys(options).length > 0;
 
   return {
+    rawInput: input,
     ...(hasOptions === true) && {
       options: options,
     },

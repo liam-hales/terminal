@@ -1,7 +1,7 @@
 import { kebabCase } from 'change-case';
 import { search } from 'fast-fuzzy';
 import { features } from '../features';
-import { FeatureOption, FeatureOutput, ParsedInput, ValidationErrorDetails } from '../types';
+import { FeatureOption, FeatureOutput, ParsedInput } from '../types';
 import { ValidationException } from '../exceptions';
 import { serverAction } from './';
 
@@ -44,15 +44,17 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
     const names = features.map((feature) => feature.command.name);
     const matches = search(inputCommand, names);
 
-    throw new ValidationException(input, {
-      matches: [inputCommand],
+    throw new ValidationException(input, [
+      {
+        match: inputCommand,
 
-      // If there are matches then use
-      // them to build the messages
-      messages: (matches.length > 0)
-        ? [`Command not found, did you mean ${matches.map((match) => `"${match}"`).join(' or ')}?`]
-        : ['Command not found, use "help" to list available commands'],
-    });
+        // If there are matches then use
+        // them to build the message
+        message: (matches.length > 0)
+          ? `Command not found, did you mean ${matches.map((match) => `"${match}"`).join(' or ')}?`
+          : 'Command not found, use "help" to list available commands',
+      },
+    ]);
   }
 
   const { id, command, enabled } = feature;
@@ -61,10 +63,12 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
   // If the feature has not been
   // enabled, then throw an error
   if (enabled === false) {
-    throw new ValidationException(input, {
-      matches: [inputCommand],
-      messages: ['This feature has been disabled'],
-    });
+    throw new ValidationException(input, [
+      {
+        match: inputCommand,
+        message: 'This feature has been disabled',
+      },
+    ]);
   }
 
   // If the help option has been set to true, return
@@ -115,10 +119,9 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
   const { error } = validated;
   const { issues } = error;
 
-  // Map the validation issues into validation error details
+  // Flat map the validation issues into validation errors
   // which will be used for the `ValidationException`
-  const details = issues.reduce<ValidationErrorDetails>((map, issue) => {
-    const { matches, messages } = map;
+  const errors = issues.flatMap((issue) => {
     const { path, code } = issue;
 
     // Join the `path` to create the key. The `path` from
@@ -133,17 +136,14 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
       case 'unrecognized_keys': {
         const { keys } = issue;
 
-        return {
-          ...map,
-          matches: [
-            ...matches,
-            ...keys.map((key) => `--${kebabCase(key)}`),
-          ],
-          messages: [
-            ...messages,
-            'Unknown command options have been found',
-          ],
-        };
+        // Map each unrecognized key
+        // into a separate error
+        return keys.map((key) => {
+          return {
+            match: `--${kebabCase(key)}`,
+            message: `Unknown command option "--${kebabCase(key)}"`,
+          };
+        });
       }
 
       // For an invalid union
@@ -165,37 +165,15 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
           .map((issue) => `"${issue.expected}"`)
           .join(', ');
 
-        return {
-          ...map,
-          ...(isRequired === true)
-            ? {
-                matches: [
-                  ...matches,
-                  inputCommand,
-                ],
-                messages: [
-                  ...messages,
-                  `Command is missing required option --${kebabCase(key)} <${kebabCase(key)}>`,
-                ],
-              }
-            : {
-                matches: [
-                  ...matches,
-                  ...(inputOptions[key] === true)
-                    ? [
-                        `--${kebabCase(key)}`,
-                        `--${kebabCase(key)} ${inputOptions[key]}`,
-                      ]
-                    : [
-                        `--${kebabCase(key)} ${inputOptions[key]}`,
-                      ],
-                ],
-                messages: [
-                  ...messages,
-                  `Expected one of the following values: ${expectedValues}`,
-                ],
-              },
-        };
+        return (isRequired === true)
+          ? {
+              match: inputCommand,
+              message: `Command is missing required option "--${kebabCase(key)} <${kebabCase(key)}>"`,
+            }
+          : {
+              match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+              message: `Expected one of the following values: ${expectedValues}`,
+            };
       }
 
       // For any other
@@ -209,47 +187,22 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
           .toLowerCase()
           .includes('required');
 
-        return {
-          ...map,
-          ...(isRequired === true)
-            ? {
-                matches: [
-                  ...matches,
-                  inputCommand,
-                ],
-                messages: [
-                  ...messages,
-                  `Command is missing required option --${kebabCase(key)} <${kebabCase(key)}>`,
-                ],
-              }
-            : {
-                matches: [
-                  ...matches,
-                  ...(inputOptions[key] === true)
-                    ? [
-                        `--${kebabCase(key)}`,
-                        `--${kebabCase(key)} ${inputOptions[key]}`,
-                      ]
-                    : [
-                        `--${kebabCase(key)} ${inputOptions[key]}`,
-                      ],
-                ],
-                messages: [
-                  ...messages,
-                  message,
-                ],
-              },
-        };
+        return (isRequired === true)
+          ? {
+              match: inputCommand,
+              message: `Command is missing required option "--${kebabCase(key)} <${kebabCase(key)}>"`,
+            }
+          : {
+              match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+              message: message,
+            };
       }
     }
-  }, {
-    matches: [],
-    messages: [],
   });
 
   // Throw the `ValidationException` with the
   // parsed input and mapped error details
-  throw new ValidationException(input, details);
+  throw new ValidationException(input, errors);
 };
 
 export default executeInput;
