@@ -6,6 +6,7 @@ import { urbanist, firaCode } from '../fonts';
 import { Terminal } from '../components';
 import { TerminalProvider } from '../providers';
 import { viewport, generateMetadata } from './metadata';
+import { Analytics } from '@vercel/analytics/react';
 
 /**
  * The `AppLayout` component props
@@ -28,6 +29,7 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
       className={`h-full ${urbanist.variable} ${firaCode.variable}`}
     >
       <body className="h-full bg-black">
+        <Analytics />
         {
         /**
          * `<Suspense>` is required here because the `Terminal` component
