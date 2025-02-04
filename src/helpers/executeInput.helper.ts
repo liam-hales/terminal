@@ -139,9 +139,16 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
         // Map each unrecognized key
         // into a separate error
         return keys.map((key) => {
+          // Attempt to search for command options that are
+          // a close match to the unrecognized key
+          const names = Object.keys(options.shape);
+          const matches = search(key, names);
+
           return {
             match: `--${kebabCase(key)}`,
-            message: `Unknown command option "--${kebabCase(key)}"`,
+            message: (matches.length > 0)
+              ? `Unknown command option, did you mean ${matches.map((match) => `"--${kebabCase(match)}"`).join(' or ')}?`
+              : `Unknown command option "--${kebabCase(key)}"`,
           };
         });
       }
