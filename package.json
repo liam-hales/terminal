@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "name": "terminal",
   "description": "Web-based developer tools with a dev-friendly terminal interface.",
   "version": "1.0.0",
