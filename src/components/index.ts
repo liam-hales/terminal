@@ -1,4 +1,5 @@
 import TextOutput from './textOutput';
+import IpFeature from './ipFeature';
 import JWTFeature from './jwtFeature';
 import WhoisFeature from './whoisFeature';
 import HelpFeature from './help/helpFeature';
@@ -15,6 +16,7 @@ import CommandHelp from './help/commandHelp';
 
 export {
   TextOutput,
+  IpFeature,
   JWTFeature,
   WhoisFeature,
   DatetimeFeature,

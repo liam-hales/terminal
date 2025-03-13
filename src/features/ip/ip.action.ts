@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
-import { TextOutput } from '../../components';
+import { IpFeature } from '../../components';
 import { ipOptions } from '.';
 
 /**
@@ -11,7 +11,7 @@ type Options = z.infer<typeof ipOptions>;
 /**
  * The IP feature component props
  */
-type Props = ComponentProps<typeof TextOutput>;
+type Props = ComponentProps<typeof IpFeature>;
 
 /**
  * The action used to execute the logic
@@ -23,23 +23,61 @@ type Props = ComponentProps<typeof TextOutput>;
 const ipAction = async (options: Options): Promise<Props> => {
   const { version } = options;
 
-  const url = (version === 4)
-    ? 'https://api.ipify.org'
-    : 'https://api6.ipify.org';
+  /**
+   * Used to resolve the users IP address
+   * for a specific IP address version
+   *
+   * @param version The IP address version to resolve
+   * @returns The resolved IP address
+   */
+  const resolveIp = async (version: 4 | 6): Promise<string | undefined> => {
+    // Define the URL map between the IP address
+    // version and the URL used to resolve it
+    const urlMap: Record<number, string> = {
+      4: 'https://api.ipify.org',
+      6: 'https://api6.ipify.org',
+    };
 
-  try {
-    const response = await fetch(url);
-    const ipAddress = await response.text();
+    try {
+      const response = await fetch(urlMap[version]);
+      return await response.text();
+    }
+    // Catch any errors while resolving the
+    // IP address and just return
+    catch {
+      return;
+    }
+  };
+
+  // If the version option has been set, resolve the users
+  // IP address for that specific IP version
+  if (version != null) {
+    const address = await resolveIp(version);
+
+    // If the address has not been resolved then there was an error, this is most
+    // likely because the user does not have an IP for the specified version
+    if (address == null) {
+      throw new Error(`Cannot resolve IPv${version} address`);
+    }
 
     return {
-      value: ipAddress,
+      type: 'single-version',
+      address: address,
     };
   }
-  catch {
-    // There was an error resolving the IP address, this is most likely because
-    // the user does not have an IP for the specified version
-    throw new Error(`Cannot resolve IPv${version} address`);
-  }
+
+  // Attempt to resolve the users
+  // v4 and v6 IP addresses
+  const [v4Address, v6Address] = await Promise.all([
+    resolveIp(4),
+    resolveIp(6),
+  ]);
+
+  return {
+    type: 'multi-version',
+    v4Address: v4Address,
+    v6Address: v6Address,
+  };
 };
 
 export default ipAction;
