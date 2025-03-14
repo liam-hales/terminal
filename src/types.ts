@@ -86,8 +86,12 @@ export interface ICommand<
 export type FeatureCommand = Feature['command'];
 
 /**
- * The type used to describe
+ * The intersection type used to describe
  * all feature command options
+ *
+ * _Used for type casting only as TypeScript does not support correlated unions_
+ *
+ * [TypeScript Issue](https://github.com/microsoft/TypeScript/issues/30581)
  */
 export type FeatureOption = Intersect<
   z.infer<
@@ -96,8 +100,24 @@ export type FeatureOption = Intersect<
 >;
 
 /**
- * The type used to describe
- * all feature props
+ * The intersection type used to describe
+ * all feature command actions
+ *
+ * _Used for type casting only as TypeScript does not support correlated unions_
+ *
+ * [TypeScript Issue](https://github.com/microsoft/TypeScript/issues/30581)
+ */
+export type FeatureAction = Intersect<
+  Feature['command']['action']
+>;
+
+/**
+ * The intersection type used to
+ * describe all feature props
+ *
+ * _Used for type casting only as TypeScript does not support correlated unions_
+ *
+ * [TypeScript Issue](https://github.com/microsoft/TypeScript/issues/30581)
  */
 export type FeatureProp = Intersect<
   Awaited<
