@@ -4,10 +4,16 @@ import { BaseProps } from '../types';
 /**
  * The `IpFeature` component props
  */
-type Props = SingleVersionProps | MultiVersionProps;
+interface Props {
+  /**
+   * This is required to avoid a component with props that have a union type. Union types
+   * for component props breaks the `FeatureProp` intersection type used for type casting
+   */
+  readonly data: SingleVersionProps | MultiVersionProps;
+}
 
 /**
- * The `IpFeature` component props to
+ * The `IpFeature` component props used to
  * render a single IP address version
  */
 interface SingleVersionProps extends BaseProps {
@@ -16,7 +22,7 @@ interface SingleVersionProps extends BaseProps {
 }
 
 /**
- * The `IpFeature` component props to
+ * The `IpFeature` component props used to
  * render multiple IP address versions
  */
 interface MultiVersionProps extends BaseProps {
@@ -32,15 +38,15 @@ interface MultiVersionProps extends BaseProps {
  * @param props The component props
  * @returns The `IpFeature` component
  */
-const IpFeature: FunctionComponent<Props> = (props): ReactElement<Props> => {
-  const { type } = props;
+const IpFeature: FunctionComponent<Props> = ({ data }): ReactElement<Props> => {
+  const { type } = data;
   const unknown = 'Unknown, could not resolve address';
 
   return (
     <>
       {
         (type === 'single-version') && (
-          <p className="font-mono text-sm text-white">{props.address}</p>
+          <p className="font-mono text-sm text-white">{data.address}</p>
         )
       }
       {
@@ -51,7 +57,7 @@ const IpFeature: FunctionComponent<Props> = (props): ReactElement<Props> => {
                 IPv4
               </p>
               <p className="font-mono text-sm text-white">
-                {props.v4Address ?? unknown}
+                {data.v4Address ?? unknown}
               </p>
             </div>
             <div className="flex flex-row">
@@ -59,7 +65,7 @@ const IpFeature: FunctionComponent<Props> = (props): ReactElement<Props> => {
                 IPv6
               </p>
               <p className="font-mono text-sm text-white">
-                {props.v6Address ?? unknown}
+                {data.v6Address ?? unknown}
               </p>
             </div>
           </div>

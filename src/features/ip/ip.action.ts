@@ -61,8 +61,10 @@ const ipAction = async (options: Options): Promise<Props> => {
     }
 
     return {
-      type: 'single-version',
-      address: address,
+      data: {
+        type: 'single-version',
+        address: address,
+      },
     };
   }
 
@@ -74,9 +76,11 @@ const ipAction = async (options: Options): Promise<Props> => {
   ]);
 
   return {
-    type: 'multi-version',
-    v4Address: v4Address,
-    v6Address: v6Address,
+    data: {
+      type: 'multi-version',
+      v4Address: v4Address,
+      v6Address: v6Address,
+    },
   };
 };
 
