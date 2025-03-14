@@ -11,7 +11,7 @@ import { ServerActionErrorResponse, ServerActionResponse } from '../types';
  *
  * @returns The server action response
  */
-const serverAction = async <T, O>(
+const serverAction = async <T extends object, O extends object>(
   action: (options: O) => T | Promise<T>,
   options: O,
 ): Promise<ServerActionResponse<T> | ServerActionErrorResponse> => {
