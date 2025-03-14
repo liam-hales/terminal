@@ -1,7 +1,7 @@
 import { kebabCase } from 'change-case';
 import { search } from 'fast-fuzzy';
 import { features } from '../features';
-import { FeatureOption, FeatureOutput, ParsedInput } from '../types';
+import { FeatureAction, FeatureOption, FeatureOutput, ParsedInput } from '../types';
 import { ValidationException } from '../exceptions';
 import { serverAction } from './';
 
@@ -93,7 +93,10 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
     // If the command execution needs to be done on the server, wrap the
     // action in the `serverAction` helper to execute this correctly
     if (execution === 'server') {
-      const response = await serverAction(action, validated.data as FeatureOption);
+      const response = await serverAction(
+        action as FeatureAction,
+        validated.data as FeatureOption,
+      );
 
       // Check the response status and if there was an error, throw
       // a new error using the error message from the response
