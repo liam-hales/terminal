@@ -16,7 +16,7 @@
     "type": "git",
     "url": "https://github.com/liam-hales/terminal.git"
   },
-  "packageManager": "yarn@4.5.3",
+  "packageManager": "yarn@4.7.0",
   "scripts": {
     "start:dev": "next dev",
     "start:prod": "next start",
