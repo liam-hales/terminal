@@ -21,7 +21,7 @@ const execute = async (input: string): Promise<TerminalBlock> => {
   const startTime = performance.now();
 
   try {
-    const parsed = await parseInput(input);
+    const parsed = parseInput(input);
     const output = await executeInput(parsed);
 
     // Get the end time stamp which along with the start time can be
