@@ -2,6 +2,7 @@
 
 import { FunctionComponent, ReactElement } from 'react';
 import { CodeInline, Typewriter } from '../components/common';
+import Link from 'next/link';
 
 /**
  * The entry point for the `/` app route,
@@ -31,7 +32,14 @@ const AppPage: FunctionComponent = (): ReactElement => {
             Web-based developer tools with a dev-friendly terminal interface.
           </p>
           <p className="font-mono italic text-xs text-white pt-8">
-            - Built by Liam Hales
+            <span>- Built by </span>
+            <Link
+              href="https://liamhales.dev"
+              target="_blank"
+              passHref={true}
+            >
+              <span className="font-bold underline underline-offset-2">Liam Hales</span>
+            </Link>
           </p>
         </div>
       </div>
