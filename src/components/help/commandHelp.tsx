@@ -78,11 +78,9 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
 
                               // There is no value so instead we can extract
                               // the type from the Zod definition type name
-                              const type = typeName
+                              return typeName
                                 .replace('Zod', '')
                                 .toLowerCase();
-
-                              return type;
                             })
                             .join(' | ');
 
