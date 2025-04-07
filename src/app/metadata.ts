@@ -34,6 +34,7 @@ export const generateMetadata = (): Metadata => {
         {
           rel: 'icon',
           url: '/favicon.ico',
+          type: 'image/x-icon',
         },
         {
           rel: 'icon',
@@ -43,6 +44,7 @@ export const generateMetadata = (): Metadata => {
         {
           rel: 'apple-touch-icon',
           url: '/apple-touch-icon.webp',
+          type: 'image/webp',
         },
       ],
     },
@@ -53,8 +55,8 @@ export const generateMetadata = (): Metadata => {
       siteName: 'Terminal',
       images: [
         {
-          type: 'image/webp',
           url: '/cover.webp',
+          type: 'image/webp',
           alt: 'Terminal Cover',
         },
       ],
