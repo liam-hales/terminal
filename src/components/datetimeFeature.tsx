@@ -46,14 +46,9 @@ const DatetimeFeature: FunctionComponent<Props> = ({ pretty, data }): ReactEleme
                 <p className="min-w-48 max-w-48 font-mono text-sm text-emerald-300">
                   {name}
                 </p>
-                <div className="flex flex-row gap-x-2">
-                  <p className="font-mono text-sm text-white">
-                    |
-                  </p>
-                  <p className="font-mono text-sm text-white">
-                    {value}
-                  </p>
-                </div>
+                <p className="font-mono text-sm text-white">
+                  {value}
+                </p>
               </div>
             );
           })

@@ -37,62 +37,47 @@ const MacLookupFeature: FunctionComponent<Props> = ({ type, startHex, endHex, co
           <p className="min-w-48 max-w-48 font-mono text-sm text-emerald-300">
             Type
           </p>
-          <div className="flex flex-row gap-x-2">
-            <p className="font-mono text-sm text-white">
-              |
-            </p>
-            <p className="font-mono text-sm text-white">
-              {type}
-            </p>
-          </div>
+          <p className="font-mono text-sm text-white">
+            {type}
+          </p>
         </div>
         <div className="flex flex-row">
           <p className="min-w-48 max-w-48 font-mono text-sm text-emerald-300">
             HEX
           </p>
-          <div className="flex flex-row gap-x-2">
-            <p className="font-mono text-sm text-white">
-              |
-            </p>
-            <p className="font-mono text-sm text-white">
-              {`${startHex} -> ${endHex}`}
-            </p>
-          </div>
+          <p className="font-mono text-sm text-white">
+            {`${startHex} -> ${endHex}`}
+          </p>
         </div>
         <div className="flex flex-row">
           <p className="min-w-48 max-w-48 font-mono text-sm text-emerald-300">
             Address
           </p>
-          <div className="flex flex-row gap-x-2">
+          <div className="flex flex-col">
+            {
+              (lineOne != null) && (
+                <p className="font-mono text-sm text-white">
+                  {lineOne}
+                </p>
+              )
+            }
+            {
+              (lineTwo != null) && (
+                <p className="font-mono text-sm text-white">
+                  {lineTwo}
+                </p>
+              )
+            }
+            {
+              (lineThree != null) && (
+                <p className="font-mono text-sm text-white">
+                  {lineThree}
+                </p>
+              )
+            }
             <p className="font-mono text-sm text-white">
-              |
+              {country}
             </p>
-            <div className="flex flex-col">
-              {
-                (lineOne != null) && (
-                  <p className="font-mono text-sm text-white">
-                    {lineOne}
-                  </p>
-                )
-              }
-              {
-                (lineTwo != null) && (
-                  <p className="font-mono text-sm text-white">
-                    {lineTwo}
-                  </p>
-                )
-              }
-              {
-                (lineThree != null) && (
-                  <p className="font-mono text-sm text-white">
-                    {lineThree}
-                  </p>
-                )
-              }
-              <p className="font-mono text-sm text-white">
-                {country}
-              </p>
-            </div>
           </div>
         </div>
       </div>

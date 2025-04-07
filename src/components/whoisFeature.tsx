@@ -45,22 +45,17 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, results }): ReactEl
                           className="flex flex-row"
                           key={`whois-${serverName}-${key}`}
                         >
-                          <p className="min-w-52 max-w-52 font-mono text-sm text-pink-300">
+                          <p className="min-w-58 max-w-58 font-mono text-sm text-pink-300">
                             {key}
                           </p>
                           {
                             (typeof value === 'string') && (
-                              <div className="flex flex-row gap-x-2">
-                                <p className="font-mono text-sm text-white">
-                                  |
-                                </p>
-                                <p className={`
-                                  font-mono text-sm
-                                  ${(value === 'REDACTED') ? 'text-red-300' : 'text-white'}`}
-                                >
-                                  {value}
-                                </p>
-                              </div>
+                              <p className={`
+                                font-mono text-sm
+                                ${(value === 'REDACTED') ? 'text-red-300' : 'text-white'}`}
+                              >
+                                {value}
+                              </p>
                             )
                           }
                           {
