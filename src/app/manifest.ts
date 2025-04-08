@@ -10,7 +10,7 @@ import { MetadataRoute } from 'next';
  */
 const buildManifest = (): MetadataRoute.Manifest => {
   return {
-    name: 'Terminal - Liam Hales',
+    name: 'Terminal',
     short_name: 'Terminal',
     description: 'Web-based developer tools with a dev-friendly terminal interface.',
     start_url: '/',
