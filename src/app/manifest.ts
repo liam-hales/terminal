@@ -3,10 +3,10 @@
 import { MetadataRoute } from 'next';
 
 /**
- * Used to build the `manifest.json` file for PWA
+ * Used to build the `manifest.webmanifest` file for PWA
  * configuration and to specify how the app is launched
  *
- * @returns The `manifest.json` file
+ * @returns The `manifest.webmanifest` file
  */
 const buildManifest = (): MetadataRoute.Manifest => {
   return {
@@ -19,15 +19,13 @@ const buildManifest = (): MetadataRoute.Manifest => {
     theme_color: '#000000',
     icons: [
       {
-        src: '/favicon.ico',
-        type: 'image/x-icon',
+        src: '/icon-192x192.png',
+        sizes: '192x192',
+        type: 'image/webp',
       },
       {
-        src: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-      {
-        src: '/apple-touch-icon.webp',
+        src: '/icon-512x512.png',
+        sizes: '512x512',
         type: 'image/webp',
       },
     ],
