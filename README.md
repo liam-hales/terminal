@@ -15,17 +15,17 @@
 
 # Content Index
 
-- [Built With](#built-with-🛠️)
-- [Getting Started](#getting-started-🚀)
-- [Local Development](#local-development-👨🏻‍💻)
+- [Built With 🛠️](#built-with-)
+- [Getting Started 🚀](#getting-started-)
+- [Local Development 👨🏻‍💻](#local-development-)
   - [Development Server](#development-server)
   - [Production Server](#production-server)
-- [Production](#production-🌍)
+- [Production 🌍](#production-)
   - [Building](#building)
   - [Deploying](#deploying)
   - [Bundle Analysing](#bundle-analysing)
-- [Public Assets](#public-assets-🌆)
-- [Dependency Management](#dependency-management-📦)
+- [Public Assets 🌆](#public-assets-)
+- [Dependency Management 📦](#dependency-management-)
   - [Options](#options)
 
 <br/>
