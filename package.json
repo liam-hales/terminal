@@ -22,6 +22,7 @@
     "start:prod": "next start",
     "build": "next build",
     "build:analyse": "ANALYSE_BUNDLE=true next build",
+    "build:icons": "ts-node ./scripts/buildIcons.script.ts",
     "lint": "next lint",
     "deps": "ncu --packageManager yarn",
     "cleanup": "rm -rf .next/"

@@ -1,0 +1,35 @@
+<svg
+  viewBox="0 0 1024 1024"
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+  <style>
+    rect {
+      fill: #000000;
+    }
+
+    path {
+      fill: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      rect {
+        fill: #ffffff;
+      }
+
+      path {
+        fill: #000000;
+      }
+    };
+  </style>
+  <rect
+    x="0"
+    y="0"
+    width="1024"
+    height="1024"
+    rx="170"
+  />
+  <path d="M547.357143 248 L547.357143 352.556122 L407.642857 352.556122 L407.642857 735.928571 L302.857143 735.928571 L302.857143 352.556122 L163.142857 352.556122 L163.142857 248 Z" />
+  <path d="M512 702.928571 L860.857143 702.928571 L860.857143 776 L512 776 Z" />
+</svg>
