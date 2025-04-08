@@ -24,6 +24,7 @@
   - [Building](#building)
   - [Deploying](#deploying)
   - [Bundle Analysing](#bundle-analysing)
+- [Public Assets](#public-assets-🌆)
 - [Dependency Management](#dependency-management-📦)
   - [Options](#options)
 
@@ -177,6 +178,23 @@ $ yarn build:analyse
 ```
 
 > ⚠️ _**WARNING** - The bundle analyser will automatically open the generated `.html` files in your default browser_
+
+<br/>
+<br/>
+
+# Public Assets 🌆
+
+Most public assets already exist in the `/public` directory, however some assets such as some of the icons are dynamically built using build scripts.
+
+1. Run `yarn build:icons` to build the `favicon.ico` and `.webp` icons
+
+```sh
+$ yarn build:icons
+```
+
+> 📝 _**NOTE** - These public assets are not required for a functional build_
+
+> 📝 _**NOTE** - Public assets such as the `sitemap.xml` and `robots.txt` files exists on dynamic routes_
 
 <br/>
 <br/>
