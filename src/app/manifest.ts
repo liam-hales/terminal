@@ -19,12 +19,12 @@ const buildManifest = (): MetadataRoute.Manifest => {
     theme_color: '#000000',
     icons: [
       {
-        src: '/icon-192x192.png',
+        src: '/icon-192x192.webp',
         sizes: '192x192',
         type: 'image/webp',
       },
       {
-        src: '/icon-512x512.png',
+        src: '/icon-512x512.webp',
         sizes: '512x512',
         type: 'image/webp',
       },
