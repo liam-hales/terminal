@@ -42,6 +42,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
       <div className="flex flex-wrap gap-y-2 pt-2 pl-4">
         {
           extractKeys(shape)
+            .sort((a, b) => a.localeCompare(b))
             .map((key) => {
 
               // Fully unwrap the Zod type to

@@ -24,6 +24,7 @@ const Help: FunctionComponent = (): ReactElement => {
         {
           features
             .map((feature) => feature.command)
+            .sort((a, b) => a.name.localeCompare(b.name))
             .map((command) => {
               const { name, description } = command;
 
