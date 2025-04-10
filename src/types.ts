@@ -33,6 +33,12 @@ export interface BaseProps<T extends HTMLElement = HTMLElement> {
 }
 
 /**
+ * Describes the function which is used to update
+ * the current progress of an action
+ */
+export type OnProgress = (percentage: number) => void;
+
+/**
  * Used to describe a feature that can
  * be used within the terminal
  *
@@ -66,7 +72,10 @@ export interface ICommand<
   readonly description: string;
   readonly options: O;
   readonly execution: 'server' | 'client';
-  readonly action: (options: z.infer<O>) => P | Promise<P>;
+  readonly action: (
+    options: z.infer<O>,
+    onProgress: OnProgress,
+  ) => P | Promise<P>;
 }
 
 /**
@@ -144,7 +153,7 @@ export interface ParsedInput {
  * Describes the server action response
  * used within the `serverAction` helper.
  *
- * Generic type `T` for the data
+ * - Generic type `T` for the data
  */
 export interface ServerActionResponse<T> {
   readonly status: 'success';

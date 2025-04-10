@@ -1,7 +1,7 @@
 import { kebabCase } from 'change-case';
 import { search } from 'fast-fuzzy';
 import { features } from '../features';
-import { FeatureAction, FeatureOption, FeatureOutput, ParsedInput } from '../types';
+import { FeatureAction, FeatureOption, FeatureOutput, OnProgress, ParsedInput } from '../types';
 import { ValidationException } from '../exceptions';
 import { serverAction } from './';
 
@@ -14,9 +14,14 @@ import { serverAction } from './';
  * - Executes the feature command action
  *
  * @param input The parsed input
+ * @param onProgress The function used to update the action progress
+ *
  * @returns The feature output
  */
-const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
+const executeInput = async (
+  input: ParsedInput,
+  onProgress: OnProgress,
+): Promise<FeatureOutput> => {
   const {
     command: inputCommand,
     options: inputOptions = {},
@@ -96,6 +101,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
       const response = await serverAction(
         action as FeatureAction,
         validated.data as FeatureOption,
+        onProgress,
       );
 
       // Check the response status and if there was an error, throw
@@ -110,7 +116,7 @@ const executeInput = async (input: ParsedInput): Promise<FeatureOutput> => {
       } as FeatureOutput;
     }
 
-    const props = await action(validated.data as FeatureOption);
+    const props = await action(validated.data as FeatureOption, onProgress);
     return {
       featureId: id,
       props: props,

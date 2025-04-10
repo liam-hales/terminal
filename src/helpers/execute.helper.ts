@@ -11,9 +11,14 @@ import { parseInput, executeInput } from '.';
  * - Builds a terminal block based on any caught errors or output data
  *
  * @param input The user input
+ * @param onProgress The function used to update the action progress
+ *
  * @returns The terminal block
  */
-const execute = async (input: string): Promise<TerminalBlock> => {
+const execute = async (
+  input: string,
+  onProgress: (percentage: number) => void,
+): Promise<TerminalBlock> => {
   const blockId = nanoid(16);
 
   // Get the start time stamp which will be used to
@@ -22,7 +27,7 @@ const execute = async (input: string): Promise<TerminalBlock> => {
 
   try {
     const parsed = parseInput(input);
-    const output = await executeInput(parsed);
+    const output = await executeInput(parsed, onProgress);
 
     // Get the end time stamp which along with the start time can be
     // used to capture the time it took for the input to be executed
