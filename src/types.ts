@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, Ref } from 'react';
+import { FunctionComponent, Ref } from 'react';
 import { ZodObject, ZodRawShape, z } from 'zod';
 import { Feature, FeatureMap } from './features';
 
@@ -30,16 +30,6 @@ type Intersect<T> = (T extends T ? (k: T) => void : never) extends ((k: infer I)
 export interface BaseProps<T extends HTMLElement = HTMLElement> {
   readonly internalRef?: Ref<T>;
   readonly className?: string;
-}
-
-/**
- * Like `FunctionComponent from `react` but for `async`
- * server components with a `Promise` return type
- *
- * - Generic type `T` for the props
- */
-export interface AsyncComponent<T extends object = never> {
-  (props: T): Promise<ReactElement<T>> | Promise<ReactElement>;
 }
 
 /**
