@@ -1,5 +1,15 @@
 @import 'tailwindcss';
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 @theme {
   --font-sans: var(--sans-font);
   --font-mono: var(--mono-font);
