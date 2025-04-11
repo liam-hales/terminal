@@ -53,7 +53,7 @@ const IpFeature: FunctionComponent<Props> = ({ data }): ReactElement<Props> => {
         (type === 'multi-version') && (
           <div className="flex flex-col gap-y-1 pt-4">
             <div className="flex flex-row">
-              <p className="w-24 font-mono text-sm text-blue-300">
+              <p className="w-24 font-mono text-sm text-lime-300">
                 IPv4
               </p>
               <p className="font-mono text-sm text-white">
@@ -61,7 +61,7 @@ const IpFeature: FunctionComponent<Props> = ({ data }): ReactElement<Props> => {
               </p>
             </div>
             <div className="flex flex-row">
-              <p className="w-24 font-mono text-sm text-blue-300">
+              <p className="w-24 font-mono text-sm text-lime-300">
                 IPv6
               </p>
               <p className="font-mono text-sm text-white">
