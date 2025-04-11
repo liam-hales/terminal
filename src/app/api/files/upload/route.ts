@@ -26,8 +26,8 @@ export const POST = async (request: Request): Promise<NextResponse> => {
       onBeforeGenerateToken: async () => {
         return {
           // Set the maximum size
-          // per file to 100mb
-          maximumSizeInBytes: 104_857_600,
+          // per file to 50 MB
+          maximumSizeInBytes: 52_428_800,
         };
       },
     });
