@@ -56,7 +56,7 @@ const fileUploadAction = async (
         name: name,
         size: size,
         contentType: contentType,
-        url: `${window.location.hostname}/files/${id}`,
+        url: `https://${window.location.hostname}/files/${id}`,
       };
     }),
   };
