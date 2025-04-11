@@ -20,6 +20,7 @@ const nextConfig = {
   productionBrowserSourceMaps: true,
   serverRuntimeConfig: {
     siteUrl: process.env.SITE_URL,
+    fileUploadToken: process.env.FILES_READ_WRITE_TOKEN,
   },
 };
 
