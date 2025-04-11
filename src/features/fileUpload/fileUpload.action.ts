@@ -28,10 +28,23 @@ const fileUploadAction = async (
   options: Options,
   onProgress: (percentage: number) => void,
 ): Promise<Props> => {
+  // Define the maximum file size
+  // in bytes (50 MB)
+  const maxFileSize = 52_428_800;
 
-  // Allow the user to select files, map the files into
-  // an array of upload promises and `await` on them all
+  // Allow the user to select files and make sure none
+  // of them exceed the maximum file size limit
   const files = await selectFiles();
+  const exceedsMaxSize = files.some((file) => file.size > maxFileSize);
+
+  // If any of the files exceed the maximum file
+  // size limit then throw an error
+  if (exceedsMaxSize === true) {
+    throw new Error('One or more files exceeds the maximum file size of 50 MB');
+  }
+
+  // Map the files into an array of upload
+  // promises and `await` on them all
   const blobs = await Promise.all(
     files.map(async (file) => {
       return await upload(file.name, file, {
