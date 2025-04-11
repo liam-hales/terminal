@@ -6,6 +6,7 @@ import HelpFeature from './help/helpFeature';
 import DatetimeFeature from './datetimeFeature';
 import KeyPairFeature from './keyPairFeature';
 import MacLookupFeature from './macLookupFeature';
+import FileUploadFeature from './fileUploadFeature';
 import Terminal from './terminal/terminal';
 import TerminalInput from './terminal/terminalInput';
 import TerminalExecutedBlock from './terminal/terminalExecutedBlock';
@@ -22,6 +23,7 @@ export {
   DatetimeFeature,
   KeyPairFeature,
   MacLookupFeature,
+  FileUploadFeature,
   HelpFeature,
   Terminal,
   TerminalInput,
