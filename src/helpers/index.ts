@@ -7,6 +7,7 @@ import decodeParam from './decodeParam.helper';
 import unwrapType from './unwrapType.helper';
 import execute from './execute.helper';
 import serverAction from './serverAction.helper';
+import selectFiles from './selectFiles.helper';
 
 export {
   buildFeature,
@@ -18,4 +19,5 @@ export {
   unwrapType,
   execute,
   serverAction,
+  selectFiles,
 };
