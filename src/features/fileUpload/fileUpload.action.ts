@@ -28,8 +28,9 @@ const fileUploadAction = async (
   options: Options,
   onProgress: (percentage: number) => void,
 ): Promise<Props> => {
-  const { zip } = options;
 
+  // Allow the user to select files, map the files into
+  // an array of upload promises and `await` on them all
   const files = await selectFiles();
   const blobs = await Promise.all(
     files.map(async (file) => {
@@ -46,6 +47,8 @@ const fileUploadAction = async (
       const { name, size } = files[index];
       const { url, contentType } = blob;
 
+      // Extract the unique file ID from the file URL which
+      // will be used for the file URL to display
       const [, id] = url
         .split('vercel-storage.com/');
 
