@@ -1518,13 +1518,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-spinners@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "cli-spinners@npm:3.2.0"
-  checksum: 10/6612d3880c87ad1749556ff463c41499ebeab4024ee4afc41a8731d0bcd1679b18bb67a98df7e647cfa49adcff1ce86c049e141a4da028bb12831d7f13111d89
-  languageName: node
-  linkType: hard
-
 "client-only@npm:0.0.1":
   version: 0.0.1
   resolution: "client-only@npm:0.0.1"
@@ -4400,7 +4393,6 @@ __metadata:
     "@vercel/blob": "npm:^0.27.3"
     camelcase-keys: "npm:^9.1.3"
     change-case: "npm:^5.4.4"
-    cli-spinners: "npm:^3.2.0"
     dayjs: "npm:^1.11.13"
     eslint: "npm:^9.23.0"
     eslint-config-next: "npm:^15.2.3"
