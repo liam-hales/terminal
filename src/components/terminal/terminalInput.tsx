@@ -40,7 +40,7 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
         <div className="flex flex-row items-center">
           {
             (loadingStatus !== 'idle') && (
-              <Loader className="h-6 pr-2" />
+              <Loader className="pr-4" />
             )
           }
           <input

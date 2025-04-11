@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, FunctionComponent, ReactElement } from 'react';
-import cliSpinners from 'cli-spinners';
 import { BaseProps } from '../../types';
 
 /**
@@ -10,8 +9,8 @@ import { BaseProps } from '../../types';
 type Props = BaseProps;
 
 /**
- * Used to render the loader which provides UI during data
- * loading using the `cli-spinners` package under the hood
+ * Used to render the loader which provides
+ * UI during data loading
  *
  * @param props The component props
  * @returns The `Loader` component
@@ -19,7 +18,15 @@ type Props = BaseProps;
 const Loader: FunctionComponent<Props> = ({ className }): ReactElement<Props> => {
   const [frameIndex, setFrameIndex] = useState<number>(0);
 
-  const { frames, interval } = cliSpinners.dots;
+  // Define the internal and frames
+  // used to display the loader
+  const interval = 120;
+  const frames = [
+    '-',
+    '\\',
+    '|',
+    '/',
+  ];
 
   /**
    * Used to update the frame index after a specific
@@ -40,12 +47,11 @@ const Loader: FunctionComponent<Props> = ({ className }): ReactElement<Props> =>
     return () => clearTimeout(timeoutId);
   }, [
     frameIndex,
-    frames,
-    interval,
+    frames.length,
   ]);
 
   return (
-    <p className={`${className ?? ''} text-2xl text-white`}>
+    <p className={`${className ?? ''} font-mono text-white`}>
       {frames[frameIndex]}
     </p>
   );
