@@ -11,6 +11,7 @@ const selectFiles = async (): Promise<File[]> => {
     // user can select file(s) to upload
     const input = document.createElement('input');
     input.type = 'file';
+    input.accept = '*';
     input.multiple = true;
 
     // Add the `change` event listener for when
