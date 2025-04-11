@@ -32,6 +32,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
     inputHistory,
     inputHistoryIndex,
     loadingStatus,
+    loadingPercentage,
     setInputValue,
     setInputHistoryIndex,
     execute,
@@ -213,7 +214,8 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
       <TerminalInput
         ref={inputRef}
         value={inputValue}
-        isLoading={loadingStatus !== 'idle'}
+        loadingStatus={loadingStatus}
+        loadingPercentage={loadingPercentage}
         isDisabled={loadingStatus !== 'idle'}
         onChange={setInputValue}
         onKeyDown={onKeyDown}
