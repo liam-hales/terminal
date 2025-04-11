@@ -22,6 +22,14 @@ const nextConfig = {
     siteUrl: process.env.SITE_URL,
     fileUploadToken: process.env.FILES_READ_WRITE_TOKEN,
   },
+  rewrites: () => {
+    return [
+      {
+        source: '/files/:path*',
+        destination: 'https://public.blob.vercel-storage.com/:path*',
+      },
+    ];
+  },
 };
 
 export default withAnalyser(nextConfig);
