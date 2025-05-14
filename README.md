@@ -110,6 +110,8 @@ v4.5.3
 
 ```sh
 SITE_URL = 'https://cli.liamhales.dev'
+FILE_STORE_ID = '******'
+FILE_READ_WRITE_TOKEN = '******'
 ```
 
 <br/>
