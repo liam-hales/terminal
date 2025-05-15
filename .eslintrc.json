@@ -130,6 +130,12 @@
         "trailingUnderscore": "forbid"
       }
     ],
+    "@typescript-eslint/no-unnecessary-condition": [
+      "error",
+      {
+        "allowConstantLoopConditions": "only-allowed-literals"
+      }
+    ],
     "react/function-component-definition": [
       "error",
       {
