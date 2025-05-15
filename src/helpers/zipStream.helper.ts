@@ -1,0 +1,75 @@
+import { AsyncZipDeflate, Zip } from 'fflate';
+
+/**
+ * Used to compress given file(s) into a
+ * `.zip` archive data stream
+ *
+ * @param files The files to compress
+ * @returns A readable `.zip` archive stream
+ */
+const zipStream = (files: File[]): ReadableStream => {
+  return new ReadableStream({
+    start: async function (controller) {
+
+      // Create the new zip archive
+      // used to compress files
+      const zip = new Zip((error, chunk, final) => {
+
+        // If there was an error then
+        // abort the stream
+        if (error != null) {
+          controller.error(error);
+          return;
+        }
+
+        // Add the chunk to the
+        // stream controller
+        controller.enqueue(chunk);
+
+        // If it's the final chunk to process
+        // then close the stream
+        if (final === true) {
+          controller.close();
+        }
+      });
+
+      // Map the files into an array of promises each reading the file
+      // stream and adding the data to a new deflate stream for the archive
+      await Promise.all(
+        files.map(async (file) => {
+          const deflate = new AsyncZipDeflate(file.name, {
+            level: 6,
+          });
+
+          // Add the deflate stream to the zip archive
+          // before reading the file stream
+          zip.add(deflate);
+
+          const reader = file
+            .stream()
+            .getReader();
+
+          // Read the file stream and push all
+          // the data to the deflate stream
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done === true) {
+              break;
+            }
+
+            deflate.push(value, false);
+          }
+
+          // Add an empty `Uint8Array` as the
+          // final chunk of data
+          deflate.push(new Uint8Array(0), true);
+        }),
+      );
+
+      // Finalise the zip archive
+      zip.end();
+    },
+  });
+};
+
+export default zipStream;

@@ -8,6 +8,7 @@ import unwrapType from './unwrapType.helper';
 import execute from './execute.helper';
 import serverAction from './serverAction.helper';
 import selectFiles from './selectFiles.helper';
+import zipStream from './zipStream.helper';
 
 export {
   buildFeature,
@@ -20,4 +21,5 @@ export {
   execute,
   serverAction,
   selectFiles,
+  zipStream,
 };
