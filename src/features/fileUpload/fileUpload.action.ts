@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
 import { fileUploadOptions } from '.';
-import { selectFiles } from '../../helpers';
+import { selectFiles, zipStream } from '../../helpers';
 import { upload } from '@vercel/blob/client';
 import { FileUploadFeature } from '../../components';
 
@@ -28,6 +28,8 @@ const fileUploadAction = async (
   options: Options,
   onProgress: (percentage: number) => void,
 ): Promise<Props> => {
+  const { zip } = options;
+
   // Define the maximum file size
   // in bytes (50 MB)
   const maxFileSize = 52_428_800;
@@ -43,11 +45,24 @@ const fileUploadAction = async (
     throw new Error('One or more files exceeds the maximum file size of 50 MB');
   }
 
-  // Map the files into an array of upload
-  // promises and `await` on them all
+  // Generate the array of data to upload
+  // based on the command options
+  const toUpload = (zip === true)
+    ? [zipStream(files)]
+    : files;
+
+  // Map the data to upload into an array of
+  // upload promises and `await` on them all
   const blobs = await Promise.all(
-    files.map(async (file) => {
-      return await upload(file.name, file, {
+    toUpload.map(async (file) => {
+
+      // Workout the name based on
+      // the data structure
+      const name = (file instanceof ReadableStream)
+        ? 'archive.zip'
+        : file.name;
+
+      return await upload(name, file, {
         access: 'public',
         handleUploadUrl: '/api/files/upload',
         onUploadProgress: ({ percentage }) => onProgress(percentage),
@@ -57,8 +72,13 @@ const fileUploadAction = async (
 
   return {
     files: blobs.map((blob, index) => {
-      const { name, size } = files[index];
-      const { url, contentType } = blob;
+      const { pathname, url, contentType } = blob;
+
+      // Extract the file size (not supported for zip streams)
+      const data = toUpload[index];
+      const size = (data instanceof ReadableStream)
+        ? 0
+        : data.size;
 
       // Extract the unique file ID from the file URL which
       // will be used for the file URL to display
@@ -66,7 +86,7 @@ const fileUploadAction = async (
         .split('vercel-storage.com/');
 
       return {
-        name: name,
+        name: pathname,
         size: size,
         contentType: contentType,
         url: `https://${window.location.hostname}/files/${id}`,
