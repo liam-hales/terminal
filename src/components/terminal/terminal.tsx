@@ -31,8 +31,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
     blocks,
     inputHistory,
     inputHistoryIndex,
-    loadingStatus,
-    loadingPercentage,
+    loading,
     setInputValue,
     setInputHistoryIndex,
     execute,
@@ -111,7 +110,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
 
         // If the terminal is loading then return to avoid
         // executing the same command multiple times
-        if (loadingStatus !== 'idle') {
+        if (loading.status !== 'idle') {
           return;
         }
 
@@ -214,9 +213,8 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
       <TerminalInput
         ref={inputRef}
         value={inputValue}
-        loadingStatus={loadingStatus}
-        loadingPercentage={loadingPercentage}
-        isDisabled={loadingStatus !== 'idle'}
+        loading={loading}
+        isDisabled={loading.status !== 'idle'}
         onChange={setInputValue}
         onKeyDown={onKeyDown}
       />

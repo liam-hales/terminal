@@ -2,15 +2,14 @@ import { FunctionComponent, KeyboardEvent, ReactElement } from 'react';
 import { BaseProps } from '../../types';
 import { Loader, ProgressBar } from '../common';
 import { withRef } from '../../helpers';
-import { TerminalLoadingStatus } from '../../context/types';
+import { TerminalLoading } from '../../context/types';
 
 /**
  * The `TerminalInput` component props
  */
 interface Props extends BaseProps<HTMLInputElement> {
   readonly value: string;
-  readonly loadingStatus?: TerminalLoadingStatus;
-  readonly loadingPercentage?: number;
+  readonly loading?: TerminalLoading;
   readonly isDisabled?: boolean;
   readonly onChange: (value: string) => void;
   readonly onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
@@ -27,8 +26,10 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
   const {
     internalRef,
     value,
-    loadingStatus = 'idle',
-    loadingPercentage = 0,
+    loading = {
+      status: 'idle',
+      progress: 0,
+    },
     isDisabled = false,
     onChange,
     onKeyDown,
@@ -39,7 +40,7 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
       <div className="flex flex-col pt-4 pb-4 pl-6 pr-6">
         <div className="flex flex-row items-center">
           {
-            (loadingStatus !== 'idle') && (
+            (loading.status !== 'idle') && (
               <Loader className="pr-4" />
             )
           }
@@ -62,8 +63,8 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
           />
         </div>
         {
-          (loadingStatus === 'long-running') && (
-            <ProgressBar percentage={loadingPercentage} />
+          (loading.status === 'long-running') && (
+            <ProgressBar percentage={loading.percentage} />
           )
         }
       </div>

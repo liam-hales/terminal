@@ -1,10 +1,13 @@
 import { TerminalBlock } from '../types';
 
 /**
- * Describes the different
- * terminal loading statuses
+ * Describes the terminal loading status used for when
+ * the terminal is executing a command action
  */
-export type TerminalLoadingStatus = 'idle' | 'loading' | 'long-running';
+export interface TerminalLoading {
+  readonly status: 'idle' | 'loading' | 'long-running';
+  readonly percentage: number;
+}
 
 /**
  * Describes the terminal state which consists
@@ -15,8 +18,7 @@ export interface TerminalState {
   readonly blocks: TerminalBlock[];
   readonly inputHistory: string[];
   readonly inputHistoryIndex: number;
-  readonly loadingStatus: TerminalLoadingStatus;
-  readonly loadingPercentage: number;
+  readonly loading: TerminalLoading;
 }
 
 /**
