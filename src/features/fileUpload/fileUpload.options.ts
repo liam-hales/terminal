@@ -12,7 +12,7 @@ const fileUploadOptions = z.object({
     .boolean()
     .optional()
     .default(false)
-    .describe('Compress and zip the file(s) before uploading'),
+    .describe('Compress and archive the file(s) into a .zip before uploading'),
 });
 
 export default fileUploadOptions;
