@@ -6,6 +6,7 @@ import { BaseProps } from '../../types';
  */
 interface Props extends BaseProps {
   readonly percentage: number;
+  readonly message?: string;
 }
 
 /**
@@ -15,10 +16,13 @@ interface Props extends BaseProps {
  * @example
  * [#########_______] 52%
  *
- * @param percentage
- * @constructor
+ * @example
+ * Message [###########_____] 62%
+ *
+ * @param props The component props
+ * @returns The `ProgressBar` component
  */
-const ProgressBar: FunctionComponent<Props> = ({ percentage }): ReactElement<Props> => {
+const ProgressBar: FunctionComponent<Props> = ({ percentage, message }): ReactElement<Props> => {
 
   // Calculate the `#` and `_` characters
   // to use to display the progress bar
@@ -28,11 +32,18 @@ const ProgressBar: FunctionComponent<Props> = ({ percentage }): ReactElement<Pro
 
   return (
     <div className="flex flex-row gap-4 pt-4">
+      {
+        (message != null) && (
+          <p className="font-mono text-white text-sm">
+            {message}
+          </p>
+        )
+      }
       <p className="font-mono text-white text-sm">
         {`[${'#'.repeat(filled)}${'_'.repeat(empty)}]`}
       </p>
       <p className="font-mono text-white text-sm">
-        {`${percentage}%`}
+        {`${percentage.toFixed((2))}%`}
       </p>
     </div>
   );

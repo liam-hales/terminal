@@ -41,11 +41,16 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
    * status when called by the action
    *
    * @param percentage The progress percentage
+   * @param message The progress message
    */
-  const onProgress = (percentage: number): void => {
+  const onProgress = (
+    percentage: number,
+    message?: string,
+  ): void => {
     setLoading({
       status: 'long-running',
       percentage: percentage,
+      message: message,
     });
   };
 

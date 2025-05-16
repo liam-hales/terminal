@@ -47,7 +47,7 @@ export interface BaseProps<T extends HTMLElement = HTMLElement> {
  * Describes the function which is used to update
  * the current progress of an action
  */
-export type OnProgress = (percentage: number) => void;
+export type OnProgress = (percentage: number, message?: string) => void;
 
 /**
  * Used to describe a feature that can

@@ -64,7 +64,10 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
         </div>
         {
           (loading.status === 'long-running') && (
-            <ProgressBar percentage={loading.percentage} />
+            <ProgressBar
+              percentage={loading.percentage}
+              message={loading.message}
+            />
           )
         }
       </div>

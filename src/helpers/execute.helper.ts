@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { TerminalBlock } from '../types';
+import { OnProgress, TerminalBlock } from '../types';
 import { ValidationException } from '../exceptions';
 import { parseInput, executeInput } from '.';
 
@@ -17,7 +17,7 @@ import { parseInput, executeInput } from '.';
  */
 const execute = async (
   input: string,
-  onProgress: (percentage: number) => void,
+  onProgress: OnProgress,
 ): Promise<TerminalBlock> => {
   const blockId = nanoid(16);
 

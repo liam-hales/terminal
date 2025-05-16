@@ -7,6 +7,7 @@ import { TerminalBlock } from '../types';
 export interface TerminalLoading {
   readonly status: 'idle' | 'loading' | 'long-running';
   readonly percentage: number;
+  readonly message?: string;
 }
 
 /**
