@@ -38,44 +38,42 @@ const zipStream = (files: File[], onProgress?: (percentage: number) => void): Re
         }
       });
 
-      // Map the files into an array of promises each reading the file
-      // stream and adding the data to a new deflate stream for the archive
-      await Promise.all(
-        files.map(async (file) => {
-          const deflate = new AsyncZipDeflate(file.name, {
-            level: 6,
-          });
+      // Loop through the files and add each one to the archive
+      // Processing the files sequentially helps to stop the main thread from being blocked
+      for (const file of files) {
+        const deflate = new AsyncZipDeflate(file.name, {
+          level: 6,
+        });
 
-          // Add the deflate stream to the zip archive
-          // before reading the file stream
-          zip.add(deflate);
+        // Add the deflate stream to the zip archive
+        // before reading the file stream
+        zip.add(deflate);
 
-          const reader = file
-            .stream()
-            .getReader();
+        const reader = file
+          .stream()
+          .getReader();
 
-          // Read the file stream and push all
-          // the data to the deflate stream
-          while (true) {
-            const { value, done } = await reader.read();
-            if (done === true) {
-              break;
-            }
-
-            // Update the processed bytes and pass the
-            // percentage to the `onProgress` function
-            processedBytes = processedBytes + value.byteLength;
-            onProgress?.((100 / totalBytes) * processedBytes);
-
-            // Add the value to the deflate stream
-            deflate.push(value, false);
+        // Read the file stream and push all
+        // the data to the deflate stream
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done === true) {
+            break;
           }
 
-          // Add an empty `Uint8Array` as the
-          // final chunk of data
-          deflate.push(new Uint8Array(0), true);
-        }),
-      );
+          // Update the processed bytes and pass the
+          // percentage to the `onProgress` function
+          processedBytes = processedBytes + value.byteLength;
+          onProgress?.((100 / totalBytes) * processedBytes);
+
+          // Add the value to the deflate stream
+          deflate.push(value, false);
+        }
+
+        // Add an empty `Uint8Array` as the
+        // final chunk of data
+        deflate.push(new Uint8Array(0), true);
+      }
 
       // Finalise the zip archive
       zip.end();
