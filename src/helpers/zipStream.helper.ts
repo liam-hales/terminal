@@ -5,9 +5,14 @@ import { AsyncZipDeflate, Zip } from 'fflate';
  * `.zip` archive data stream
  *
  * @param files The files to compress
+ * @param onProgress The function used to update the progress
+ *
  * @returns A readable `.zip` archive stream
  */
-const zipStream = (files: File[]): ReadableStream => {
+const zipStream = (files: File[], onProgress?: (percentage: number) => void): ReadableStream => {
+  const totalBytes = files.reduce((total, file) => total + file.size, 0);
+  let processedBytes = 0;
+
   return new ReadableStream({
     start: async function (controller) {
 
@@ -57,6 +62,12 @@ const zipStream = (files: File[]): ReadableStream => {
               break;
             }
 
+            // Update the processed bytes and pass the
+            // percentage to the `onProgress` function
+            processedBytes = processedBytes + value.byteLength;
+            onProgress?.((100 / totalBytes) * processedBytes);
+
+            // Add the value to the deflate stream
             deflate.push(value, false);
           }
 
