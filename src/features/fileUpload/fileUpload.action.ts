@@ -4,6 +4,7 @@ import { fileUploadOptions } from '.';
 import { selectFiles, zipStream } from '../../helpers';
 import { upload } from '@vercel/blob/client';
 import { FileUploadFeature } from '../../components';
+import { OnProgress } from '../../types';
 
 /**
  * The file upload feature options
@@ -26,7 +27,7 @@ type Props = ComponentProps<typeof FileUploadFeature>;
  */
 const fileUploadAction = async (
   options: Options,
-  onProgress: (percentage: number) => void,
+  onProgress: OnProgress,
 ): Promise<Props> => {
   const { zip } = options;
 
@@ -48,7 +49,7 @@ const fileUploadAction = async (
   // Generate the array of data to upload
   // based on the command options
   const toUpload = (zip === true)
-    ? [zipStream(files)]
+    ? [zipStream(files, (percentage) => onProgress(percentage, 'Archiving'))]
     : files;
 
   // Map the data to upload into an array of
@@ -65,7 +66,7 @@ const fileUploadAction = async (
       return await upload(name, file, {
         access: 'public',
         handleUploadUrl: '/api/files/upload',
-        onUploadProgress: ({ percentage }) => onProgress(percentage),
+        onUploadProgress: ({ percentage }) => onProgress(percentage, 'Uploading'),
       });
     }),
   );
