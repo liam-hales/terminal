@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 /**
  * The datetime options schema used to describe the
- * date feature command options using `zod`.
+ * datetime feature command options using `zod`.
  *
  * This options schema is used for
  * validation and type inference.
