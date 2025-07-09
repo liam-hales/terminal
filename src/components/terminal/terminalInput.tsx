@@ -36,40 +36,42 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
   } = props;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-black border-solid border-t-[1px] border-zinc-900">
-      <div className="flex flex-col pt-4 pb-4 pl-6 pr-6">
-        <div className="flex flex-row items-center">
+    <div className="fixed bottom-0 left-0 right-0 bg-black">
+      <div className="mb-2 ml-2 mr-2 bg-zinc-950 border-solid border-[1px] rounded-lg border-zinc-900">
+        <div className="flex flex-col pt-4 pb-4 pl-6 pr-6">
+          <div className="flex flex-row items-center">
+            {
+              (loading.status !== 'idle') && (
+                <Loader className="pr-4" />
+              )
+            }
+            <input
+              ref={internalRef}
+              className="w-full h-6 text-white placeholder-zinc-700 font-mono text-sm bg-transparent outline-none"
+              placeholder=">_ Enter command"
+              value={value}
+              disabled={isDisabled}
+              onKeyDown={(event) => onKeyDown(event)}
+              onChange={(event) => {
+
+                // Destructure the event and the event target
+                // and pass its value to `onChange`
+                const { target } = event;
+                const { value } = target;
+
+                onChange(value);
+              }}
+            />
+          </div>
           {
-            (loading.status !== 'idle') && (
-              <Loader className="pr-4" />
+            (loading.status === 'long-running') && (
+              <ProgressBar
+                percentage={loading.percentage}
+                message={loading.message}
+              />
             )
           }
-          <input
-            ref={internalRef}
-            className="w-full h-6 text-white placeholder-zinc-700 font-mono text-sm bg-transparent outline-none"
-            placeholder=">_ Enter command"
-            value={value}
-            disabled={isDisabled}
-            onKeyDown={(event) => onKeyDown(event)}
-            onChange={(event) => {
-
-              // Destructure the event and the event target
-              // and pass its value to `onChange`
-              const { target } = event;
-              const { value } = target;
-
-              onChange(value);
-            }}
-          />
         </div>
-        {
-          (loading.status === 'long-running') && (
-            <ProgressBar
-              percentage={loading.percentage}
-              message={loading.message}
-            />
-          )
-        }
       </div>
     </div>
   );
