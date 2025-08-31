@@ -21,7 +21,7 @@ const toBuffer = (value: unknown): Buffer => {
  * Used to build the `favicon.ico` and `.webp`
  * icons from the `icon.svg` file
  */
-(async () => {
+void (async () => {
   const publicPath = join(process.cwd(), '/public');
   const iconPath = join(publicPath, '/icon.svg');
 
