@@ -96,7 +96,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
    *
    * @param event The keyboard event
    */
-  const onKeyDown = async (event: KeyboardEvent<HTMLInputElement>): Promise<void> => {
+  const _onKeyDown = async (event: KeyboardEvent<HTMLInputElement>): Promise<void> => {
     const { key } = event;
 
     switch (key) {
@@ -126,7 +126,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
 
       case 'ArrowUp': {
         // Prevent the default input behavior to
-        // proven incorrect cursor position
+        // prevent incorrect cursor position
         event.preventDefault();
 
         const index = inputHistoryIndex + 1;
@@ -216,7 +216,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
         loading={loading}
         isDisabled={loading.status !== 'idle'}
         onChange={setInputValue}
-        onKeyDown={onKeyDown}
+        onKeyDown={_onKeyDown}
       />
     </>
   );

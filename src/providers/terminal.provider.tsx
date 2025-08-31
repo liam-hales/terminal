@@ -43,7 +43,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
    * @param percentage The progress percentage
    * @param message The progress message
    */
-  const onProgress = (
+  const _onProgress = (
     percentage: number,
     message?: string,
   ): void => {
@@ -68,7 +68,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
 
     // Executes the input and
     // receives the terminal block
-    const block = await execute(input, onProgress);
+    const block = await execute(input, _onProgress);
 
     // All errors are handled in the `execute` function
     // The terminal block can be added to state
