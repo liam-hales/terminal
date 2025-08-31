@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { BaseProps } from '../types';
 
 /**
@@ -19,7 +19,7 @@ interface Props extends BaseProps {
  */
 const JWTFeature: FunctionComponent<Props> = ({ header, payload, signature }): ReactElement<Props> => {
   return (
-    <>
+    <Fragment>
       <p className="font-mono text-sm text-white">
         Decoded Token
       </p>
@@ -38,7 +38,7 @@ const JWTFeature: FunctionComponent<Props> = ({ header, payload, signature }): R
         {' '}
         {`"${signature}"`}
       </pre>
-    </>
+    </Fragment>
   );
 };
 

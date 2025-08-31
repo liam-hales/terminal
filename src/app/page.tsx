@@ -1,6 +1,6 @@
 'use client';
 
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { CodeInline, Typewriter } from '../components/common';
 import Link from 'next/link';
 
@@ -12,7 +12,7 @@ import Link from 'next/link';
  */
 const AppPage: FunctionComponent = (): ReactElement => {
   return (
-    <>
+    <Fragment>
       <div className="flex flex-col pb-28">
         <div className="flex flex-col pb-7">
           <Typewriter
@@ -71,7 +71,7 @@ const AppPage: FunctionComponent = (): ReactElement => {
           </p>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 

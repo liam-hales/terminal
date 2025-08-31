@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { BaseProps } from '../types';
 
 /**
@@ -43,7 +43,7 @@ const IpFeature: FunctionComponent<Props> = ({ data }): ReactElement<Props> => {
   const unknown = 'Unknown, could not resolve address';
 
   return (
-    <>
+    <Fragment>
       {
         (type === 'single-version') && (
           <p className="font-mono text-sm text-white">{data.address}</p>
@@ -71,7 +71,7 @@ const IpFeature: FunctionComponent<Props> = ({ data }): ReactElement<Props> => {
           </div>
         )
       }
-    </>
+    </Fragment>
   );
 };
 

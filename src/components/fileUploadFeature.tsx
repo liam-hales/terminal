@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { BaseProps } from '../types';
 
 /**
@@ -32,7 +32,7 @@ const FileUploadFeature: FunctionComponent<Props> = ({ files }): ReactElement<Pr
   ];
 
   return (
-    <>
+    <Fragment>
       <div className="flex flex-col gap-y-8 pt-4">
         {
           files.map((file) => {
@@ -88,7 +88,7 @@ const FileUploadFeature: FunctionComponent<Props> = ({ files }): ReactElement<Pr
           })
         }
       </div>
-    </>
+    </Fragment>
   );
 };
 

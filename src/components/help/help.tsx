@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { features } from '../../features';
 import { CodeInline } from '../common';
 
@@ -10,7 +10,7 @@ import { CodeInline } from '../common';
  */
 const Help: FunctionComponent = (): ReactElement => {
   return (
-    <>
+    <Fragment>
       <p className="font-mono text-sm text-white pb-6">
         Usage:
         <CodeInline className="ml-2">
@@ -29,7 +29,7 @@ const Help: FunctionComponent = (): ReactElement => {
               const { name, description } = command;
 
               return (
-                <>
+                <Fragment key={`feature-${name}`}>
                   <div className="w-[18%]">
                     <CodeInline>
                       {name}
@@ -43,7 +43,7 @@ const Help: FunctionComponent = (): ReactElement => {
                       {description}
                     </p>
                   </div>
-                </>
+                </Fragment>
               );
             })
         }
@@ -59,7 +59,7 @@ const Help: FunctionComponent = (): ReactElement => {
         </CodeInline>
         to get help for a specific command
       </p>
-    </>
+    </Fragment>
   );
 };
 

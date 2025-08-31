@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { BaseProps } from '../types';
 
 /**
@@ -18,7 +18,7 @@ interface Props extends BaseProps {
  */
 const KeyPairFeature: FunctionComponent<Props> = ({ publicKey, privateKey }): ReactElement<Props> => {
   return (
-    <>
+    <Fragment>
       <p className="font-mono text-sm text-white">
         Public Key
       </p>
@@ -31,7 +31,7 @@ const KeyPairFeature: FunctionComponent<Props> = ({ publicKey, privateKey }): Re
       <pre className="font-mono text-sm text-blue-300 pt-2">
         {privateKey}
       </pre>
-    </>
+    </Fragment>
   );
 };
 

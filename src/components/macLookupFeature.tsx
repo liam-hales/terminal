@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { BaseProps } from '../types';
 
 /**
@@ -28,7 +28,7 @@ const MacLookupFeature: FunctionComponent<Props> = ({ type, startHex, endHex, co
 
   const { lineOne, lineTwo, lineThree, country } = address;
   return (
-    <>
+    <Fragment>
       <p className="font-mono text-sm text-white">
         {company}
       </p>
@@ -81,7 +81,7 @@ const MacLookupFeature: FunctionComponent<Props> = ({ type, startHex, endHex, co
           </div>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 

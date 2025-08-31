@@ -1,6 +1,6 @@
 'use client';
 
-import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef } from 'react';
+import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef, Fragment } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { BaseProps } from '../../types';
 import { TerminalInput, TerminalValidationErrorBlock, TerminalErrorBlock, TerminalExecutedBlock } from '..';
@@ -163,7 +163,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   };
 
   return (
-    <>
+    <Fragment>
       <div className="h-full flex flex-col-reverse pb-18 overflow-y-auto no-scrollbar">
         {
           blocks.map((block) => {
@@ -218,7 +218,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
         onChange={setInputValue}
         onKeyDown={_onKeyDown}
       />
-    </>
+    </Fragment>
   );
 };
 

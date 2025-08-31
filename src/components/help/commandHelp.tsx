@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { kebabCase } from 'change-case';
 import { BaseProps, FeatureCommand } from '../../types';
 import { extractKeys, unwrapType } from '../../helpers';
@@ -24,7 +24,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
   const { shape } = options;
 
   return (
-    <>
+    <Fragment>
       <p className="font-mono text-sm text-white">
         Usage:
         <CodeInline className="ml-2">
@@ -53,7 +53,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
               const option = kebabCase(key);
 
               return (
-                <>
+                <Fragment key={`command-option-${option}`}>
                   <div className="w-[18%]">
                     <CodeInline>
                       {`--${option}`}
@@ -134,12 +134,12 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                       {description}
                     </p>
                   </div>
-                </>
+                </Fragment>
               );
             })
         }
       </div>
-    </>
+    </Fragment>
   );
 };
 

@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { BaseProps } from '../types';
 
 /**
@@ -26,7 +26,7 @@ const DatetimeFeature: FunctionComponent<Props> = ({ pretty, data }): ReactEleme
 
   const { date, time } = pretty;
   return (
-    <>
+    <Fragment>
       <p className="font-mono text-sm text-white">
         {date}
       </p>
@@ -54,7 +54,7 @@ const DatetimeFeature: FunctionComponent<Props> = ({ pretty, data }): ReactEleme
           })
         }
       </div>
-    </>
+    </Fragment>
   );
 };
 
