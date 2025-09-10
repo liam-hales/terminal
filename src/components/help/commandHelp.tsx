@@ -3,7 +3,6 @@ import { kebabCase } from 'change-case';
 import { BaseProps, FeatureCommand } from '../../types';
 import { extractKeys, unwrapType } from '../../helpers';
 import { CodeInline } from '../common';
-import { ZodFirstPartyTypeKind } from 'zod';
 
 /**
  * The `CommandHelp` component props
@@ -47,8 +46,8 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
 
               // Fully unwrap the Zod type to
               // extract the option details
-              const { _def: def, description } = shape[key];
-              const { _def: unwrappedDef } = unwrapType(shape[key]);
+              const { def, description } = shape[key];
+              const { def: unwrappedDef } = unwrapType(shape[key]);
 
               const option = kebabCase(key);
 
@@ -62,26 +61,24 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                   <div className="w-[32%]">
                     {
                       (() => {
-                        if (unwrappedDef.typeName === ZodFirstPartyTypeKind.ZodUnion) {
+                        if (unwrappedDef.type === 'union') {
 
                           // Map the union options into all possible option
                           // values to display for the command help
                           const values = unwrappedDef.options
                             .map((option) => {
-                              const { _def } = option;
-                              const { typeName } = _def;
+                              const { def } = option;
 
-                              // If the option is a Zod literal then it
+                              // If the option is a literal then it
                               // will have a value we can use
-                              if (typeName === ZodFirstPartyTypeKind.ZodLiteral) {
-                                return (typeof _def.value === 'string') ? `"${_def.value}"` : _def.value;
+                              if (def.type === 'literal') {
+                                const [value] = def.values;
+                                return (typeof value === 'string') ? `"${value}"` : value;
                               }
 
-                              // There is no value so instead we can extract
-                              // the type from the Zod definition type name
-                              return typeName
-                                .replace('Zod', '')
-                                .toLowerCase();
+                              // There is no value so instead
+                              // we can use the type value
+                              return def.type;
                             })
                             .join(' | ');
 
@@ -92,17 +89,9 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                           );
                         }
 
-                        const { typeName } = unwrappedDef;
-
-                        // Extract the type from the
-                        // Zod definition type name
-                        const type = typeName
-                          .replace('Zod', '')
-                          .toLowerCase();
-
                         return (
                           <CodeInline>
-                            {`[${type}]`}
+                            {`[${unwrappedDef.type}]`}
                           </CodeInline>
                         );
                       })()
@@ -110,11 +99,11 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                     {
                       (() => {
                         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                        if (def.typeName === ZodFirstPartyTypeKind.ZodDefault) {
+                        if (def.type === 'default') {
 
                           // Extract the default value from the definition and wrap said
                           // value in quotes if it is a string to display it correctly
-                          const defaultValue = def.defaultValue();
+                          const { defaultValue } = def;
                           const value = (typeof defaultValue === 'string') ? `"${defaultValue}"` : defaultValue;
 
                           return (

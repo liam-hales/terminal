@@ -1,5 +1,5 @@
 import { FunctionComponent, Ref } from 'react';
-import { ZodObject, ZodRawShape, z } from 'zod';
+import { ZodObject, z } from 'zod';
 import { Feature, FeatureMap } from './features';
 
 /**
@@ -59,7 +59,7 @@ export type OnProgress = (percentage: number, message?: string) => void;
  */
 export interface IFeature<
   F extends FeatureId,
-  O extends ZodObject<ZodRawShape>,
+  O extends ZodObject,
   P extends object,
 > {
   readonly id: F;
@@ -76,7 +76,7 @@ export interface IFeature<
  * - Generic type `P` for the component props
  */
 export interface ICommand<
-  O extends ZodObject<ZodRawShape>,
+  O extends ZodObject,
   P extends object,
 > {
   readonly name: string;

@@ -165,31 +165,19 @@ const executeInput = async (
       // For an invalid union
       // validation issue
       case 'invalid_union': {
-        const { unionErrors } = issue;
+        const { errors } = issue;
 
-        // Flat map the union errors into
-        // the `invalid_literal` issues
-        const issues = unionErrors.flatMap((error) => {
-          const { issues } = error;
-          return issues.filter((issue) => issue.code === 'invalid_literal');
-        });
-
-        // If every issue from the union errors has a missing `received` value
-        // then the issue is considered a required options error
-        const isRequired = issues.every((issue) => issue.received == null);
-        const expectedValues = issues
-          .map((issue) => `"${issue.expected}"`)
+        // Extract the expected values
+        // from the errors
+        const expectedValues = errors
+          .flatMap((error) => error.filter((issue) => issue.code === 'invalid_value'))
+          .map((issue) => `"${issue.values.toString()}"`)
           .join(', ');
 
-        return (isRequired === true)
-          ? {
-              match: inputCommand,
-              message: `Command is missing required option "--${kebabCase(key)} <${kebabCase(key)}>"`,
-            }
-          : {
-              match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
-              message: `Expected one of the following values: ${expectedValues}`,
-            };
+        return {
+          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          message: `Expected one of the following values: ${expectedValues}`,
+        };
       }
 
       // For any other

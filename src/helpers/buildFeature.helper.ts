@@ -1,4 +1,4 @@
-import { z, ZodObject, ZodRawShape } from 'zod';
+import { z, ZodObject } from 'zod';
 import { FeatureId, IFeature } from '../types';
 
 /**
@@ -29,7 +29,7 @@ const commonOptions = z.object({
  */
 const buildFeature = <
   F extends FeatureId,
-  O extends ZodObject<ZodRawShape>,
+  O extends ZodObject,
   P extends object,
 >(config: IFeature<F, O, P>) => {
   const { command } = config;
@@ -41,6 +41,9 @@ const buildFeature = <
     ...config,
     command: {
       ...command,
+      // Using `.merge` is still required as the types
+      // when using `.extends` does not work the same
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       options: commonOptions.merge(options),
     },
   };
