@@ -162,21 +162,63 @@ const executeInput = async (
         });
       }
 
+      // For an invalid type
+      // validation issue
+      case 'invalid_type': {
+        const { expected } = issue;
+
+        // If the input options does not contain a value for the key then this
+        // is considered a required option otherwise there would be no error
+        if (inputOptions[key] == null) {
+          return {
+            match: inputCommand,
+            message: `Command is missing required option "--${kebabCase(key)} <${kebabCase(key)}>"`,
+          };
+        }
+
+        return {
+          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          message: `Invalid type, expected: "${expected}"`,
+        };
+      }
+
       // For an invalid union
       // validation issue
       case 'invalid_union': {
         const { errors } = issue;
 
-        // Extract the expected values
-        // from the errors
+        // If the input options does not contain a value for the key then this
+        // is considered a required option otherwise there would be no error
+        if (inputOptions[key] == null) {
+          return {
+            match: inputCommand,
+            message: `Command is missing required option "--${kebabCase(key)} <${kebabCase(key)}>"`,
+          };
+        }
+
+        // Extract both the expected types and values
+        // from the errors for the error message
         const expectedValues = errors
-          .flatMap((error) => error.filter((issue) => issue.code === 'invalid_value'))
-          .map((issue) => `"${issue.values.toString()}"`)
+          .flatMap((error) => {
+
+            const types = error
+              .filter((issue) => issue.code === 'invalid_type')
+              .map((error) => `"${error.expected}"`);
+
+            const values = error
+              .filter((issue) => issue.code === 'invalid_value')
+              .map((error) => `"${error.values.toString()}"`);
+
+            return [
+              ...types,
+              ...values,
+            ];
+          })
           .join(', ');
 
         return {
           match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
-          message: `Expected one of the following values: ${expectedValues}`,
+          message: `Invalid value, expected: ${expectedValues}`,
         };
       }
 
@@ -184,22 +226,10 @@ const executeInput = async (
       // validation issue
       default: {
         const { message } = issue;
-
-        // If the issue message contains `required` then the
-        // issue is considered a required options error
-        const isRequired = message
-          .toLowerCase()
-          .includes('required');
-
-        return (isRequired === true)
-          ? {
-              match: inputCommand,
-              message: `Command is missing required option "--${kebabCase(key)} <${kebabCase(key)}>"`,
-            }
-          : {
-              match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
-              message: message,
-            };
+        return {
+          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          message: message,
+        };
       }
     }
   });
