@@ -10,13 +10,16 @@ import { z } from 'zod';
 const whoisOptions = z.object({
   search: z
     .string()
+    .min(1)
     .describe('The domain or IP address to search'),
   server: z
     .string()
+    .min(1)
     .optional()
     .describe('The whois server to search against'),
   follow: z
     .number()
+    .int()
     .min(0)
     .optional()
     .default(0)

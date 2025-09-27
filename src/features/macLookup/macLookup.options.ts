@@ -10,8 +10,9 @@ import { z } from 'zod';
 const macLookupOptions = z.object({
   address: z
     .string()
+    .min(1)
     .regex(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/, {
-      message: 'Should be a valid MAC address',
+      message: 'MAC address',
     })
     .describe('The MAC address to lookup'),
 });

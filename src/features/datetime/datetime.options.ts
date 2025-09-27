@@ -10,7 +10,8 @@ import { z } from 'zod';
 const dateOptions = z.object({
   value: z
     .union([
-      z.string(),
+      z.iso.date(),
+      z.iso.datetime(),
       z
         .number()
         .int()
@@ -20,7 +21,9 @@ const dateOptions = z.object({
     .describe('The UTC datetime value in any format such as an ISO string or UNIX time in milliseconds. If omitted, the current datetime is used'),
   timezone: z
     .union([
-      z.string(),
+      z
+        .string()
+        .min(1),
       z.literal('current'),
     ])
     .optional()

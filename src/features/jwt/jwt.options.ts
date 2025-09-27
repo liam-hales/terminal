@@ -10,6 +10,7 @@ import { z } from 'zod';
 const jwtOptions = z.object({
   token: z
     .string()
+    .min(1)
     .describe('The token to decode and inspect'),
 });
 
