@@ -137,11 +137,8 @@ const executeInput = async (
     // the issue will mostly always be a single item array
     const key = path.join('.');
 
-    // Switch for the validation `issueCode`
     switch (code) {
 
-      // For an unrecognized keys
-      // validation issue
       case 'unrecognized_keys': {
         const { keys } = issue;
 
@@ -162,8 +159,6 @@ const executeInput = async (
         });
       }
 
-      // For an invalid type
-      // validation issue
       case 'invalid_type': {
         const { expected } = issue;
 
@@ -182,8 +177,6 @@ const executeInput = async (
         };
       }
 
-      // For an invalid union
-      // validation issue
       case 'invalid_union': {
         const { errors } = issue;
 
