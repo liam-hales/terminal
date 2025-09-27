@@ -177,6 +177,26 @@ const executeInput = async (
         };
       }
 
+      case 'invalid_format': {
+        const { format, message } = issue;
+
+        return {
+          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          message: (format === 'regex')
+            ? `Invalid format, expected: "${message}"`
+            : `Invalid format, expected: "${format}"`,
+        };
+      }
+
+      case 'invalid_value': {
+        const { values } = issue;
+
+        return {
+          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          message: `Invalid value, expected: "${values.toString()}"`,
+        };
+      }
+
       case 'invalid_union': {
         const { errors } = issue;
 
@@ -189,29 +209,56 @@ const executeInput = async (
           };
         }
 
-        // Extract both the expected types and values
-        // from the errors for the error message
+        // Extract the expected values from
+        // each error and its issues
         const expectedValues = errors
           .flatMap((error) => {
 
-            const types = error
-              .filter((issue) => issue.code === 'invalid_type')
-              .map((error) => `"${error.expected}"`);
+            // Extract the invalid types, formats and values to
+            // build the expected values for the error message
+            return error.map((issue) => {
+              switch (issue.code) {
+                case 'invalid_type': {
+                  return `"${issue.expected}"`;
+                }
 
-            const values = error
-              .filter((issue) => issue.code === 'invalid_value')
-              .map((error) => `"${error.values.toString()}"`);
+                case 'invalid_format': {
+                  return `"${issue.format}"`;
+                }
 
-            return [
-              ...types,
-              ...values,
-            ];
+                case 'invalid_value': {
+                  return `"${issue.values.toString()}"`;
+                }
+              }
+            });
           })
           .join(', ');
 
         return {
           match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
           message: `Invalid value, expected: ${expectedValues}`,
+        };
+      }
+
+      case 'too_big': {
+        const { origin, maximum } = issue;
+
+        return {
+          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          message: (origin === 'string')
+            ? `Value length too long, maximum length: ${maximum}`
+            : `Value too big, maximum: ${maximum}`,
+        };
+      }
+
+      case 'too_small': {
+        const { origin, minimum } = issue;
+
+        return {
+          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          message: (origin === 'string')
+            ? `Value length too short, minimum length: ${minimum}`
+            : `Value too small, minimum: ${minimum}`,
         };
       }
 
