@@ -4168,13 +4168,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"performance-now@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "performance-now@npm:2.1.0"
-  checksum: 10/534e641aa8f7cba160f0afec0599b6cecefbb516a2e837b512be0adbe6c1da5550e89c78059c7fabc5c9ffdf6627edabe23eb7c518c4500067a898fa65c2b550
-  languageName: node
-  linkType: hard
-
 "picocolors@npm:^1.0.0, picocolors@npm:^1.1.1":
   version: 1.1.1
   resolution: "picocolors@npm:1.1.1"
@@ -4272,15 +4265,6 @@ __metadata:
   version: 6.1.1
   resolution: "quick-lru@npm:6.1.1"
   checksum: 10/3e9e61bd8fece00da09bacff29e7b33e69088eb6d2c956a140e4264d32ebd8b4e0cc040c9ff2c1ccea52442ae9655561f28b3879f5deeb792ed8a0ffa3ec5014
-  languageName: node
-  linkType: hard
-
-"raf@npm:^3.4.1":
-  version: 3.4.1
-  resolution: "raf@npm:3.4.1"
-  dependencies:
-    performance-now: "npm:^2.1.0"
-  checksum: 10/4c4b4c826b09d2aec6ca809f1a3c3c12136e7ec8d13fbb91f495dd2c99cd43345240e003da3bfd16036a432e635049fc6d9f69f9187f5f22ea88bb146ec75881
   languageName: node
   linkType: hard
 
@@ -4962,7 +4946,6 @@ __metadata:
     tailwindcss: "npm:^4.1.12"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.9.2"
-    typewriter-effect: "npm:^2.22.0"
     uuid: "npm:^11.1.0"
     whoiser: "npm:^1.18.0"
     xml2js: "npm:^0.6.2"
@@ -5178,19 +5161,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/bd810ab13e8e557225a8b5122370385440b933e4e077d5c7641a8afd207fdc8be9c346e3c678adba934b64e0e70b0acf5eef9493ea05170a48ce22bef845fdc7
-  languageName: node
-  linkType: hard
-
-"typewriter-effect@npm:^2.22.0":
-  version: 2.22.0
-  resolution: "typewriter-effect@npm:2.22.0"
-  dependencies:
-    prop-types: "npm:^15.8.1"
-    raf: "npm:^3.4.1"
-  peerDependencies:
-    react: ">=17.0.0"
-    react-dom: ">=17.0.0"
-  checksum: 10/67791252894a5bd56ae300e4b7a7f1445aa7e18672deb04e08e2e89d405d8f3b629fc026c120459b9b4f06c5c220cfa1f63f62bae9eeb5931150742267f49153
   languageName: node
   linkType: hard
 
