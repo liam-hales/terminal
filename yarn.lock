@@ -1907,6 +1907,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dedent@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "dedent@npm:1.7.0"
+  peerDependencies:
+    babel-plugin-macros: ^3.1.0
+  peerDependenciesMeta:
+    babel-plugin-macros:
+      optional: true
+  checksum: 10/c902f3e7e828923bd642c12c1d8996616ff5588f8279a2951790bd7c7e479fa4dd7f016b55ce2c9ea1aa2895fc503e7d6c0cde6ebc95ca683ac0230f7c911fd7
+  languageName: node
+  linkType: hard
+
 "deep-is@npm:^0.1.3":
   version: 0.1.4
   resolution: "deep-is@npm:0.1.4"
@@ -4933,6 +4945,7 @@ __metadata:
     camelcase-keys: "npm:^9.1.3"
     change-case: "npm:^5.4.4"
     dayjs: "npm:^1.11.18"
+    dedent: "npm:^1.7.0"
     eslint: "npm:^9.34.0"
     eslint-config-next: "npm:^15.5.2"
     eslint-plugin-import: "npm:^2.32.0"
