@@ -28,7 +28,7 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, results }): ReactEl
               className="pb-4"
               key={`whois-${serverName}`}
             >
-              <p className="font-mono text-sm font-bold text-white">
+              <p className="text-sm">
                 Server:
                 {' '}
                 {serverName}
@@ -45,15 +45,12 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, results }): ReactEl
                           className="flex flex-row"
                           key={`whois-${serverName}-${key}`}
                         >
-                          <p className="min-w-58 max-w-58 font-mono text-sm text-pink-300">
+                          <p className="min-w-58 max-w-58 text-sm">
                             {key}
                           </p>
                           {
                             (typeof value === 'string') && (
-                              <p className={`
-                                font-mono text-sm
-                                ${(value === 'REDACTED') ? 'text-red-300' : 'text-white'}`}
-                              >
+                              <p className="text-sm">
                                 {value}
                               </p>
                             )
@@ -70,10 +67,10 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, results }): ReactEl
                                         className="flex flex-row gap-x-2"
                                         key={`whois-${serverName}-${key}-${item}`}
                                       >
-                                        <p className="font-mono text-sm text-white">
+                                        <p className="text-sm">
                                           -
                                         </p>
-                                        <p className="font-mono text-sm text-white">
+                                        <p className="text-sm">
                                           {item}
                                         </p>
                                       </div>

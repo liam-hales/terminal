@@ -24,7 +24,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
 
   return (
     <Fragment>
-      <p className="font-mono text-sm text-white">
+      <p className="text-sm">
         Usage:
         <CodeInline className="ml-2">
           {name}
@@ -32,13 +32,13 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
           [options]
         </CodeInline>
       </p>
-      <p className="font-mono text-sm text-white pt-6 pb-8">
+      <p className="text-sm pt-6 pb-8">
         {description}
       </p>
-      <p className="font-mono text-sm text-white">
+      <p className="text-sm">
         Options:
       </p>
-      <div className="flex flex-wrap gap-y-2 pt-2 pl-4">
+      <div className="flex flex-wrap gap-y-4 pt-4 pl-4">
         {
           extractKeys(shape)
             .sort((a, b) => a.localeCompare(b))
@@ -54,11 +54,13 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
               return (
                 <Fragment key={`command-option-${option}`}>
                   <div className="w-[18%]">
-                    <CodeInline>
-                      {`--${option}`}
-                    </CodeInline>
+                    <p className="text-sm">
+                      <CodeInline>
+                        {`--${option}`}
+                      </CodeInline>
+                    </p>
                   </div>
-                  <div className="w-[32%]">
+                  <div className="w-[32%] flex flex-col items-start gap-y-1">
                     {
                       (() => {
                         if (unwrappedDef.type === 'union') {
@@ -83,16 +85,16 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                             .join(' | ');
 
                           return (
-                            <CodeInline>
+                            <p className="text-sm">
                               {`[${values}]`}
-                            </CodeInline>
+                            </p>
                           );
                         }
 
                         return (
-                          <CodeInline>
+                          <p className="text-sm">
                             {`[${unwrappedDef.type}]`}
-                          </CodeInline>
+                          </p>
                         );
                       })()
                     }
@@ -107,19 +109,19 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                           const value = (typeof defaultValue === 'string') ? `"${defaultValue}"` : defaultValue;
 
                           return (
-                            <CodeInline className="ml-2 text-zinc-500">
+                            <p className="text-sm">
                               {`default: ${value}`}
-                            </CodeInline>
+                            </p>
                           );
                         }
                       })()
                     }
                   </div>
                   <div className="w-[50%] flex flex-row gap-x-2">
-                    <p className="font-mono text-sm text-white">
+                    <p className="text-sm">
                       -
                     </p>
-                    <p className="font-mono text-sm text-white">
+                    <p className="text-sm">
                       {description}
                     </p>
                   </div>

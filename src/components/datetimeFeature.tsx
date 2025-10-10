@@ -27,10 +27,10 @@ const DatetimeFeature: FunctionComponent<Props> = ({ pretty, data }): ReactEleme
   const { date, time } = pretty;
   return (
     <Fragment>
-      <p className="font-mono text-sm text-white">
+      <p className="text-sm">
         {date}
       </p>
-      <p className="font-mono text-sm text-white">
+      <p className="text-sm">
         {time}
       </p>
       <div className="flex flex-col gap-y-1 pt-4">
@@ -43,10 +43,10 @@ const DatetimeFeature: FunctionComponent<Props> = ({ pretty, data }): ReactEleme
                 className="flex flex-row"
                 key={`datetime-${name}`}
               >
-                <p className="min-w-48 max-w-48 font-mono text-sm text-emerald-300">
+                <p className="min-w-48 max-w-48 text-sm">
                   {name}
                 </p>
-                <p className="font-mono text-sm text-white">
+                <p className="text-sm">
                   {value}
                 </p>
               </div>

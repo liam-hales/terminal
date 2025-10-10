@@ -36,19 +36,25 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
   } = props;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-black">
-      <div className="mb-2 ml-2 mr-2 bg-zinc-950 border-solid border-[1px] rounded-lg border-zinc-900">
-        <div className="flex flex-col pt-4 pb-4 pl-6 pr-6">
-          <div className="flex flex-row items-center">
-            {
-              (loading.status !== 'idle') && (
-                <Loader className="pr-4" />
-              )
-            }
+    <div className="fixed bottom-0 left-0 right-0 bg-[#0d0803]">
+      <div className="flex flex-col pt-4 pb-6 pl-6 pr-6">
+        <div className="flex flex-row items-center">
+          {
+            (loading.status !== 'idle') && (
+              <Loader className="pr-4" />
+            )
+          }
+          <div className="relative w-full flex flex-col items-start">
+            <p className="absolute text-sm white whitespace-pre pointer-events-none">
+              {
+                (value !== '')
+                  ? value
+                  : '>_ Enter command'
+              }
+            </p>
             <input
               ref={internalRef}
-              className="w-full h-6 text-white placeholder-zinc-700 font-mono text-sm bg-transparent outline-none"
-              placeholder=">_ Enter command"
+              className="w-full relative text-sm bg-transparent text-transparent placeholder-transparent outline-none caret-white"
               value={value}
               disabled={isDisabled}
               onKeyDown={(event) => onKeyDown(event)}
@@ -63,15 +69,15 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
               }}
             />
           </div>
-          {
-            (loading.status === 'long-running') && (
-              <ProgressBar
-                percentage={loading.percentage}
-                message={loading.message}
-              />
-            )
-          }
         </div>
+        {
+          (loading.status === 'long-running') && (
+            <ProgressBar
+              percentage={loading.percentage}
+              message={loading.message}
+            />
+          )
+        }
       </div>
     </div>
   );

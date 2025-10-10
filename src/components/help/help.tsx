@@ -11,13 +11,13 @@ import { CodeInline } from '../common';
 const Help: FunctionComponent = (): ReactElement => {
   return (
     <Fragment>
-      <p className="font-mono text-sm text-white pb-6">
+      <p className="text-sm pb-6">
         Usage:
         <CodeInline className="ml-2">
           {'<command> [options]'}
         </CodeInline>
       </p>
-      <p className="font-mono text-sm text-white">
+      <p className="text-sm">
         Commands:
       </p>
       <div className="flex flex-wrap gap-y-2 pt-2 pb-8 pl-4">
@@ -31,15 +31,17 @@ const Help: FunctionComponent = (): ReactElement => {
               return (
                 <Fragment key={`feature-${name}`}>
                   <div className="w-[18%]">
-                    <CodeInline>
-                      {name}
-                    </CodeInline>
+                    <p className="text-sm">
+                      <CodeInline>
+                        {name}
+                      </CodeInline>
+                    </p>
                   </div>
                   <div className="w-[82%] flex flex-row gap-x-2">
-                    <p className="font-mono text-sm text-white">
+                    <p className="text-sm">
                       -
                     </p>
-                    <p className="font-mono text-sm text-white">
+                    <p className="text-sm">
                       {description}
                     </p>
                   </div>
@@ -48,7 +50,7 @@ const Help: FunctionComponent = (): ReactElement => {
             })
         }
       </div>
-      <p className="font-mono text-sm text-white">
+      <p className="text-sm">
         Use the
         <CodeInline className="ml-2 mr-2">
           --help

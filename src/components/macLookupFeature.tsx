@@ -29,53 +29,53 @@ const MacLookupFeature: FunctionComponent<Props> = ({ type, startHex, endHex, co
   const { lineOne, lineTwo, lineThree, country } = address;
   return (
     <Fragment>
-      <p className="font-mono text-sm text-white">
+      <p className="text-sm">
         {company}
       </p>
       <div className="flex flex-col gap-y-1 pt-4">
         <div className="flex flex-row">
-          <p className="min-w-48 max-w-48 font-mono text-sm text-emerald-300">
+          <p className="min-w-48 max-w-48 text-sm">
             Type
           </p>
-          <p className="font-mono text-sm text-white">
+          <p className="text-sm">
             {type}
           </p>
         </div>
         <div className="flex flex-row">
-          <p className="min-w-48 max-w-48 font-mono text-sm text-emerald-300">
+          <p className="min-w-48 max-w-48 text-sm">
             HEX
           </p>
-          <p className="font-mono text-sm text-white">
+          <p className="text-sm">
             {`${startHex} -> ${endHex}`}
           </p>
         </div>
         <div className="flex flex-row">
-          <p className="min-w-48 max-w-48 font-mono text-sm text-emerald-300">
+          <p className="min-w-48 max-w-48 text-sm">
             Address
           </p>
           <div className="flex flex-col">
             {
               (lineOne != null) && (
-                <p className="font-mono text-sm text-white">
+                <p className="text-sm">
                   {lineOne}
                 </p>
               )
             }
             {
               (lineTwo != null) && (
-                <p className="font-mono text-sm text-white">
+                <p className="text-sm">
                   {lineTwo}
                 </p>
               )
             }
             {
               (lineThree != null) && (
-                <p className="font-mono text-sm text-white">
+                <p className="text-sm">
                   {lineThree}
                 </p>
               )
             }
-            <p className="font-mono text-sm text-white">
+            <p className="ext-sm">
               {country}
             </p>
           </div>

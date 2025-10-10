@@ -15,13 +15,13 @@ type Props = Omit<ValidationErrorBlock, 'id' | 'type'> & BaseProps;
  */
 const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duration, regex, errors }): ReactElement<Props> => {
   return (
-    <div className="pt-4 pb-4 pl-6 pr-4 border-solid border-t-[1px] border-zinc-900">
-      <p className="font-mono text-sm text-zinc-500 pb-3 break-all">
+    <div className="w-full pt-4 pb-4 pl-6 pr-4">
+      <p className="text-sm pb-3 break-all">
         {`> ${input}`}
       </p>
       <div className="flex flex-row items-end justify-between">
         <div className="w-full pt-2 pb-4 pl-5 pr-5">
-          <p className="font-mono font-bold text-sm whitespace-pre-wrap break-all pb-6">
+          <p className="text-sm whitespace-pre-wrap break-all pb-6">
             {
               input
                 // Split the input string at the spaces while
@@ -37,7 +37,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                   if (isMatch === true) {
                     return (
                       <span
-                        className="text-white underline underline-offset-4 decoration-2 decoration-wavy decoration-red-400"
+                        className="!text-red-500 border-solid border-[1px] border-l-[6px] border-red-500 pt-1 pb-1 pl-2 pr-2"
                         key={`validation-error-input-${part}`}
                       >
                         {part}
@@ -46,17 +46,14 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                   }
 
                   return (
-                    <span
-                      className="text-white"
-                      key={`validation-error-input-${part}`}
-                    >
+                    <span key={`validation-error-input-${part}`}>
                       {part}
                     </span>
                   );
                 })
             }
           </p>
-          <p className="font-mono text-sm text-red-400">
+          <p className="text-sm !text-red-500">
             {`${errors.length} problem${(errors.length > 1) ? 's' : ''} ...`}
           </p>
           <div className="flex flex-col gap-y-2 pt-2 pl-4">
@@ -68,13 +65,13 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                     className="flex flex-row"
                     key={`validation-error-message-${message}`}
                   >
-                    <p className="font-mono text-sm text-white">
+                    <p className="w-24 text-sm">
                       {`[${line}:${position}]`}
                     </p>
-                    <p className={`font-mono text-sm text-red-400 pl-${(position >= 10) ? '4' : '6'} pr-5`}>
-                      error
+                    <p className="w-28 text-sm !text-red-500">
+                      x error
                     </p>
-                    <pre className="font-mono text-sm text-red-400 whitespace-pre-wrap break-all">
+                    <pre className="text-sm !text-red-500 whitespace-pre-wrap break-all">
                       {message}
                     </pre>
                   </div>
@@ -83,7 +80,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
             }
           </div>
         </div>
-        <p className="font-mono text-xs text-zinc-500">
+        <p className="text-xs">
           {duration.toFixed(0)}
           <span className="pl-1">ms</span>
         </p>

@@ -164,7 +164,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
 
   return (
     <Fragment>
-      <div className="h-full flex flex-col-reverse pb-18 overflow-y-auto no-scrollbar">
+      <div className="w-full h-full flex flex-col-reverse items-start pb-18 overflow-y-auto no-scrollbar">
         {
           blocks.map((block) => {
             const { id, type, input, duration } = block;
