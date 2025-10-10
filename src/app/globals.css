@@ -9,6 +9,15 @@
   }
 }
 
+@utility text-retro {
+  text-shadow: 0px 0px 36px currentColor;
+
+  @apply
+    font-mono
+    text-orange-400
+    blur-[0.4px];
+}
+
 @theme {
   --font-sans: var(--sans-font);
   --font-mono: var(--mono-font);
