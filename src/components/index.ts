@@ -1,3 +1,4 @@
+import RetroScreen from './retroScreen';
 import TextOutput from './textOutput';
 import IpFeature from './ipFeature';
 import JWTFeature from './jwtFeature';
@@ -16,6 +17,7 @@ import Help from './help/help';
 import CommandHelp from './help/commandHelp';
 
 export {
+  RetroScreen,
   TextOutput,
   IpFeature,
   JWTFeature,
