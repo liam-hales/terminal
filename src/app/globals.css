@@ -23,6 +23,10 @@
   --font-mono: var(--mono-font);
 
   --animate-cursor: cursor 800ms infinite;
+  --animate-shift: shift 0.2s linear infinite both;
+  --animate-scanner:
+    scan 14s linear infinite,
+    flicker 0.12s linear infinite;
 
   @keyframes cursor {
     from,
@@ -31,6 +35,37 @@
     }
     50% {
       opacity: 1;
+    }
+  }
+
+  @keyframes shift {
+    0% {
+      transform: translateX(10%) translateY(10%);
+    }
+    100% {
+      transform: translateX(-10%) translateY(-10%);
+    }
+  }
+
+  @keyframes scan {
+    0% {
+      top: -120px;
+    }
+    80% {
+      top: 100%;
+    }
+    100% {
+      top: 100%;
+    }
+  }
+
+  @keyframes flicker {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
     }
   }
 }
