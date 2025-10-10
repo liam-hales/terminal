@@ -2,8 +2,8 @@ import './globals.css';
 
 import { FunctionComponent, ReactElement, ReactNode, Suspense } from 'react';
 import { BaseProps } from '../types';
-import { urbanist, firaCode } from '../fonts';
-import { Terminal } from '../components';
+import { hp100lx } from '../fonts';
+import { RetroScreen, Terminal } from '../components';
 import { TerminalProvider } from '../providers';
 import { viewport, generateMetadata } from './metadata';
 import { Analytics } from '@vercel/analytics/react';
@@ -26,9 +26,9 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
   return (
     <html
       lang="en"
-      className={`h-full ${urbanist.variable} ${firaCode.variable}`}
+      className={`h-full ${hp100lx.className}`}
     >
-      <body className="h-full bg-black">
+      <body className="h-full">
         <Analytics />
         {
         /**
@@ -38,11 +38,11 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
         }
         <Suspense>
           <TerminalProvider>
-            <Terminal>
-              <div className="flex flex-col items-center pt-28 pb-28 pl-6 pr-6">
+            <RetroScreen>
+              <Terminal>
                 {children}
-              </div>
-            </Terminal>
+              </Terminal>
+            </RetroScreen>
           </TerminalProvider>
         </Suspense>
       </body>
