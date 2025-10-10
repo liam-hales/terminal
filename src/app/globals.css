@@ -22,21 +22,10 @@
   --font-sans: var(--sans-font);
   --font-mono: var(--mono-font);
 
-  --animate-cursor: cursor 800ms infinite;
   --animate-shift: shift 0.2s linear infinite both;
   --animate-scanner:
     scan 14s linear infinite,
     flicker 0.12s linear infinite;
-
-  @keyframes cursor {
-    from,
-    to {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
 
   @keyframes shift {
     0% {
