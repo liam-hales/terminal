@@ -37,7 +37,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                   if (isMatch === true) {
                     return (
                       <span
-                        className="!text-red-500 border-solid border-[1px] border-l-[6px] border-red-500 pt-1 pb-1 pl-2 pr-2"
+                        className="!text-error border-solid border-[1px] border-l-[6px] border-error pt-1 pb-1 pl-2 pr-2"
                         key={`validation-error-input-${part}`}
                       >
                         {part}
@@ -53,7 +53,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                 })
             }
           </p>
-          <p className="text-sm !text-red-500">
+          <p className="text-sm !text-error">
             {`${errors.length} problem${(errors.length > 1) ? 's' : ''} ...`}
           </p>
           <div className="flex flex-col gap-y-2 pt-2 pl-4">
@@ -68,10 +68,10 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                     <p className="w-24 text-sm">
                       {`[${line}:${position}]`}
                     </p>
-                    <p className="w-28 text-sm !text-red-500">
+                    <p className="w-28 text-sm !text-error">
                       x error
                     </p>
-                    <pre className="text-sm !text-red-500 whitespace-pre-wrap break-all">
+                    <pre className="text-sm !text-error whitespace-pre-wrap break-all">
                       {message}
                     </pre>
                   </div>
