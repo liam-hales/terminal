@@ -22,6 +22,10 @@
   --font-sans: var(--sans-font);
   --font-mono: var(--mono-font);
 
+  --color-primary: #ff8904;
+  --color-background: #0d0803;
+  --color-error: #fb2c36;
+
   --animate-shift: shift 0.2s linear infinite both;
   --animate-scanner:
     scan 14s linear infinite,
