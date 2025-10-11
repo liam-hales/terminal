@@ -20,7 +20,7 @@ const Help: FunctionComponent = (): ReactElement => {
       <p className="text-sm">
         Commands:
       </p>
-      <div className="flex flex-wrap gap-y-2 pt-2 pb-8 pl-4">
+      <div className="flex flex-wrap gap-y-4 pt-4 pb-8 pl-4">
         {
           features
             .map((feature) => feature.command)
