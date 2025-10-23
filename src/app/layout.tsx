@@ -28,7 +28,7 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
       lang="en"
       className={`h-full ${hp100lx.className}`}
     >
-      <body className="h-full">
+      <body className="h-full touch-none">
         <Analytics />
         {
         /**
