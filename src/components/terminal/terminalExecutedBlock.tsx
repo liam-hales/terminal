@@ -19,7 +19,7 @@ const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, duration, outp
   const feature = featureMap[featureId];
 
   return (
-    <div className="w-full pt-4 pb-5 pl-6 pr-4">
+    <div className="w-full">
       <p className="text-sm pb-3 break-all">
         {`> ${input}`}
       </p>
