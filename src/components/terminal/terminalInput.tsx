@@ -36,7 +36,7 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
   } = props;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#0d0803]">
+    <div className="fixed bottom-0 left-0 right-0 bg-background">
       <div className="flex flex-col pt-4 pb-6 pl-6 pr-6">
         <div className="flex flex-row items-center">
           {

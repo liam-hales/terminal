@@ -28,7 +28,7 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
       lang="en"
       className={`h-full ${hp100lx.className} overscroll-none`}
     >
-      <body className="h-full touch-none">
+      <body className="h-full bg-background touch-none">
         <Analytics />
         {
         /**
