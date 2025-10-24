@@ -1,6 +1,5 @@
 import { handleUpload, HandleUploadBody } from '@vercel/blob/client';
 import { NextResponse } from 'next/server';
-import getConfig from 'next/config';
 
 /**
  * Used to generate the file upload token to access Vercel storage
@@ -10,10 +9,15 @@ import getConfig from 'next/config';
  * @returns The response
  */
 export const POST = async (request: Request): Promise<NextResponse> => {
-  const body: HandleUploadBody = await request.json();
+  const fileUploadToken = process.env.FILE_READ_WRITE_TOKEN;
 
-  const { serverRuntimeConfig } = getConfig();
-  const { fileUploadToken } = serverRuntimeConfig;
+  // Make sure the `FILE_READ_WRITE_TOKEN`
+  // environment variable has been set
+  if (fileUploadToken == null) {
+    throw new Error('The "FILE_READ_WRITE_TOKEN" environment variable is required');
+  }
+
+  const body: HandleUploadBody = await request.json();
 
   try {
     // Handle the file upload

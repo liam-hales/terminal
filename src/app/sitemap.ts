@@ -1,5 +1,4 @@
 import { MetadataRoute } from 'next';
-import getConfig from 'next/config';
 
 /**
  * Used to build the `sitemap.xml` file to help search
@@ -8,9 +7,13 @@ import getConfig from 'next/config';
  * @returns The `sitemap.xml` file
  */
 const buildSitemap = (): MetadataRoute.Sitemap => {
+  const siteUrl = process.env.SITE_URL;
 
-  const { serverRuntimeConfig } = getConfig();
-  const { siteUrl } = serverRuntimeConfig;
+  // Make sure the `SITE_URL` environment
+  // variable has been set
+  if (siteUrl == null) {
+    throw new Error('The "SITE_URL" environment variable is required');
+  }
 
   return [
     {

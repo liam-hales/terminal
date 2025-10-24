@@ -1,5 +1,4 @@
 import { MetadataRoute } from 'next';
-import getConfig from 'next/config';
 
 /**
  * Used to build the `robots.txt` file to tell search engine
@@ -8,16 +7,20 @@ import getConfig from 'next/config';
  * @returns The `robots.txt` file
  */
 const buildRobots = (): MetadataRoute.Robots => {
+  const siteUrl = process.env.SITE_URL;
 
-  const { serverRuntimeConfig } = getConfig();
-  const { siteUrl } = serverRuntimeConfig;
+  // Make sure the `SITE_URL` environment
+  // variable has been set
+  if (siteUrl == null) {
+    throw new Error('The "SITE_URL" environment variable is required');
+  }
 
   return {
     rules: {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: `${siteUrl as string}/sitemap.xml`,
+    sitemap: `${siteUrl}/sitemap.xml`,
   };
 };
 
