@@ -41,8 +41,8 @@ export const generateMetadata = (): Metadata => {
         },
         {
           rel: 'icon',
-          url: '/icon.svg',
-          type: 'image/svg+xml',
+          url: '/icon.webp',
+          type: 'image/webp',
         },
         {
           rel: 'apple-touch-icon',
