@@ -30,57 +30,39 @@ void (async () => {
   const svgData = readFileSync(iconPath, 'utf-8');
   const iconSvg = await parseStringPromise(svgData);
 
-  const { rx } = iconSvg.svg.rect[0].$;
-  const iconRect = {
-    x: -86,
-    y: -86,
-    width: 1196,
-    height: 1196,
-  };
-
-  // Modify the icon SVG attributes to resize the
-  // background rect and remove its corner radius
-  iconSvg.svg.$.viewBox = '-86 -86 1196 1196';
-  iconSvg.svg.rect[0].$ = {
-    ...iconRect,
-    rx: 0,
-  };
+  // Modify the icon SVG attributes
+  // to remove its corner radius
+  iconSvg.svg.defs[0].clipPath[0].rect[0].$.rx = 0;
 
   // Convert the modified icon SVG into
   // a buffer to be used with `sharp`
   const withoutRxBuffer = toBuffer(iconSvg);
 
   // Use sharp to load the SVG data, resize and export
-  // to `.webp` icon files to the public directory
+  // to icon files to the public directory
 
   await sharp(iconPath)
     .webp()
     .resize(64, 64)
     .toFile(`${publicPath}/favicon.ico`);
 
-  await sharp(withoutRxBuffer)
+  await sharp(iconPath)
     .webp()
-    .resize(180, 180)
-    .toFile(`${publicPath}/apple-touch-icon.webp`);
+    .resize(1024, 1024)
+    .toFile(`${publicPath}/icon.webp`);
 
-  // Set the SVG `rx` value (corner radius) back to its
-  // original value for the below exported icons
-  iconSvg.svg.rect[0].$ = {
-    ...iconRect,
-    rx: rx,
-  };
-
-  // Convert the modified icon SVG into a
-  // new buffer to be used with `sharp`
-  const withRxBuffer = toBuffer(iconSvg);
-
-  await sharp(withRxBuffer)
+  await sharp(iconPath)
     .webp()
     .resize(192, 192)
     .toFile(`${publicPath}/icon-192x192.webp`);
 
-  await sharp(withRxBuffer)
+  await sharp(iconPath)
     .webp()
     .resize(512, 512)
     .toFile(`${publicPath}/icon-512x512.webp`);
+
+  await sharp(withoutRxBuffer)
+    .webp()
+    .resize(180, 180)
+    .toFile(`${publicPath}/apple-touch-icon.webp`);
 })();
