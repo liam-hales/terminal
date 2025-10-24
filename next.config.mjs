@@ -18,11 +18,6 @@ const withAnalyser = bundleAnalyser({
 const nextConfig = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
-  serverRuntimeConfig: {
-    siteUrl: process.env.SITE_URL,
-    fileStoreId: process.env.FILE_STORE_ID,
-    fileUploadToken: process.env.FILE_READ_WRITE_TOKEN,
-  },
   rewrites: () => {
     return [
       {
