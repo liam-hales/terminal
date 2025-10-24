@@ -13,7 +13,7 @@ import dedent from 'dedent';
  */
 const AppPage: FunctionComponent = (): ReactElement => {
   return (
-    <div className="w-full flex flex-col items-start pt-12 pb-12 pl-6 pr-6">
+    <div className="w-full flex flex-col items-start pt-12 pb-12">
       <pre className="leading-5">
         {
           dedent`
