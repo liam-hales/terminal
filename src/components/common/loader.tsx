@@ -51,7 +51,7 @@ const Loader: FunctionComponent<Props> = ({ className }): ReactElement<Props> =>
   ]);
 
   return (
-    <p className={`${className ?? ''} text-md`}>
+    <p className={className ?? ''}>
       {frames[frameIndex]}
     </p>
   );
