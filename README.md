@@ -1,5 +1,18 @@
 <div>
   <img src="public/cover.webp"/>
+  <h1>
+    Terminal
+  </h1>
+  <p>
+    Terminal is a web app that was created to provide developer tools with a dev-friendly terminal interface.
+  </p>
+  <a
+    href="https://cli.liamhales.dev"
+    target="_blank"
+  >
+    https://cli.liamhales.dev
+  </a>
+  <br/>
   <br/>
   <br/>
   <a
