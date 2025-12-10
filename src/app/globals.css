@@ -10,7 +10,7 @@
 }
 
 @utility text-retro {
-  text-shadow: 0px 0px 36px currentColor;
+  text-shadow: 0px 0px 80px currentColor;
 
   @apply
     font-mono
@@ -22,7 +22,7 @@
   --font-sans: var(--sans-font);
   --font-mono: var(--mono-font);
 
-  --color-primary: #ff8904;
+  --color-primary: #fff3e3;
   --color-background: #0d0803;
   --color-error: #fb2c36;
 
@@ -59,6 +59,6 @@
     opacity: 1;
   }
   50% {
-    opacity: 0.6;
+    opacity: 0.8;
   }
 }
