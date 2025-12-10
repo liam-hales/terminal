@@ -52,34 +52,34 @@ const FileUploadFeature: FunctionComponent<Props> = ({ files }): ReactElement<Pr
                 key={`file-${name}`}
               >
                 <div className="flex flex-row">
-                  <p className="min-w-36 max-w-36 text-sm">
+                  <p className="min-w-36 max-w-36 text-xs">
                     Name
                   </p>
-                  <p className="text-sm">
+                  <p className="text-xs">
                     {name}
                   </p>
                 </div>
                 <div className="flex flex-row">
-                  <p className="min-w-36 max-w-36 text-sm">
+                  <p className="min-w-36 max-w-36 text-xs">
                     Size
                   </p>
-                  <p className="text-sm">
+                  <p className="text-xs">
                     {`${sizeValue.toFixed(2)} ${fileSizeUnits[sizeUnitIndex]}`}
                   </p>
                 </div>
                 <div className="flex flex-row">
-                  <p className="min-w-36 max-w-36 text-sm">
+                  <p className="min-w-36 max-w-36 text-xs">
                     Type
                   </p>
-                  <p className="text-sm">
+                  <p className="text-xs">
                     {`${extension} (${contentType})`}
                   </p>
                 </div>
                 <div className="flex flex-row">
-                  <p className="min-w-36 max-w-36 text-sm">
+                  <p className="min-w-36 max-w-36 text-xs">
                     Download URL
                   </p>
-                  <p className="text-sm">
+                  <p className="text-xs">
                     {url}
                   </p>
                 </div>

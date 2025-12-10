@@ -12,15 +12,15 @@ const Help: FunctionComponent = (): ReactElement => {
   return (
     <div className="flex flex-col gap-y-8">
       <div className="flex flex-col gap-y-2">
-        <p className="text-sm">
+        <p className="text-xs">
           Usage:
         </p>
-        <p className="text-sm pl-4">
+        <p className="text-xs pl-4">
           {'<command> [options]'}
         </p>
       </div>
       <div className="flex flex-col gap-y-4">
-        <p className="text-sm">
+        <p className="text-xs">
           Commands:
         </p>
         <div className="flex flex-wrap gap-y-4 pb-8 pl-4">
@@ -34,17 +34,17 @@ const Help: FunctionComponent = (): ReactElement => {
                 return (
                   <Fragment key={`feature-${name}`}>
                     <div className="w-[18%]">
-                      <p className="text-sm">
+                      <p className="text-xs">
                         <CodeInline>
                           {name}
                         </CodeInline>
                       </p>
                     </div>
                     <div className="w-[82%] flex flex-row gap-x-2">
-                      <p className="text-sm">
+                      <p className="text-xs">
                         -
                       </p>
-                      <p className="text-sm">
+                      <p className="text-xs">
                         {description}
                       </p>
                     </div>
@@ -54,7 +54,7 @@ const Help: FunctionComponent = (): ReactElement => {
           }
         </div>
       </div>
-      <p className="text-sm">
+      <p className="text-xs">
         Use the
         <CodeInline className="ml-2 mr-2">
           --help

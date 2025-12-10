@@ -20,20 +20,20 @@ interface Props extends BaseProps {
 const JWTFeature: FunctionComponent<Props> = ({ header, payload, signature }): ReactElement<Props> => {
   return (
     <Fragment>
-      <p className="text-sm">
+      <p className="text-xs">
         Decoded Token
       </p>
-      <pre className="text-sm pt-4">
+      <pre className="text-xs pt-4">
         header:
         {' '}
         {header}
       </pre>
-      <pre className="text-sm pt-4">
+      <pre className="text-xs pt-4">
         payload:
         {' '}
         {payload}
       </pre>
-      <pre className="text-sm pt-4">
+      <pre className="text-xs pt-4">
         signature:
         {' '}
         {`"${signature}"`}

@@ -34,15 +34,15 @@ const ProgressBar: FunctionComponent<Props> = ({ percentage, message }): ReactEl
     <div className="flex flex-row gap-4 pt-4">
       {
         (message != null) && (
-          <p className="text-sm">
+          <p className="text-xs">
             {message}
           </p>
         )
       }
-      <p className="text-sm">
+      <p className="text-xs">
         {`[${'#'.repeat(filled)}${'_'.repeat(empty)}]`}
       </p>
-      <p className="text-sm">
+      <p className="text-xs">
         {`${percentage.toFixed((2))}%`}
       </p>
     </div>

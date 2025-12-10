@@ -15,11 +15,11 @@ type Props = Omit<ErrorBlock, 'id' | 'type'> & BaseProps;
 const TerminalErrorBlock: FunctionComponent<Props> = ({ input, duration, error }): ReactElement<Props> => {
   return (
     <div className="w-full">
-      <p className="text-sm pb-3 break-all">
+      <p className="text-xs pb-3 break-all">
         {`> ${input}`}
       </p>
       <div className="flex flex-row items-end justify-between">
-        <p className="text-sm !text-error border-solid border-[1px] border-l-[6px] border-error whitespace-pre-wrap break-all pt-1 pb-1 pl-2 pr-2">
+        <p className="text-xs !text-error border-solid border-[1px] border-l-[6px] border-error whitespace-pre-wrap break-all pt-1 pb-1 pl-2 pr-2">
           {`X - ${error.message}`}
         </p>
         <p className="text-xs">

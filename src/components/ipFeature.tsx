@@ -46,25 +46,25 @@ const IpFeature: FunctionComponent<Props> = ({ data }): ReactElement<Props> => {
     <Fragment>
       {
         (type === 'single-version') && (
-          <p className="text-sm">{data.address}</p>
+          <p className="text-xs">{data.address}</p>
         )
       }
       {
         (type === 'multi-version') && (
           <div className="flex flex-col gap-y-1 pt-4">
             <div className="flex flex-row">
-              <p className="relative w-24 text-sm">
+              <p className="relative w-24 text-xs">
                 IPv4
               </p>
-              <p className="relative text-sm">
+              <p className="relative text-xs">
                 {data.v4Address ?? unknown}
               </p>
             </div>
             <div className="flex flex-row">
-              <p className="w-24 text-sml">
+              <p className="w-24 text-xs">
                 IPv6
               </p>
-              <p className="text-sm">
+              <p className="text-xs">
                 {data.v6Address ?? unknown}
               </p>
             </div>

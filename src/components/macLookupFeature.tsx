@@ -29,48 +29,48 @@ const MacLookupFeature: FunctionComponent<Props> = ({ type, startHex, endHex, co
   const { lineOne, lineTwo, lineThree, country } = address;
   return (
     <Fragment>
-      <p className="text-sm">
+      <p className="text-xs">
         {company}
       </p>
       <div className="flex flex-col gap-y-1 pt-4">
         <div className="flex flex-row">
-          <p className="min-w-48 max-w-48 text-sm">
+          <p className="min-w-48 max-w-48 text-xs">
             Type
           </p>
-          <p className="text-sm">
+          <p className="text-xs">
             {type}
           </p>
         </div>
         <div className="flex flex-row">
-          <p className="min-w-48 max-w-48 text-sm">
+          <p className="min-w-48 max-w-48 text-xs">
             HEX
           </p>
-          <p className="text-sm">
+          <p className="text-xs">
             {`${startHex} -> ${endHex}`}
           </p>
         </div>
         <div className="flex flex-row">
-          <p className="min-w-48 max-w-48 text-sm">
+          <p className="min-w-48 max-w-48 text-xs">
             Address
           </p>
           <div className="flex flex-col">
             {
               (lineOne != null) && (
-                <p className="text-sm">
+                <p className="text-xs">
                   {lineOne}
                 </p>
               )
             }
             {
               (lineTwo != null) && (
-                <p className="text-sm">
+                <p className="text-xs">
                   {lineTwo}
                 </p>
               )
             }
             {
               (lineThree != null) && (
-                <p className="text-sm">
+                <p className="text-xs">
                   {lineThree}
                 </p>
               )

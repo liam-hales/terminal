@@ -20,7 +20,7 @@ const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, duration, outp
 
   return (
     <div className="w-full">
-      <p className="text-sm pb-3 break-all">
+      <p className="text-xs pb-3 break-all">
         {`> ${input}`}
       </p>
       <div className="flex flex-row items-end justify-between">

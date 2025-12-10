@@ -16,12 +16,12 @@ type Props = Omit<ValidationErrorBlock, 'id' | 'type'> & BaseProps;
 const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duration, regex, errors }): ReactElement<Props> => {
   return (
     <div className="w-full">
-      <p className="text-sm pb-3 break-all">
+      <p className="text-xs pb-3 break-all">
         {`> ${input}`}
       </p>
       <div className="flex flex-row items-end justify-between">
         <div className="w-full pt-2 pb-4 pl-5 pr-5">
-          <p className="text-sm whitespace-pre-wrap break-all pb-6">
+          <p className="text-xs whitespace-pre-wrap break-all pb-6">
             {
               input
                 // Split the input string at the spaces while
@@ -53,7 +53,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                 })
             }
           </p>
-          <p className="text-sm !text-error">
+          <p className="text-xs !text-error">
             {`${errors.length} problem${(errors.length > 1) ? 's' : ''} ...`}
           </p>
           <div className="flex flex-col gap-y-2 pt-2 pl-4">
@@ -65,13 +65,13 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                     className="flex flex-row"
                     key={`validation-error-message-${message}`}
                   >
-                    <p className="w-24 text-sm">
+                    <p className="w-24 text-xs">
                       {`[${line}:${position}]`}
                     </p>
-                    <p className="w-28 text-sm !text-error">
+                    <p className="w-28 text-xs !text-error">
                       x error
                     </p>
-                    <pre className="text-sm !text-error whitespace-pre-wrap break-all">
+                    <pre className="text-xs !text-error whitespace-pre-wrap break-all">
                       {message}
                     </pre>
                   </div>

@@ -24,19 +24,19 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
 
   return (
     <div className="flex flex-col gap-y-8">
-      <p className="text-sm">
+      <p className="text-xs">
         {description}
       </p>
       <div className="flex flex-col gap-y-2">
-        <p className="text-sm">
+        <p className="text-xs">
           Usage:
         </p>
-        <p className="text-sm pl-4">
+        <p className="text-xs pl-4">
           {`${name} [options]`}
         </p>
       </div>
       <div className="flex flex-col gap-y-4">
-        <p className="text-sm">
+        <p className="text-xs">
           Options:
         </p>
         <div className="flex flex-wrap gap-y-4 pl-4">
@@ -55,7 +55,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                 return (
                   <Fragment key={`command-option-${option}`}>
                     <div className="w-[18%]">
-                      <p className="text-sm">
+                      <p className="text-xs">
                         <CodeInline>
                           {`--${option}`}
                         </CodeInline>
@@ -86,14 +86,14 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                               .join(' | ');
 
                             return (
-                              <p className="text-sm">
+                              <p className="text-xs">
                                 {`[${values}]`}
                               </p>
                             );
                           }
 
                           return (
-                            <p className="text-sm">
+                            <p className="text-xs">
                               {`[${unwrappedDef.type}]`}
                             </p>
                           );
@@ -110,7 +110,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                             const value = (typeof defaultValue === 'string') ? `"${defaultValue}"` : defaultValue;
 
                             return (
-                              <p className="text-sm">
+                              <p className="text-xs">
                                 {`default: ${value}`}
                               </p>
                             );
@@ -119,10 +119,10 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
                       }
                     </div>
                     <div className="w-[50%] flex flex-row gap-x-2">
-                      <p className="text-sm">
+                      <p className="text-xs">
                         -
                       </p>
-                      <p className="text-sm">
+                      <p className="text-xs">
                         {description}
                       </p>
                     </div>

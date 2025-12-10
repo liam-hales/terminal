@@ -27,7 +27,7 @@ const AppPage: FunctionComponent = (): ReactElement => {
         }
       </pre>
       <div className="flex flex-col pt-16">
-        <p className="text-lg max-w-[440px]">
+        <p className="max-w-[440px] text-xs">
           Web-based developer tools with a dev-friendly terminal interface.
         </p>
         <p className="text-xs pt-8">
@@ -44,25 +44,25 @@ const AppPage: FunctionComponent = (): ReactElement => {
         </p>
       </div>
       <div className="flex flex-col pt-24">
-        <p className="text-2xl">
+        <p className="text-xl">
           GETTING STARTED
         </p>
         <div className="flex flex-col gap-y-2 pt-6">
-          <p className="text-sm">
+          <p className="text-xs">
             - Use the
             <CodeInline className="ml-2 mr-2">
               help
             </CodeInline>
             command to display all available commands
           </p>
-          <p className="text-sm">
+          <p className="text-xs">
             - Use the
             <CodeInline className="ml-2 mr-2">
               --help
             </CodeInline>
             command option to get help for a specific command
           </p>
-          <p className="text-sm">
+          <p className="text-xs">
             - You can also use
             <CodeInline className="ml-2 mr-2">
               {'help --for <command>'}

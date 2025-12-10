@@ -28,7 +28,7 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, results }): ReactEl
               className="pb-4"
               key={`whois-${serverName}`}
             >
-              <p className="text-sm">
+              <p className="text-xs">
                 Server:
                 {' '}
                 {serverName}
@@ -45,12 +45,12 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, results }): ReactEl
                           className="flex flex-row"
                           key={`whois-${serverName}-${key}`}
                         >
-                          <p className="min-w-58 max-w-58 text-sm">
+                          <p className="min-w-58 max-w-58 text-xs">
                             {key}
                           </p>
                           {
                             (typeof value === 'string') && (
-                              <p className="text-sm">
+                              <p className="text-xs">
                                 {value}
                               </p>
                             )
@@ -67,10 +67,10 @@ const WhoisFeature: FunctionComponent<Props> = ({ className, results }): ReactEl
                                         className="flex flex-row gap-x-2"
                                         key={`whois-${serverName}-${key}-${item}`}
                                       >
-                                        <p className="text-sm">
+                                        <p className="text-xs">
                                           -
                                         </p>
-                                        <p className="text-sm">
+                                        <p className="text-xs">
                                           {item}
                                         </p>
                                       </div>

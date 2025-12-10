@@ -19,16 +19,16 @@ interface Props extends BaseProps {
 const KeyPairFeature: FunctionComponent<Props> = ({ publicKey, privateKey }): ReactElement<Props> => {
   return (
     <Fragment>
-      <p className="text-sm">
+      <p className="text-xs">
         Public Key
       </p>
-      <pre className="text-sm pt-2">
+      <pre className="text-xs pt-2">
         {publicKey}
       </pre>
-      <p className="text-sm pt-4">
+      <p className="text-xs pt-4">
         Private Key
       </p>
-      <pre className="text-sm pt-2">
+      <pre className="text-xs pt-2">
         {privateKey}
       </pre>
     </Fragment>
