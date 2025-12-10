@@ -161,12 +161,12 @@ export interface ParsedInput {
 }
 
 /**
- * Describes the server action response
+ * Describes the server action success response
  * used within the `serverAction` helper.
  *
  * - Generic type `T` for the data
  */
-export interface ServerActionResponse<T> {
+export interface ServerActionSuccessResponse<T> {
   readonly status: 'success';
   readonly data: T;
 }
@@ -233,3 +233,11 @@ export interface TerminalErrorBlock {
  * terminal block types
  */
 export type TerminalBlock = TerminalExecutedBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
+
+/**
+ * The union type for all server
+ * action response types
+ *
+ * - Generic type `T` for the data
+ */
+export type ServerActionResponse<T> = ServerActionSuccessResponse<T> | ServerActionErrorResponse;

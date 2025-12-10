@@ -1,6 +1,6 @@
 'use server';
 
-import { OnProgress, ServerActionErrorResponse, ServerActionResponse } from '../types';
+import { OnProgress, ServerActionResponse } from '../types';
 
 /**
  * Used to wrap server actions and catch any errors thrown
@@ -22,7 +22,7 @@ const serverAction = async <
   action: (options: O, onProgress: OnProgress) => P | Promise<P>,
   options: O,
   onProgress: OnProgress,
-): Promise<ServerActionResponse<P> | ServerActionErrorResponse> => {
+): Promise<ServerActionResponse<P>> => {
 
   try {
     const data = await action(options, onProgress);
