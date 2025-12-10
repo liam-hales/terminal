@@ -19,6 +19,20 @@ export type FeatureId =
   | 'mac-lookup'
   | 'file-upload';
 
+/**
+ * The union type for all
+ * terminal block types
+ */
+export type TerminalBlock = TerminalExecutedBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
+
+/**
+ * The union type for all server
+ * action response types
+ *
+ * - Generic type `T` for the data
+ */
+export type ServerActionResponse<T> = ServerActionSuccessResponse<T> | ServerActionErrorResponse;
+
 /*
  * The utility type used to convert a type
  * into an intersection type
@@ -227,17 +241,3 @@ export interface TerminalErrorBlock {
   readonly duration: number;
   readonly error: Error;
 }
-
-/**
- * The union type for all
- * terminal block types
- */
-export type TerminalBlock = TerminalExecutedBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
-
-/**
- * The union type for all server
- * action response types
- *
- * - Generic type `T` for the data
- */
-export type ServerActionResponse<T> = ServerActionSuccessResponse<T> | ServerActionErrorResponse;
