@@ -22,7 +22,7 @@ const nextConfig = {
     return [
       {
         source: '/files/:path*',
-        destination: `https://${process.env.FILE_STORE_ID.toString()}.public.blob.vercel-storage.com/:path*`,
+        destination: `https://${process.env.FILE_STORE_ID ?? ''}.public.blob.vercel-storage.com/:path*`,
       },
     ];
   },
