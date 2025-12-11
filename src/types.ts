@@ -1,4 +1,4 @@
-import { FunctionComponent, Ref } from 'react';
+import { ComponentProps, FunctionComponent, Ref } from 'react';
 import { ZodObject, z } from 'zod';
 import { Feature, FeatureMap } from './features';
 
@@ -33,6 +33,14 @@ export type TerminalBlock = TerminalExecutedBlock | TerminalValidationErrorBlock
  */
 export type ServerActionResponse<T> = ServerActionSuccessResponse<T> | ServerActionErrorResponse;
 
+/**
+ * The union type for all
+ * action event types
+ *
+ * - Generic type `T` for the props
+ */
+export type ActionEvent<P extends object> = ActionProgressEvent | ActionUpdateEvent<P>;
+
 /*
  * The utility type used to convert a type
  * into an intersection type
@@ -56,12 +64,6 @@ export interface BaseProps<T extends HTMLElement = HTMLElement> {
   readonly internalRef?: Ref<T>;
   readonly className?: string;
 }
-
-/**
- * Describes the function which is used to update
- * the current progress of an action
- */
-export type OnProgress = (percentage: number, message?: string) => void;
 
 /**
  * Used to describe a feature that can
@@ -97,17 +99,14 @@ export interface ICommand<
   readonly description: string;
   readonly options: O;
   readonly execution: 'server' | 'client';
-  readonly action: (
-    options: z.infer<O>,
-    onProgress: OnProgress,
-  ) => P | Promise<P>;
+  readonly action: (options: z.infer<O>) => P | Promise<P> | AsyncGenerator<ActionEvent<P>>;
 }
 
 /**
  * The type used to describe
  * all feature commands
  */
-export type FeatureCommand = Feature['command'];
+export type Command = Feature['command'];
 
 /**
  * The intersection type used to describe
@@ -117,7 +116,7 @@ export type FeatureCommand = Feature['command'];
  *
  * [TypeScript Issue](https://github.com/microsoft/TypeScript/issues/30581)
  */
-export type FeatureOption = Intersect<
+export type CommandOption = Intersect<
   z.infer<
     Feature['command']['options']
   >
@@ -131,36 +130,43 @@ export type FeatureOption = Intersect<
  *
  * [TypeScript Issue](https://github.com/microsoft/TypeScript/issues/30581)
  */
-export type FeatureAction = Intersect<
+export type CommandAction = Intersect<
   Feature['command']['action']
 >;
 
 /**
- * The intersection type used to
- * describe all feature props
+ * The intersection type used to describe
+ * all feature component props
  *
  * _Used for type casting only as TypeScript does not support correlated unions_
  *
  * [TypeScript Issue](https://github.com/microsoft/TypeScript/issues/30581)
  */
-export type FeatureProp = Intersect<
-  Awaited<
-    ReturnType<
-      Feature['command']['action']
-    >
+export type FeatureComponentProps = Intersect<
+  ComponentProps<
+    Feature['component']
   >
 >;
 
 /**
- * Used to build the feature output
+ * Used to describe the feature output
  * type for all features
- *
- * - Generic type `T` for the feature union type
  */
 export type FeatureOutput = {
   [K in keyof FeatureMap]: {
     readonly featureId: K;
-    readonly props: Awaited<ReturnType<FeatureMap[K]['command']['action']>>;
+    readonly componentProps: ComponentProps<FeatureMap[K]['component']>;
+  }
+}[keyof FeatureMap];
+
+/**
+ * Used to describe the event data used for events
+ * sent from the `executeInput` helper
+ */
+export type ExecuteInputEvent = {
+  [K in keyof FeatureMap]: {
+    readonly featureId: K;
+    readonly actionEvent: ActionEvent<ComponentProps<FeatureMap[K]['component']>>;
   }
 }[keyof FeatureMap];
 
@@ -172,6 +178,27 @@ export interface ParsedInput {
   readonly rawInput: string;
   readonly command?: string;
   readonly options?: Record<string, unknown>;
+}
+
+/**
+ * Used to send progress from an action to the
+ * terminal for long-running actions
+ */
+export interface ActionProgressEvent {
+  readonly type: 'progress';
+  readonly percentage: number;
+  readonly message?: string;
+}
+
+/**
+ * Used to send updates from an action to the terminal to update
+ * the feature data such as the component `props`
+ *
+ * - Generic type `P` for the component props
+ */
+export interface ActionUpdateEvent<P extends object> {
+  readonly type: 'update';
+  readonly componentProps: P;
 }
 
 /**

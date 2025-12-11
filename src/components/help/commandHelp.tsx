@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { kebabCase } from 'change-case';
-import { BaseProps, FeatureCommand } from '../../types';
+import { BaseProps, Command } from '../../types';
 import { extractKeys, unwrapType } from '../../helpers';
 import { CodeInline } from '../common';
 
@@ -8,7 +8,7 @@ import { CodeInline } from '../common';
  * The `CommandHelp` component props
  */
 interface Props extends BaseProps {
-  readonly command: FeatureCommand;
+  readonly command: Command;
 }
 
 /**

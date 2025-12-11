@@ -1,9 +1,10 @@
 import { kebabCase } from 'change-case';
 import { search } from 'fast-fuzzy';
 import { features } from '../features';
-import { FeatureAction, FeatureOption, FeatureOutput, OnProgress, ParsedInput } from '../types';
+import { CommandAction, CommandOption, ExecuteInputEvent, ParsedInput } from '../types';
 import { ValidationException } from '../exceptions';
 import { serverAction } from './';
+import { isAsyncGenerator } from '../guards';
 
 /**
  * Used to execute a given parsed `input` that
@@ -12,16 +13,12 @@ import { serverAction } from './';
  * - Checks if a feature exists for the `input.command`
  * - Validates the `input.options` against the options schema
  * - Executes the feature command action
+ * - Yields `ExecuteInputEvent` events until complete
  *
  * @param input The parsed input
- * @param onProgress The function used to update the action progress
- *
- * @returns The feature output
+ * @returns The async generator used to transmit events
  */
-const executeInput = async (
-  input: ParsedInput,
-  onProgress: OnProgress,
-): Promise<FeatureOutput> => {
+const executeInput = async function* (input: ParsedInput): AsyncGenerator<ExecuteInputEvent> {
   const {
     command: inputCommand,
     options: inputOptions = {},
@@ -99,9 +96,8 @@ const executeInput = async (
     // action in the `serverAction` helper to execute this correctly
     if (execution === 'server') {
       const response = await serverAction(
-        action as FeatureAction,
-        validated.data as FeatureOption,
-        onProgress,
+        action as CommandAction,
+        validated.data as CommandOption,
       );
 
       // Check the response status and if there was an error, throw
@@ -110,17 +106,42 @@ const executeInput = async (
         throw new Error(response.errorMessage);
       }
 
-      return {
+      yield {
         featureId: id,
-        props: response.data,
-      } as FeatureOutput;
+        actionEvent: {
+          type: 'update',
+          componentProps: response.data,
+        },
+      } as ExecuteInputEvent;
     }
 
-    const props = await action(validated.data as FeatureOption, onProgress);
-    return {
+    const response = action(validated.data as CommandOption);
+
+    // If the response is an async generator then loop
+    // through each event and yield the event
+    if (isAsyncGenerator(response) === true) {
+      for await (const event of response) {
+        yield {
+          featureId: id,
+          actionEvent: event,
+        } as ExecuteInputEvent;
+      }
+
+      return;
+    }
+
+    // The response will either already be the props or a promise which
+    // will resolve the props so use `await` to obtain them correctly
+    const props = await response;
+    yield {
       featureId: id,
-      props: props,
-    } as FeatureOutput;
+      actionEvent: {
+        type: 'update',
+        componentProps: props,
+      },
+    } as ExecuteInputEvent;
+
+    return;
   }
 
   // The validation failed, extract the error

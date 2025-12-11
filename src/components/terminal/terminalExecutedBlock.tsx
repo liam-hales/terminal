@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement } from 'react';
-import { BaseProps, TerminalExecutedBlock as ExecutedBlock, FeatureProp } from '../../types';
+import { BaseProps, FeatureComponentProps, TerminalExecutedBlock as ExecutedBlock } from '../../types';
 import { featureMap } from '../../features';
 
 /**
@@ -14,7 +14,7 @@ type Props = Omit<ExecutedBlock, 'id' | 'type'> & BaseProps;
  * @returns The `TerminalExecutedBlock` component
  */
 const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, duration, output }): ReactElement<Props> => {
-  const { featureId, props } = output;
+  const { featureId, componentProps } = output;
 
   const feature = featureMap[featureId];
 
@@ -25,7 +25,7 @@ const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, duration, outp
       </p>
       <div className="flex flex-row items-end justify-between">
         <div className="flex flex-col">
-          <feature.component {...props as FeatureProp} />
+          <feature.component {...componentProps as FeatureComponentProps} />
         </div>
         <p className="text-xs">
           {duration.toFixed(0)}

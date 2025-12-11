@@ -2,9 +2,11 @@
 
 import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { TerminalContext } from '../context';
-import { BaseProps, TerminalBlock } from '../types';
-import { execute } from '../helpers';
+import { BaseProps, FeatureOutput, TerminalBlock } from '../types';
+import { executeInput, parseInput } from '../helpers';
 import { TerminalLoading } from '../context/types';
+import { nanoid } from 'nanoid';
+import { ValidationException } from '../exceptions';
 
 /**
  * The `TerminalProvider` component props
@@ -37,24 +39,6 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
   });
 
   /**
-   * Used to update the terminal loading
-   * status when called by the action
-   *
-   * @param percentage The progress percentage
-   * @param message The progress message
-   */
-  const _onProgress = (
-    percentage: number,
-    message?: string,
-  ): void => {
-    setLoading({
-      status: 'long-running',
-      percentage: percentage,
-      message: message,
-    });
-  };
-
-  /**
    * Used to execute a terminal command
    * from a user `input`
    *
@@ -66,25 +50,139 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
       status: 'loading',
     });
 
-    // Executes the input and
-    // receives the terminal block
-    const block = await execute(input, _onProgress);
+    const blockId = nanoid(16);
 
-    // All errors are handled in the `execute` function
-    // The terminal block can be added to state
-    setBlocks((current) => {
-      return [
-        block,
-        ...current,
-      ];
-    });
+    // Get the start time stamp which will be used to
+    // capture the time it takes to execute the input
+    const startTime = performance.now();
 
-    // Resets the loading state once the
-    // terminal block as been added to state
-    setLoading({
-      status: 'idle',
-      percentage: 0,
-    });
+    try {
+      const parsed = parseInput(input);
+      const generator = executeInput(parsed);
+
+      // Loop through and process
+      // each generator event
+      for await (const event of generator) {
+        const { featureId, actionEvent } = event;
+
+        // Process each type of event and update
+        // the terminal state for each
+        switch (actionEvent.type) {
+
+          case 'progress': {
+            const { percentage, message } = actionEvent;
+
+            setLoading({
+              status: 'long-running',
+              percentage: percentage,
+              message: message,
+            });
+
+            break;
+          }
+
+          case 'update': {
+            const { componentProps } = actionEvent;
+
+            // Get the end time stamp which along with the start time
+            // can be used to capture the current duration
+            const endTime = performance.now();
+            const output = {
+              featureId: featureId,
+              componentProps: componentProps,
+            } as FeatureOutput;
+
+            setBlocks((previous) => {
+              const found = previous.find((block) => block.id === blockId);
+
+              // If there has not yet been an executed terminal
+              // block created then add a new one to state
+              if (found == null) {
+                return [
+                  {
+                    type: 'executed',
+                    id: blockId,
+                    input: input,
+                    duration: endTime - startTime,
+                    output: output,
+                  },
+                  ...previous,
+                ];
+              }
+
+              // There is an existing terminal block, update
+              // it wth the latest duration and output
+              return previous.map((block) => {
+                return (block.id === blockId && block.type === 'executed')
+                  ? {
+                      ...block,
+                      duration: endTime - startTime,
+                      output: output,
+                    }
+                  : block;
+              });
+            });
+          }
+        }
+      }
+    }
+    catch (error) {
+
+      // Get the end time stamp which along with the start time can be
+      // used to capture the time it took for the input execution to fail
+      const endTime = performance.now();
+
+      // If the error is a validation exception
+      // Add the terminal validation error block
+      if (error instanceof ValidationException) {
+        const { regex, errors } = error;
+
+        setBlocks((previous) => {
+          return [
+            {
+              type: 'validation-error',
+              id: blockId,
+              input: input,
+              duration: endTime - startTime,
+              regex: regex,
+              errors: errors,
+            },
+            ...previous,
+          ];
+        });
+
+        return;
+      }
+
+      // If the error is a generic error
+      // Add the terminal error block
+      if (error instanceof Error) {
+        setBlocks((previous) => {
+          return [
+            {
+              type: 'error',
+              id: blockId,
+              input: input,
+              duration: endTime - startTime,
+              error: error,
+            },
+            ...previous,
+          ];
+        });
+
+        return;
+      }
+
+      throw error;
+    }
+    finally {
+      // Reset the loading state once the
+      // terminal block as been added to state
+      setLoading({
+        status: 'idle',
+        percentage: 0,
+      });
+    }
   };
 
   return (
