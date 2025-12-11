@@ -16,7 +16,7 @@ const keyPairFeature = buildFeature({
     action: keyPairAction,
   },
   component: KeyPairFeature,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default keyPairFeature;

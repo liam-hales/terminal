@@ -81,7 +81,7 @@ export interface IFeature<
   readonly id: F;
   readonly command: ICommand<O, P>;
   readonly component: FunctionComponent<P>;
-  readonly enabled: boolean;
+  readonly isEnabled: boolean;
 }
 
 /**

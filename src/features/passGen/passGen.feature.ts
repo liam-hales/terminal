@@ -16,7 +16,7 @@ const passGenFeature = buildFeature({
     action: passGenAction,
   },
   component: TextOutput,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default passGenFeature;

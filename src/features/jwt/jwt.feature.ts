@@ -16,7 +16,7 @@ const jwtFeature = buildFeature({
     action: jwtAction,
   },
   component: JWTFeature,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default jwtFeature;

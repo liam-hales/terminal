@@ -16,7 +16,7 @@ const datetimeFeature = buildFeature({
     action: datetimeAction,
   },
   component: DatetimeFeature,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default datetimeFeature;

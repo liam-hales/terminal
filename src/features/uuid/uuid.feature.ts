@@ -16,7 +16,7 @@ const uuidFeature = buildFeature({
     action: uuidAction,
   },
   component: TextOutput,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default uuidFeature;

@@ -16,7 +16,7 @@ const helpFeature = buildFeature({
     action: helpAction,
   },
   component: HelpFeature,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default helpFeature;

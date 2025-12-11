@@ -16,7 +16,7 @@ const ipFeature = buildFeature({
     action: ipAction,
   },
   component: IpFeature,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default ipFeature;

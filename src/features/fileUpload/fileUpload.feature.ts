@@ -16,7 +16,7 @@ const fileUploadFeature = buildFeature({
     action: fileUploadAction,
   },
   component: FileUploadFeature,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default fileUploadFeature;

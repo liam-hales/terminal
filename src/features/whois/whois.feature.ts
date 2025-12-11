@@ -16,7 +16,7 @@ const whoisFeature = buildFeature({
     action: whoisAction,
   },
   component: WhoisFeature,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default whoisFeature;

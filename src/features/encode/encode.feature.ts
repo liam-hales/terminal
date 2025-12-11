@@ -16,7 +16,7 @@ const encodeFeature = buildFeature({
     action: encodeAction,
   },
   component: TextOutput,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default encodeFeature;

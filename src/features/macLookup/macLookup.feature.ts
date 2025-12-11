@@ -16,7 +16,7 @@ const macLookupFeature = buildFeature({
     action: macLookupAction,
   },
   component: MacLookupFeature,
-  enabled: true,
+  isEnabled: true,
 });
 
 export default macLookupFeature;
