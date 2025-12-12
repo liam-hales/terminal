@@ -32,6 +32,9 @@ export const POST = async (request: Request): Promise<NextResponse> => {
           // Set the maximum size
           // per file to 50 MB
           maximumSizeInBytes: 52_428_800,
+          // Add a random suffix to the file
+          // name to avoid duplicates
+          addRandomSuffix: true,
         };
       },
     });
