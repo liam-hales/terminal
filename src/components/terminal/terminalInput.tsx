@@ -36,9 +36,10 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
   } = props;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-background">
-      <div className="flex flex-col pt-4 pb-6 pl-6 pr-6">
-        <div className="flex flex-row items-center">
+    <div className="w-full flex flex-col items-start bg-background gap-y-4 pb-4 pl-4 pr-4">
+      <div className="relative w-full flex flex-col items-start">
+        <div className="absolute w-full h-10 flex flex-row items-center border-solid border-[1px] border-primary/20 rounded-sm blur-[0.4px]" />
+        <div className="relative w-full h-10 flex flex-row items-center pl-3 pr-3">
           {
             (loading.status !== 'idle') && (
               <Loader className="pr-4" />
@@ -70,15 +71,15 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
             />
           </div>
         </div>
-        {
-          (loading.status === 'long-running') && (
-            <ProgressBar
-              percentage={loading.percentage}
-              message={loading.message}
-            />
-          )
-        }
       </div>
+      {
+        (loading.status === 'long-running') && (
+          <ProgressBar
+            percentage={loading.percentage}
+            message={loading.message}
+          />
+        )
+      }
     </div>
   );
 };
