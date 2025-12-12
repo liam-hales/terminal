@@ -2716,6 +2716,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-list@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "fast-list@npm:1.0.3"
+  checksum: 10/d1125cf534a7f075e3fb577397c3b358154a660095d8a4849addca0804b66a0ee0bd92fa880fdd866de8ff97b673eef0693beb6b8b6a3bdafce039c20737484c
+  languageName: node
+  linkType: hard
+
 "fastq@npm:^1.6.0":
   version: 1.15.0
   resolution: "fastq@npm:1.15.0"
@@ -4261,6 +4268,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"queueable@npm:^5.3.2":
+  version: 5.3.2
+  resolution: "queueable@npm:5.3.2"
+  dependencies:
+    fast-list: "npm:^1.0.3"
+  checksum: 10/ef48f9ffd563fc8298b60efd11848e5093a06e27335ada5d96dd5f125c3937fe56cf494c0cd8564d100bad7f6829966e0f66bde0eff7434006410dffbf61f130
+  languageName: node
+  linkType: hard
+
 "quick-lru@npm:^6.1.1":
   version: 6.1.1
   resolution: "quick-lru@npm:6.1.1"
@@ -4940,6 +4956,7 @@ __metadata:
     next: "npm:^15.5.2"
     npm-check-updates: "npm:^18.0.3"
     postcss: "npm:^8.5.6"
+    queueable: "npm:^5.3.2"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
     sharp: "npm:^0.34.3"
