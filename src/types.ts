@@ -79,27 +79,45 @@ export interface IFeature<
   P extends object,
 > {
   readonly id: F;
-  readonly command: ICommand<O, P>;
+  readonly command: IClientCommand<O, P> | IServerCommand<O, P>;
   readonly component: FunctionComponent<P>;
   readonly isEnabled: boolean;
 }
 
 /**
- * Used to describe a feature command which
- * can be executed in the terminal
+ * Used to describe a feature command
+ * which is executed on the client
  *
  * - Generic type `O` for the options
  * - Generic type `P` for the component props
  */
-export interface ICommand<
+export interface IClientCommand<
   O extends ZodObject,
   P extends object,
 > {
   readonly name: string;
   readonly description: string;
   readonly options: O;
-  readonly execution: 'server' | 'client';
+  readonly execution: 'client';
   readonly action: (options: z.infer<O>) => P | Promise<P> | AsyncGenerator<ActionEvent<P>>;
+}
+
+/**
+ * Used to describe a feature command
+ * which is executed on the server
+ *
+ * - Generic type `O` for the options
+ * - Generic type `P` for the component props
+ */
+export interface IServerCommand<
+  O extends ZodObject,
+  P extends object,
+> {
+  readonly name: string;
+  readonly description: string;
+  readonly options: O;
+  readonly execution: 'server';
+  readonly action: (options: z.infer<O>) => P | Promise<P>;
 }
 
 /**
