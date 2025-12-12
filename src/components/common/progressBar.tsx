@@ -31,10 +31,10 @@ const ProgressBar: FunctionComponent<Props> = ({ percentage, message }): ReactEl
   const empty = total - filled;
 
   return (
-    <div className="flex flex-row gap-4 pt-4">
+    <div className="flex flex-row gap-x-4">
       {
         (message != null) && (
-          <p className="text-xs">
+          <p className="shrink-0 text-xs">
             {message}
           </p>
         )
