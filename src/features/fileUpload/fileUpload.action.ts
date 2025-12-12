@@ -4,7 +4,9 @@ import { fileUploadOptions } from '.';
 import { selectFiles, zipStream } from '../../helpers';
 import { upload } from '@vercel/blob/client';
 import { FileUploadFeature } from '../../components';
-import { OnProgress } from '../../types';
+import { ActionEvent } from '../../types';
+import { Channel } from 'queueable';
+import { PutBlobResult } from '@vercel/blob';
 
 /**
  * The file upload feature options
@@ -21,18 +23,14 @@ type Props = ComponentProps<typeof FileUploadFeature>;
  * for the file upload feature command
  *
  * @param options The feature options
- * @param onProgress The function used to update the action progress
- *
  * @returns The feature component props
  */
-const fileUploadAction = async (
-  options: Options,
-  onProgress: OnProgress,
-): Promise<Props> => {
+const fileUploadAction = async function* (options: Options): AsyncGenerator<ActionEvent<Props>> {
   const { zip } = options;
 
-  // Define the maximum file size
-  // in bytes (50 MB)
+  // Define the queue channel and the maximum
+  // file size in bytes (50 MB)
+  const channel = new Channel<ActionEvent<Props>>();
   const maxFileSize = 52_428_800;
 
   // Allow the user to select files and make sure none
@@ -46,54 +44,83 @@ const fileUploadAction = async (
     throw new Error('One or more files exceeds the maximum file size of 50 MB');
   }
 
-  // Generate the array of data to upload
-  // based on the command options
+  const blobs: PutBlobResult[] = [];
   const toUpload = (zip === true)
-    ? [zipStream(files, (percentage) => onProgress(percentage, 'Archiving'))]
+    ? [
+        zipStream(files, (percentage) => {
+          void channel.push({
+            type: 'progress',
+            percentage: percentage,
+            message: 'Archiving',
+          });
+        }),
+      ]
     : files;
 
-  // Map the data to upload into an array of
-  // upload promises and `await` on them all
-  const blobs = await Promise.all(
-    toUpload.map(async (file) => {
+  // Execute the function to used to upload the files one
+  // after another and push events to the channel
+  void (async () => {
+    for (let index = 0; index < toUpload.length; index++) {
 
-      // Workout the name based on
-      // the data structure
+      const file = toUpload[index];
       const name = (file instanceof ReadableStream)
         ? 'archive.zip'
         : file.name;
 
-      return await upload(name, file, {
+      const blob = await upload(name, file, {
         access: 'public',
         handleUploadUrl: '/api/files/upload',
-        onUploadProgress: ({ percentage }) => onProgress(percentage, 'Uploading'),
+        onUploadProgress: ({ percentage }) => {
+
+          // Push the progress event to the channel with the correct percentage
+          // calculated based on how many files are being uploaded
+          void channel.push({
+            type: 'progress',
+            percentage: ((index + (percentage / 100)) / toUpload.length) * 100,
+            message: `Uploading ${index + 1}/${toUpload.length}`,
+          });
+        },
       });
-    }),
-  );
 
-  return {
-    files: blobs.map((blob, index) => {
-      const { pathname, url, contentType } = blob;
+      blobs.push(blob);
 
-      // Extract the file size (not supported for zip streams)
-      const data = toUpload[index];
-      const size = (data instanceof ReadableStream)
-        ? 0
-        : data.size;
+      // Push the update event to the channel
+      // with the updated files array
+      void channel.push({
+        type: 'update',
+        componentProps: {
+          files: blobs.map((blob) => {
+            const { pathname, url, contentType } = blob;
 
-      // Extract the unique file ID from the file URL which
-      // will be used for the file URL to display
-      const [, id] = url
-        .split('vercel-storage.com/');
+            // Extract the file size (not supported for zip streams)
+            const size = (file instanceof ReadableStream)
+              ? 0
+              : file.size;
 
-      return {
-        name: pathname,
-        size: size,
-        contentType: contentType,
-        url: `https://${window.location.hostname}/files/${id}`,
-      };
-    }),
-  };
+            // Extract the unique fi``le ID from the file URL which
+            // will be used for the file URL to display
+            const [, id] = url
+              .split('vercel-storage.com/');
+
+            return {
+              name: pathname,
+              size: size,
+              contentType: contentType,
+              url: `https://${window.location.hostname}/files/${id}`,
+            };
+          }),
+        },
+      });
+    }
+
+    void channel.return();
+  })();
+
+  // Loop through the channel and
+  // yield each event
+  for await (const event of channel) {
+    yield event;
+  }
 };
 
 export default fileUploadAction;
