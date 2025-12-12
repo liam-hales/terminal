@@ -23,7 +23,7 @@ const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, duration, outp
       <p className="text-xs pb-3 break-all">
         {`> ${input}`}
       </p>
-      <div className="flex flex-row items-end justify-between">
+      <div className="flex flex-row items-end justify-between gap-x-3">
         <div className="flex flex-col">
           <feature.component {...componentProps as FeatureComponentProps} />
         </div>

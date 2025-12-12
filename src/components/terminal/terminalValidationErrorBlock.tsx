@@ -19,7 +19,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
       <p className="text-xs pb-3 break-all">
         {`> ${input}`}
       </p>
-      <div className="flex flex-row items-end justify-between">
+      <div className="flex flex-row items-end justify-between gap-x-3">
         <div className="w-full pt-2 pb-4 pl-5 pr-5">
           <p className="text-xs whitespace-pre-wrap break-all pb-6">
             {
