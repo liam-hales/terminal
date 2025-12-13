@@ -17,7 +17,8 @@ export type FeatureId =
   | 'pass-gen'
   | 'uuid'
   | 'mac-lookup'
-  | 'file-upload';
+  | 'file-upload'
+  | 'isp';
 
 /**
  * The union type for all

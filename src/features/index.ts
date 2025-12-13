@@ -10,6 +10,7 @@ import { passGenFeature } from './passGen';
 import { uuidFeature } from './uuid';
 import { macLookupFeature } from './macLookup';
 import { fileUploadfeature } from './fileUpload';
+import { ispFeature } from './isp';
 
 /**
  * Describes all the features
@@ -27,6 +28,7 @@ export const features = [
   uuidFeature,
   macLookupFeature,
   fileUploadfeature,
+  ispFeature,
 ];
 
 /**
