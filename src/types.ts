@@ -88,7 +88,7 @@ export interface IFeature<
  * Used to describe a feature command
  * which is executed on the client
  *
- * - Generic type `O` for the options
+ * - Generic type `O` for the command options
  * - Generic type `P` for the component props
  */
 export interface IClientCommand<
@@ -106,7 +106,7 @@ export interface IClientCommand<
  * Used to describe a feature command
  * which is executed on the server
  *
- * - Generic type `O` for the options
+ * - Generic type `O` for the command options
  * - Generic type `P` for the component props
  */
 export interface IServerCommand<

@@ -7,7 +7,7 @@ import { z } from 'zod';
  * This options schema is used for
  * validation and type inference.
  */
-const dateOptions = z.object({
+const datetimeOptions = z.object({
   value: z
     .union([
       z.iso.date(),
@@ -30,4 +30,4 @@ const dateOptions = z.object({
     .describe('The timezone used to display the datetime'),
 });
 
-export default dateOptions;
+export default datetimeOptions;

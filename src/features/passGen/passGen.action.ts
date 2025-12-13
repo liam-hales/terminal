@@ -41,7 +41,7 @@ const passGenAction = async (options: Options): Promise<Props> => {
     .reduce((previous, key) => {
 
       // If the option that matches the key from the values map has
-      // been set to `true`, then include it's values in the pool
+      // been set to `true`, then include its values in the pool
       return (options[key] === true)
         ? `${previous}${valuesMap[key]}`
         : previous;
