@@ -16,9 +16,9 @@ interface Props extends BaseProps {
  * @param props The component props
  * @returns The `WhoisFeature` component
  */
-const WhoisFeature: FunctionComponent<Props> = ({ className, results }): ReactElement<Props> => {
+const WhoisFeature: FunctionComponent<Props> = ({ results }): ReactElement<Props> => {
   return (
-    <div className={`${className ?? ''} flex flex-col`}>
+    <div className="flex flex-col items-start">
       {
         results.map((result) => {
           const { serverName, data } = result;

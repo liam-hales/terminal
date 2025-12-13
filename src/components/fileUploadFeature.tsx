@@ -33,7 +33,7 @@ const FileUploadFeature: FunctionComponent<Props> = ({ files }): ReactElement<Pr
 
   return (
     <Fragment>
-      <div className="flex flex-col gap-y-8 pt-4">
+      <div className="flex flex-col gap-y-8">
         {
           files.map((file) => {
             const { name, size, contentType, url } = file;
