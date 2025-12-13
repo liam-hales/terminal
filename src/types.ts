@@ -42,19 +42,11 @@ export type ServerActionResponse<T> = ServerActionSuccessResponse<T> | ServerAct
  */
 export type ActionEvent<P extends object> = ActionProgressEvent | ActionUpdateEvent<P>;
 
-/*
- * The utility type used to convert a type
- * into an intersection type
- *
- * - Generic type `T` for the type to convert
- */
-type Intersect<T> = (T extends T ? (k: T) => void : never) extends ((k: infer I) => void) ? I : never;
-
 /**
  * The props that all component
  * props should `extends`
  *
- * - Generic type `T` for the `internalRef`
+     * - Generic type `T` for the `internalRef`
  *
  * The `internalRef` prop is used with the `withRef`
  * helper to forward component references
@@ -126,46 +118,6 @@ export interface IServerCommand<
  * all feature commands
  */
 export type Command = Feature['command'];
-
-/**
- * The intersection type used to describe
- * all feature command options
- *
- * _Used for type casting only as TypeScript does not support correlated unions_
- *
- * [TypeScript Issue](https://github.com/microsoft/TypeScript/issues/30581)
- */
-export type CommandOption = Intersect<
-  z.infer<
-    Feature['command']['options']
-  >
->;
-
-/**
- * The intersection type used to describe
- * all feature command actions
- *
- * _Used for type casting only as TypeScript does not support correlated unions_
- *
- * [TypeScript Issue](https://github.com/microsoft/TypeScript/issues/30581)
- */
-export type CommandAction = Intersect<
-  Feature['command']['action']
->;
-
-/**
- * The intersection type used to describe
- * all feature component props
- *
- * _Used for type casting only as TypeScript does not support correlated unions_
- *
- * [TypeScript Issue](https://github.com/microsoft/TypeScript/issues/30581)
- */
-export type FeatureComponentProps = Intersect<
-  ComponentProps<
-    Feature['component']
-  >
->;
 
 /**
  * Used to describe the feature output

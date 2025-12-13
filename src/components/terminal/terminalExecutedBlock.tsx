@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement } from 'react';
-import { BaseProps, FeatureComponentProps, TerminalExecutedBlock as ExecutedBlock } from '../../types';
+import { BaseProps, TerminalExecutedBlock as ExecutedBlock } from '../../types';
 import { featureMap } from '../../features';
 
 /**
@@ -25,7 +25,8 @@ const TerminalExecutedBlock: FunctionComponent<Props> = ({ input, duration, outp
       </p>
       <div className="flex flex-row items-end justify-between gap-x-3">
         <div className="flex flex-col">
-          <feature.component {...componentProps as FeatureComponentProps} />
+          {/* @ts-expect-error - TypeScript does not currently support correlated unions */}
+          <feature.component {...componentProps} />
         </div>
         <p className="text-xs">
           {duration.toFixed(0)}

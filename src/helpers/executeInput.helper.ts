@@ -1,7 +1,7 @@
 import { kebabCase } from 'change-case';
 import { search } from 'fast-fuzzy';
 import { features } from '../features';
-import { CommandAction, CommandOption, ExecuteInputEvent, ParsedInput } from '../types';
+import { ExecuteInputEvent, ParsedInput } from '../types';
 import { ValidationException } from '../exceptions';
 import { serverAction } from './';
 import { isAsyncGenerator } from '../guards';
@@ -100,10 +100,8 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
     // If the command execution needs to be done on the server, wrap the
     // action in the `serverAction` helper to execute this correctly
     if (execution === 'server') {
-      const response = await serverAction(
-        action as CommandAction,
-        validated.data as CommandOption,
-      );
+      // @ts-expect-error - TypeScript does not currently support correlated unions
+      const response = await serverAction(action, validated.data);
 
       // Check the response status and if there was an error, throw
       // a new error using the error message from the response
@@ -120,7 +118,8 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
       } as ExecuteInputEvent;
     }
 
-    const response = action(validated.data as CommandOption);
+    // @ts-expect-error - TypeScript does not currently support correlated unions
+    const response = action(validated.data);
 
     // If the response is an async generator then loop
     // through each event and yield the event
