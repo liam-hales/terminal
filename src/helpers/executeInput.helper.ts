@@ -59,12 +59,12 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
     ]);
   }
 
-  const { id, command, enabled } = feature;
+  const { id, command, isEnabled } = feature;
   const { options, execution, action } = command;
 
   // If the feature has not been
   // enabled, then throw an error
-  if (enabled === false) {
+  if (isEnabled === false) {
     throw new ValidationException(input, [
       {
         match: inputCommand,
@@ -73,15 +73,20 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
     ]);
   }
 
-  // If the help option has been set to true, return
-  // the help feature output for said command
+  // If the help option has been set to true,
+  // yield the event for the help feature
   if (inputOptions.help === true) {
-    return {
+    yield {
       featureId: 'help',
-      props: {
-        command: command,
+      actionEvent: {
+        type: 'update',
+        componentProps: {
+          command: command,
+        },
       },
     };
+
+    return;
   }
 
   const validated = options
