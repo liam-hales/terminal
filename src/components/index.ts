@@ -9,6 +9,7 @@ import KeyPairFeature from './keyPairFeature';
 import MacLookupFeature from './macLookupFeature';
 import FileUploadFeature from './fileUploadFeature';
 import IspFeature from './ispFeature';
+import SpeedTestFeature from './speedTestFeature';
 import Terminal from './terminal/terminal';
 import TerminalInput from './terminal/terminalInput';
 import TerminalExecutedBlock from './terminal/terminalExecutedBlock';
@@ -28,6 +29,7 @@ export {
   MacLookupFeature,
   FileUploadFeature,
   IspFeature,
+  SpeedTestFeature,
   HelpFeature,
   Terminal,
   TerminalInput,

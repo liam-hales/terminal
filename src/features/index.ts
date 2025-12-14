@@ -11,6 +11,7 @@ import { uuidFeature } from './uuid';
 import { macLookupFeature } from './macLookup';
 import { fileUploadfeature } from './fileUpload';
 import { ispFeature } from './isp';
+import { speedTestFeature } from './speedTest';
 
 /**
  * Describes all the features
@@ -29,6 +30,7 @@ export const features = [
   macLookupFeature,
   fileUploadfeature,
   ispFeature,
+  speedTestFeature,
 ];
 
 /**

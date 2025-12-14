@@ -18,7 +18,8 @@ export type FeatureId =
   | 'uuid'
   | 'mac-lookup'
   | 'file-upload'
-  | 'isp';
+  | 'isp'
+  | 'speed-test';
 
 /**
  * The union type for all
