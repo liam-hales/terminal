@@ -12,6 +12,7 @@ import { macLookupFeature } from './macLookup';
 import { fileUploadfeature } from './fileUpload';
 import { ispFeature } from './isp';
 import { speedTestFeature } from './speedTest';
+import { formatJsonFeature } from './format/json';
 
 /**
  * Describes all the features
@@ -31,6 +32,7 @@ export const features = [
   fileUploadfeature,
   ispFeature,
   speedTestFeature,
+  formatJsonFeature,
 ];
 
 /**

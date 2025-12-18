@@ -19,7 +19,8 @@ export type FeatureId =
   | 'mac-lookup'
   | 'file-upload'
   | 'isp'
-  | 'speed-test';
+  | 'speed-test'
+  | 'format-json';
 
 /**
  * The union type for all
