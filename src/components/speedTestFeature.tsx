@@ -9,7 +9,7 @@ interface Props extends BaseProps {
   readonly throughput: ThroughputValues;
   readonly latency: DelayValues;
   readonly jitter: DelayValues;
-  readonly showDetails: boolean;
+  readonly showDetails?: boolean;
 }
 
 /**
