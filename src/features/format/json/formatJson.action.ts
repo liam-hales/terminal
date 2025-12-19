@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
 import { TextOutput } from '../../../components';
-import { formatJsonOptions } from './index';
+import { formatJsonOptions } from '.';
 
 /**
  * The format JSON feature options
