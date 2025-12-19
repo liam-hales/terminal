@@ -13,6 +13,7 @@ import { fileUploadfeature } from './fileUpload';
 import { ispFeature } from './isp';
 import { speedTestFeature } from './speedTest';
 import { formatJsonFeature } from './format/json';
+import { formatSqlFeature } from './format/sql';
 
 /**
  * Describes all the features
@@ -33,6 +34,7 @@ export const features = [
   ispFeature,
   speedTestFeature,
   formatJsonFeature,
+  formatSqlFeature,
 ];
 
 /**

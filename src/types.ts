@@ -20,7 +20,8 @@ export type FeatureId =
   | 'file-upload'
   | 'isp'
   | 'speed-test'
-  | 'format-json';
+  | 'format-json'
+  | 'format-sql';
 
 /**
  * The union type for all
