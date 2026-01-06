@@ -1,10 +1,10 @@
 import { ComponentProps } from 'react';
-import { IspFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 
 /**
  * The ISP feature component props
  */
-type Props = ComponentProps<typeof IspFeature>;
+type Props = ComponentProps<typeof GroupedListOutput>;
 
 /**
  * The action used to execute the logic
@@ -20,14 +20,53 @@ const ispAction = async (): Promise<Props> => {
   const data = await response.json();
 
   return {
-    name: data.asOrganization,
-    asn: data.asn,
-    city: data.city,
-    region: data.region,
-    country: data.country,
-    postCode: data.postalCode,
-    latitude: data.latitude,
-    longitude: data.longitude,
+    spacing: 'medium',
+    groups: [
+      {
+        items: [
+          {
+            name: 'Name',
+            value: data.asOrganization,
+          },
+          {
+            name: 'ASN',
+            value: data.asn,
+          },
+        ],
+      },
+      {
+        items: [
+          {
+            name: 'City',
+            value: data.city,
+          },
+          {
+            name: 'Region',
+            value: data.region,
+          },
+          {
+            name: 'Country',
+            value: data.country,
+          },
+          {
+            name: 'Postal Code',
+            value: data.postalCode,
+          },
+        ],
+      },
+      {
+        items: [
+          {
+            name: 'Latitude',
+            value: data.latitude,
+          },
+          {
+            name: 'Longitude',
+            value: data.longitude,
+          },
+        ],
+      },
+    ],
   };
 };
 

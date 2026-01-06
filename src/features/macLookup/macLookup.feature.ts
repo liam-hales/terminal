@@ -1,5 +1,5 @@
 import { buildFeature } from '../../helpers';
-import { MacLookupFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { macLookupOptions, macLookupAction } from '.';
 
 /**
@@ -15,7 +15,7 @@ const macLookupFeature = buildFeature({
     execution: 'server',
     action: macLookupAction,
   },
-  component: MacLookupFeature,
+  component: GroupedListOutput,
   isEnabled: true,
 });
 

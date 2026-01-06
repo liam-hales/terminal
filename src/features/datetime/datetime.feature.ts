@@ -1,5 +1,5 @@
 import { buildFeature } from '../../helpers';
-import { DatetimeFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { datetimeOptions, datetimeAction } from '.';
 
 /**
@@ -15,7 +15,7 @@ const datetimeFeature = buildFeature({
     execution: 'client',
     action: datetimeAction,
   },
-  component: DatetimeFeature,
+  component: GroupedListOutput,
   isEnabled: true,
 });
 

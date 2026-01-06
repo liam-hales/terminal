@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
-import { JWTFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { jwtOptions } from '.';
 
 /**
@@ -11,7 +11,7 @@ type Options = z.infer<typeof jwtOptions>;
 /**
  * The JWT feature component props
  */
-type Props = ComponentProps<typeof JWTFeature>;
+type Props = ComponentProps<typeof GroupedListOutput>;
 
 /**
  * The action used to execute the logic
@@ -47,9 +47,17 @@ const jwtAction = async (options: Options): Promise<Props> => {
       });
 
     return {
-      header: header,
-      payload: payload,
-      signature: signature,
+      groups: [
+        {
+          items: ['Header', header],
+        },
+        {
+          items: ['Payload', payload],
+        },
+        {
+          items: ['Signature', signature],
+        },
+      ],
     };
   }
   // If any error occurs, it is most likely

@@ -3,10 +3,11 @@ import { z } from 'zod';
 import { fileUploadOptions } from '.';
 import { selectFiles, zipStream } from '../../helpers';
 import { upload } from '@vercel/blob/client';
-import { FileUploadFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { ActionEvent } from '../../types';
 import { Channel } from 'queueable';
 import { PutBlobResult } from '@vercel/blob';
+import { ListOutputGroup } from '../../components/types';
 
 /**
  * The file upload feature options
@@ -16,7 +17,7 @@ type Options = z.infer<typeof fileUploadOptions>;
 /**
  * The file upload feature component props
  */
-type Props = ComponentProps<typeof FileUploadFeature>;
+type Props = ComponentProps<typeof GroupedListOutput>;
 
 /**
  * The action used to execute the logic
@@ -27,6 +28,15 @@ type Props = ComponentProps<typeof FileUploadFeature>;
  */
 const fileUploadAction = async function* (options: Options): AsyncGenerator<ActionEvent<Props>> {
   const { zip } = options;
+
+  // Define all the possible file size
+  // units that each file could be
+  const fileSizeUnits = [
+    'bytes',
+    'KB',
+    'MB',
+    'GB',
+  ];
 
   // Define the queue channel and the maximum
   // file size in bytes (50 MB)
@@ -89,24 +99,52 @@ const fileUploadAction = async function* (options: Options): AsyncGenerator<Acti
       void channel.push({
         type: 'update',
         componentProps: {
-          files: blobs.map((blob) => {
+          spacing: 'medium',
+          groups: blobs.map<ListOutputGroup>((blob) => {
             const { pathname, url, contentType } = blob;
+
+            // Extract the file extension
+            // from the file name
+            const extension = `.${
+              name
+                .split('.')
+                .pop() ?? ''
+            }`;
 
             // Extract the file size (not supported for zip streams)
             const size = (file instanceof ReadableStream)
               ? 0
               : file.size;
 
-            // Extract the unique fi``le ID from the file URL which
+            // Calculate the size unit index and size value
+            // used to display the correct file size
+            const sizeUnitIndex = Math.floor(Math.log(size) / Math.log(1024));
+            const sizeValue = size / Math.pow(1024, sizeUnitIndex);
+
+            // Extract the unique file ID from the file URL which
             // will be used for the file URL to display
             const [, id] = url
               .split('vercel-storage.com/');
 
             return {
-              name: pathname,
-              size: size,
-              contentType: contentType,
-              url: `https://${window.location.hostname}/files/${id}`,
+              items: [
+                {
+                  name: 'Name',
+                  value: pathname,
+                },
+                {
+                  name: 'Size',
+                  value: `${sizeValue.toFixed(2)} ${fileSizeUnits[sizeUnitIndex]}`,
+                },
+                {
+                  name: 'Type',
+                  value: `${extension} (${contentType})`,
+                },
+                {
+                  name: 'Download URL',
+                  value: `https://${window.location.hostname}/files/${id}`,
+                },
+              ],
             };
           }),
         },

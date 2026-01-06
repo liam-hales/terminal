@@ -1,5 +1,5 @@
 import { buildFeature } from '../../helpers';
-import { IspFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { ispAction } from '.';
 import { z } from 'zod';
 
@@ -16,7 +16,7 @@ const ispFeature = buildFeature({
     execution: 'client',
     action: ispAction,
   },
-  component: IspFeature,
+  component: GroupedListOutput,
   isEnabled: true,
 });
 

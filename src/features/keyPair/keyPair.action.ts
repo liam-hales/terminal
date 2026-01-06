@@ -5,7 +5,7 @@
 import { generateKeyPairSync } from 'crypto';
 import { ComponentProps } from 'react';
 import { z } from 'zod';
-import { KeyPairFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { keyPairOptions } from '.';
 
 /**
@@ -16,7 +16,7 @@ type Options = z.infer<typeof keyPairOptions>;
 /**
  * The key pair feature component props
  */
-type Props = ComponentProps<typeof KeyPairFeature>;
+type Props = ComponentProps<typeof GroupedListOutput>;
 
 /**
  * The action used to execute the logic
@@ -58,8 +58,20 @@ const keyPairAction = async (options: Options): Promise<Props> => {
     const privateJwk = privateKey.export({ format: format });
 
     return {
-      publicKey: JSON.stringify(publicJwk, undefined, 2),
-      privateKey: JSON.stringify(privateJwk, undefined, 2),
+      groups: [
+        {
+          items: [
+            'Public Key',
+            JSON.stringify(publicJwk, undefined, 2),
+          ],
+        },
+        {
+          items: [
+            'Private Key',
+            JSON.stringify(privateJwk, undefined, 2),
+          ],
+        },
+      ],
     };
   }
 
@@ -81,8 +93,14 @@ const keyPairAction = async (options: Options): Promise<Props> => {
     .toString();
 
   return {
-    publicKey: publicKeyExport,
-    privateKey: privateKeyExport,
+    groups: [
+      {
+        items: ['Public Key', publicKeyExport],
+      },
+      {
+        items: ['Private Key', privateKeyExport],
+      },
+    ],
   };
 };
 

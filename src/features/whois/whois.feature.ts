@@ -1,5 +1,5 @@
 import { buildFeature } from '../../helpers';
-import { WhoisFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { whoisOptions, whoisAction } from '.';
 
 /**
@@ -15,7 +15,7 @@ const whoisFeature = buildFeature({
     execution: 'server',
     action: whoisAction,
   },
-  component: WhoisFeature,
+  component: GroupedListOutput,
   isEnabled: true,
 });
 

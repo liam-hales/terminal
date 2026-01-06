@@ -3,8 +3,8 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
 import whoiser from 'whoiser';
-import { WhoisFeature } from '../../components';
-import { WhoiserData, WhoisResult } from '../../components/types';
+import { GroupedListOutput } from '../../components';
+import { ListOutputGroup, ListOutputItem, WhoiserData } from '../../components/types';
 import { whoisOptions } from '.';
 
 /**
@@ -15,7 +15,7 @@ type Options = z.infer<typeof whoisOptions>;
 /**
  * The Whois feature component props
  */
-type Props = ComponentProps<typeof WhoisFeature>;
+type Props = ComponentProps<typeof GroupedListOutput>;
 
 /**
  * The action used to execute the logic
@@ -37,39 +37,55 @@ const whoisAction = async (options: Options): Promise<Props> => {
   // is actually returned from `whoiser`
   }) as WhoiserData;
 
-  // Map the data into results for
-  // the feature component props
-  const results: WhoisResult[] = Object
+  // Map the data into an array of
+  // groups for the component props
+  const groups = Object
     .keys(data)
-    .map((key) => {
+    .map<ListOutputGroup>((key) => {
 
-      // Extract the item from the data using it's key
+      // Extract the item from the data using its key
       // and reduce the item to correctly map it
       const item = data[key];
       return {
-        serverName: key,
-        data: Object
-          .keys(item)
-          .reduce((map, key) => {
+        items: [
+          {
+            name: 'Server',
+            value: key,
+          },
+          ...Object
+            .keys(item)
+            .map<ListOutputItem>((key) => {
 
-            // Remove any empty strings from the data or set their value
-            // to `REDACTED` depending on the command options set
-            const value = item[key];
-            return {
-              ...map,
-              ...(value !== '') && {
-                [key]: value,
-              },
-              ...(value === '' && excludeRedacted === false) && {
-                [key]: 'REDACTED',
-              },
-            };
-          }, {}),
+              // Extract and format the value from the
+              // data as it could be an array
+              const value = item[key];
+              const formatted = (typeof value === 'string')
+                ? value
+                : value.join('\n');
+
+              return {
+                name: key,
+                value: (formatted !== '') ? formatted : 'REDACTED',
+              };
+            })
+            .filter((item) => {
+              const { value } = item;
+
+              // Remove `REDACTED` values if the `excludeRedacted`
+              // command option has been set
+              if (value === 'REDACTED' && excludeRedacted === true) {
+                return false;
+              }
+
+              return true;
+            }),
+        ],
       };
     });
 
   return {
-    results: results,
+    spacing: 'large',
+    groups: groups,
   };
 };
 

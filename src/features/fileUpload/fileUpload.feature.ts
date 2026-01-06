@@ -1,6 +1,6 @@
 import { buildFeature } from '../../helpers';
 import { fileUploadOptions, fileUploadAction } from '.';
-import { FileUploadFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 
 /**
  * The file upload feature, executed with `file upload`, used to upload files
@@ -15,7 +15,7 @@ const fileUploadFeature = buildFeature({
     execution: 'client',
     action: fileUploadAction,
   },
-  component: FileUploadFeature,
+  component: GroupedListOutput,
   isEnabled: true,
 });
 

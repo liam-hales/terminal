@@ -1,5 +1,5 @@
 import { buildFeature } from '../../helpers';
-import { JWTFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { jwtOptions, jwtAction } from '.';
 
 /**
@@ -15,7 +15,7 @@ const jwtFeature = buildFeature({
     execution: 'client',
     action: jwtAction,
   },
-  component: JWTFeature,
+  component: GroupedListOutput,
   isEnabled: true,
 });
 

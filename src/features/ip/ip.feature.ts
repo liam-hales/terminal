@@ -1,5 +1,5 @@
 import { buildFeature } from '../../helpers';
-import { IpFeature } from '../../components';
+import { ListOutput } from '../../components';
 import { ipOptions, ipAction } from '.';
 
 /**
@@ -15,7 +15,7 @@ const ipFeature = buildFeature({
     execution: 'client',
     action: ipAction,
   },
-  component: IpFeature,
+  component: ListOutput,
   isEnabled: true,
 });
 

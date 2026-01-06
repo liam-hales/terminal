@@ -1,4 +1,27 @@
 /**
+ * The spacing used for the `ListOutput`
+ * and `GroupedListOutput` components
+ */
+export type ListOutputSpacing = 'small' | 'medium' | 'large';
+
+/**
+ * Describes the list output item for
+ * the `ListOutput` component
+ */
+export interface ListOutputItem {
+  readonly name: string;
+  readonly value: string;
+}
+
+/**
+ * Describes the list output group for
+ * the `GroupedListOutput` component
+ */
+export interface ListOutputGroup {
+  readonly items: ListOutputItem[] | string[];
+}
+
+/**
  * Describes the whois data which is used
  * for the `whoiser` response
  */
@@ -6,15 +29,6 @@ export interface WhoiserData {
   readonly [key: string]: {
     readonly [key: string]: string | string[];
   };
-}
-
-/**
- * Describes the whois result which is used
- * for the `WhoisFeature` component props
- */
-export interface WhoisResult {
-  readonly serverName: string;
-  readonly data: Record<string, string | string[] | undefined>;
 }
 
 /**

@@ -2,7 +2,7 @@
 
 import { ComponentProps } from 'react';
 import { z } from 'zod';
-import { MacLookupFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { macLookupOptions } from '.';
 
 /**
@@ -15,7 +15,7 @@ type Options = z.infer<typeof macLookupOptions>;
  * The MAC address lookup feature
  * component props
  */
-type Props = ComponentProps<typeof MacLookupFeature>;
+type Props = ComponentProps<typeof GroupedListOutput>;
 
 /**
  * The action used to execute the logic
@@ -52,22 +52,36 @@ const macLookupAction = async (options: Options): Promise<Props> => {
   }] = await response.json();
 
   return {
-    type: type,
-    startHex: startHex,
-    endHex: endHex,
-    company: company,
-    address: {
-      ...(addressL1 !== '') && {
-        lineOne: addressL1,
+    spacing: 'small',
+    groups: [
+      {
+        items: [company],
       },
-      ...(addressL2 !== '') && {
-        lineTwo: addressL2,
+      {
+        items: [
+          {
+            name: 'Type',
+            value: type,
+          },
+          {
+            name: 'HEX',
+            value: `${startHex as string} -> ${endHex as string}`,
+          },
+          {
+            name: 'Address',
+            value:
+              [
+                addressL1,
+                addressL2,
+                addressL3,
+                country,
+              ]
+                .filter((item) => item !== '')
+                .join('\n'),
+          },
+        ],
       },
-      ...(addressL3 !== '') && {
-        lineTwo: addressL3,
-      },
-      country: country,
-    },
+    ],
   };
 };
 

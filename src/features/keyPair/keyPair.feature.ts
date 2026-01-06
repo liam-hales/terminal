@@ -1,5 +1,5 @@
 import { buildFeature } from '../../helpers';
-import { KeyPairFeature } from '../../components';
+import { GroupedListOutput } from '../../components';
 import { keyPairOptions, keyPairAction } from '.';
 
 /**
@@ -15,7 +15,7 @@ const keyPairFeature = buildFeature({
     execution: 'server',
     action: keyPairAction,
   },
-  component: KeyPairFeature,
+  component: GroupedListOutput,
   isEnabled: true,
 });
 

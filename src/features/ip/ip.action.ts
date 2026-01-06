@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
-import { IpFeature } from '../../components';
+import { ListOutput } from '../../components';
 import { ipOptions } from '.';
 
 /**
@@ -11,7 +11,7 @@ type Options = z.infer<typeof ipOptions>;
 /**
  * The IP feature component props
  */
-type Props = ComponentProps<typeof IpFeature>;
+type Props = ComponentProps<typeof ListOutput>;
 
 /**
  * The action used to execute the logic
@@ -61,10 +61,7 @@ const ipAction = async (options: Options): Promise<Props> => {
     }
 
     return {
-      data: {
-        type: 'single-version',
-        address: address,
-      },
+      items: [address],
     };
   }
 
@@ -76,11 +73,17 @@ const ipAction = async (options: Options): Promise<Props> => {
   ]);
 
   return {
-    data: {
-      type: 'multi-version',
-      v4Address: v4Address,
-      v6Address: v6Address,
-    },
+    spacing: 'small',
+    items: [
+      {
+        name: 'IPv4',
+        value: v4Address ?? 'Unknown, could not resolve address',
+      },
+      {
+        name: 'IPv6',
+        value: v6Address ?? 'Unknown, could not resolve address',
+      },
+    ],
   };
 };
 
