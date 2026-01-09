@@ -6,7 +6,7 @@ import { hp100lx } from '../fonts';
 import { RetroScreen, Terminal } from '../components';
 import { TerminalProvider } from '../providers';
 import { viewport, generateMetadata } from './metadata';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/next';
 
 /**
  * The `AppLayout` component props
