@@ -1,6 +1,7 @@
-import { ExecuteInputEvent, ParsedInput } from '../types';
+import { ExecuteInputEvent, ExecuteInputFeatureEvent, ParsedInput } from '../types';
 import { resolveFeature, serverAction, validateOptions } from './';
 import { isAsyncGenerator } from '../guards';
+import { clearOptions } from '../features/clear';
 
 /**
  * Used to validate and execute
@@ -10,6 +11,19 @@ import { isAsyncGenerator } from '../guards';
  * @returns The async generator used to transmit events
  */
 const executeInput = async function* (input: ParsedInput): AsyncGenerator<ExecuteInputEvent> {
+  const { command: inputCommand } = input;
+
+  // If the command is set to `clear` then treat this separately
+  // to a standard feature and yield the clear event
+  if (inputCommand === 'clear') {
+    const { last } = validateOptions(input, clearOptions);
+    yield {
+      type: 'clear',
+      last: last,
+    };
+
+    return;
+  }
 
   // Resolve the feature from
   // the parsed input
@@ -24,6 +38,7 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
   // yield the event for the help feature
   if (options.help === true) {
     yield {
+      type: 'feature',
       featureId: 'help',
       actionEvent: {
         type: 'update',
@@ -49,12 +64,13 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
     }
 
     yield {
+      type: 'feature',
       featureId: id,
       actionEvent: {
         type: 'update',
         componentProps: response.data,
       },
-    } as ExecuteInputEvent;
+    } as ExecuteInputFeatureEvent;
   }
 
   // @ts-expect-error - TypeScript does not currently support correlated unions
@@ -65,9 +81,10 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
   if (isAsyncGenerator(response) === true) {
     for await (const event of response) {
       yield {
+        type: 'feature',
         featureId: id,
         actionEvent: event,
-      } as ExecuteInputEvent;
+      } as ExecuteInputFeatureEvent;
     }
 
     return;
@@ -77,12 +94,13 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
   // will resolve the props so use `await` to obtain them correctly
   const props = await response;
   yield {
+    type: 'feature',
     featureId: id,
     actionEvent: {
       type: 'update',
       componentProps: props,
     },
-  } as ExecuteInputEvent;
+  } as ExecuteInputFeatureEvent;
 };
 
 export default executeInput;
