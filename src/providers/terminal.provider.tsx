@@ -63,65 +63,83 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
       // Loop through and process
       // each generator event
       for await (const event of generator) {
-        const { featureId, actionEvent } = event;
 
         // Process each type of event and update
         // the terminal state for each
-        switch (actionEvent.type) {
+        switch (event.type) {
 
-          case 'progress': {
-            const { percentage, message } = actionEvent;
+          case 'clear': {
+            const { last } = event;
 
-            setLoading({
-              status: 'long-running',
-              percentage: percentage,
-              message: message,
-            });
+            // If `last` has been set in the event then remove that
+            // number of blocks, otherwise remove them all
+            setBlocks((previous) => previous.slice(last ?? previous.length, previous.length));
 
             break;
           }
 
-          case 'update': {
-            const { componentProps } = actionEvent;
+          case 'feature': {
+            const { featureId, actionEvent } = event;
 
-            // Get the end time stamp which along with the start time
-            // can be used to capture the current duration
-            const endTime = performance.now();
-            const output = {
-              featureId: featureId,
-              componentProps: componentProps,
-            } as FeatureOutput;
+            // Process each type of action event and
+            // update the terminal state for each
+            switch (actionEvent.type) {
 
-            setBlocks((previous) => {
-              const found = previous.find((block) => block.id === blockId);
+              case 'progress': {
+                const { percentage, message } = actionEvent;
 
-              // If there has not yet been an executed terminal
-              // block created then add a new one to state
-              if (found == null) {
-                return [
-                  {
-                    type: 'executed',
-                    id: blockId,
-                    input: input,
-                    duration: endTime - startTime,
-                    output: output,
-                  },
-                  ...previous,
-                ];
+                setLoading({
+                  status: 'long-running',
+                  percentage: percentage,
+                  message: message,
+                });
+
+                break;
               }
 
-              // There is an existing terminal block, update
-              // it wth the latest duration and output
-              return previous.map((block) => {
-                return (block.id === blockId && block.type === 'executed')
-                  ? {
-                      ...block,
-                      duration: endTime - startTime,
-                      output: output,
-                    }
-                  : block;
-              });
-            });
+              case 'update': {
+                const { componentProps } = actionEvent;
+
+                // Get the end time stamp which along with the start time
+                // can be used to capture the current duration
+                const endTime = performance.now();
+                const output = {
+                  featureId: featureId,
+                  componentProps: componentProps,
+                } as FeatureOutput;
+
+                setBlocks((previous) => {
+                  const found = previous.find((block) => block.id === blockId);
+
+                  // If there has not yet been an executed terminal
+                  // block created then add a new one to state
+                  if (found == null) {
+                    return [
+                      {
+                        type: 'executed',
+                        id: blockId,
+                        input: input,
+                        duration: endTime - startTime,
+                        output: output,
+                      },
+                      ...previous,
+                    ];
+                  }
+
+                  // There is an existing terminal block, update
+                  // it wth the latest duration and output
+                  return previous.map((block) => {
+                    return (block.id === blockId && block.type === 'executed')
+                      ? {
+                          ...block,
+                          duration: endTime - startTime,
+                          output: output,
+                        }
+                      : block;
+                  });
+                });
+              }
+            }
           }
         }
       }
