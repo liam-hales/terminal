@@ -39,6 +39,12 @@ export type ServerActionResponse<T> = ServerActionSuccessResponse<T> | ServerAct
 
 /**
  * The union type for all
+ * execute input event types
+ */
+export type ExecuteInputEvent = ExecuteInputFeatureEvent | ExecuteInputClearEvent;
+
+/**
+ * The union type for all
  * action event types
  *
  * - Generic type `T` for the props
@@ -49,7 +55,7 @@ export type ActionEvent<P extends object> = ActionProgressEvent | ActionUpdateEv
  * The props that all component
  * props should `extends`
  *
-     * - Generic type `T` for the `internalRef`
+ * - Generic type `T` for the `internalRef`
  *
  * The `internalRef` prop is used with the `withRef`
  * helper to forward component references
@@ -134,15 +140,28 @@ export type FeatureOutput = {
 }[keyof FeatureMap];
 
 /**
- * Used to describe the event data used for events
- * sent from the `executeInput` helper
+ * Used to describe the feature event data for
+ * events sent from the `executeInput` helper
  */
-export type ExecuteInputEvent = {
-  [K in keyof FeatureMap]: {
-    readonly featureId: K;
-    readonly actionEvent: ActionEvent<ComponentProps<FeatureMap[K]['component']>>;
+export type ExecuteInputFeatureEvent =
+  {
+    readonly type: 'feature';
   }
-}[keyof FeatureMap];
+  & {
+    [K in keyof FeatureMap]: {
+      readonly featureId: K;
+      readonly actionEvent: ActionEvent<ComponentProps<FeatureMap[K]['component']>>;
+    }
+  }[keyof FeatureMap];
+
+/**
+ * Used to describe the clear event data for
+ * events sent from the `executeInput` helper
+ */
+export interface ExecuteInputClearEvent {
+  readonly type: 'clear';
+  readonly last?: number;
+}
 
 /**
  * Describes the parsed input which consists of
