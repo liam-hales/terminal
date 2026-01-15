@@ -28,7 +28,7 @@
 
 # Docs 📑
 
-> ⚠️ _**WARNING** - Please make sure to follow the [Getting Started](#getting-started) section first to avoid running into any issues._
+> ⚠️ _**WARNING** - Please make sure to follow the [Getting Started](#getting-started-) section first to avoid running into any issues._
 
 - [Built With 🛠️](#built-with-)
 - [Getting Started 🚀](#getting-started-)
@@ -134,8 +134,6 @@ For local development there are two ways to build and start the app depending on
 
 * [Development Server](#development-server) - Should be used when developing the app
 * [Production Server](#production-server) - Should be used to simulate how the app will run in production
-
-<br/>
 
 ## Development Server
 
