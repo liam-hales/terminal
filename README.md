@@ -4,8 +4,8 @@
     Terminal
   </h1>
   <p>
-    Terminal is a web app that was created to provide developer tools with a dev-friendly terminal interface.
-  </p>
+    Terminal is a web app created to provide web-based developer tools with a dev-friendly terminal interface.
+</p>
   <a
     href="https://cli.liamhales.dev"
     target="_blank"
@@ -26,7 +26,9 @@
 <br/>
 <br/>
 
-# Content Index
+# Docs 📑
+
+> ⚠️ _**WARNING** - Please make sure to follow the [Getting Started](#getting-started) section first to avoid running into any issues._
 
 - [Built With 🛠️](#built-with-)
 - [Getting Started 🚀](#getting-started-)
@@ -46,7 +48,7 @@
 
 # Built With 🛠️
 
-This app was built and hosted with the below. For a full list of dependencies used to build the app see the [`package.json`](/package.json) file.
+This app was built and hosted with the following technologies. For a full list of dependencies used, see the [`package.json`](/package.json) file.
 
 <br/>
 
@@ -84,10 +86,6 @@ This app was built and hosted with the below. For a full list of dependencies us
 <div>
 
 <br/>
-<br/>
-
-> ⚠️ _**WARNING** - Please make sure to read and follow the [Getting Started](#getting-started) section before continuing to the below sections to avoid running into any issues_
-
 <br/>
 
 # Getting Started 🚀
@@ -149,7 +147,7 @@ $ yarn start:dev
 
 ## Production Server
 
-1. Follow the steps in the [Production -> Building](#building) section
+1. Run `yarn build` to build the app for production
 2. Run `yarn start:prod` to start the production server
 
 ```sh
