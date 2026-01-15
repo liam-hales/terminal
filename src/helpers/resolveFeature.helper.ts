@@ -13,10 +13,6 @@ import { Feature, features } from '../features';
 const resolveFeature = (input: ParsedInput): Feature => {
   const { command: inputCommand } = input;
 
-  if (inputCommand == null) {
-    throw new Error('No command input');
-  }
-
   // Attempt to find a feature with a command
   // name that matches the input command
   const feature = features.find((feature) => {

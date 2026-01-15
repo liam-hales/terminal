@@ -17,7 +17,7 @@ const validateOptions = <S extends ZodRawShape>(
   input: ParsedInput,
   schema: ZodObject<S>,
 ): z.infer<typeof schema> => {
-  const { command = '', options = {} } = input;
+  const { command, options = {} } = input;
 
   const validated = schema
     .strict()

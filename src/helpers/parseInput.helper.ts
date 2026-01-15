@@ -50,13 +50,15 @@ const parseInput = (input: string): ParsedInput => {
   const options = camelcaseKeys(mapped);
   const hasOptions = Object.keys(options).length > 0;
 
+  if (command === '') {
+    throw new Error('No command input');
+  }
+
   return {
     rawInput: input,
+    command: command,
     ...(hasOptions === true) && {
       options: options,
-    },
-    ...(command !== '') && {
-      command: command,
     },
   };
 };

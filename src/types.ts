@@ -150,7 +150,7 @@ export type ExecuteInputEvent = {
  */
 export interface ParsedInput {
   readonly rawInput: string;
-  readonly command?: string;
+  readonly command: string;
   readonly options?: Record<string, unknown>;
 }
 
