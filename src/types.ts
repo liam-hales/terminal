@@ -24,10 +24,16 @@ export type FeatureId =
   | 'format-sql';
 
 /**
+ * Describes the different modes
+ * the terminal can be in
+ */
+export type TerminalMode = 'command' | 'text';
+
+/**
  * The union type for all
  * terminal block types
  */
-export type TerminalBlock = TerminalExecutedBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
+export type TerminalBlock = TerminalExecutedBlock | TerminalTextBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
 
 /**
  * The union type for all server
@@ -41,7 +47,7 @@ export type ServerActionResponse<T> = ServerActionSuccessResponse<T> | ServerAct
  * The union type for all
  * execute input event types
  */
-export type ExecuteInputEvent = ExecuteInputFeatureEvent | ExecuteInputClearEvent;
+export type ExecuteInputEvent = ExecuteInputFeatureEvent | ExecuteInputClearEvent | ExecuteInputTextEvent;
 
 /**
  * The union type for all
@@ -164,6 +170,14 @@ export interface ExecuteInputClearEvent {
 }
 
 /**
+ * Used to describe the text event data for
+ * events sent from the `executeInput` helper
+ */
+export interface ExecuteInputTextEvent {
+  readonly type: 'text';
+}
+
+/**
  * Describes the parsed input which consists of
  * the `command` and the `options`
  */
@@ -235,6 +249,16 @@ export interface TerminalExecutedBlock {
   readonly input: string;
   readonly duration: number;
   readonly output: FeatureOutput;
+}
+
+/**
+ * Describes the terminal text block used to store
+ * text data sent when the terminal is in text mode
+ */
+export interface TerminalTextBlock {
+  readonly type: 'text';
+  readonly id: string;
+  readonly value: string;
 }
 
 /**

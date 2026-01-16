@@ -3,7 +3,14 @@
 import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef, Fragment } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { BaseProps } from '../../types';
-import { TerminalCommandInput, TerminalValidationErrorBlock, TerminalErrorBlock, TerminalExecutedBlock } from '..';
+import {
+  TerminalCommandInput,
+  TerminalExecutedBlock,
+  TerminalTextBlock,
+  TerminalValidationErrorBlock,
+  TerminalErrorBlock,
+  TerminalTextInput,
+} from '..';
 import { useTerminal } from '../../hooks';
 import { decodeParam } from '../../helpers';
 
@@ -27,22 +34,31 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   const searchParams = useSearchParams();
 
   const {
+    mode,
     inputValue,
     blocks,
     inputHistory,
     inputHistoryIndex,
     loading,
+    setMode,
     setInputValue,
     setInputHistoryIndex,
     execute,
+    sendText,
   } = useTerminal();
 
   /**
    * Used to monitor the terminal `inputValue`
-   * and set the `input` URL query param
+   * and set the `?input=` URL query param
    */
   useEffect(() => {
     const { history } = window;
+
+    // The `?input=` URL query param should only be set when the terminal is in command mode
+    // However let the query param be removed if the input value is empty
+    if (mode === 'text' && inputValue !== '') {
+      return;
+    }
 
     // Build the URL query based on
     // the terminal input value
@@ -55,7 +71,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
       : '/';
 
     history.pushState({}, '', urlQuery);
-  }, [inputValue]);
+  }, [inputValue, mode]);
 
   /**
    * Used to monitor the
@@ -96,22 +112,22 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
    *
    * @param event The keyboard event
    */
-  const _onKeyDown = async (event: KeyboardEvent<HTMLInputElement>): Promise<void> => {
+  const _onCommandInputKeyDown = async (event: KeyboardEvent<HTMLInputElement>): Promise<void> => {
     const { key } = event;
 
     switch (key) {
       case 'Enter': {
 
-        // If the input is empty, return to
+        // If the input is empty, break to
         // avoid executing an empty input
         if (inputValue === '') {
-          return;
+          break;
         }
 
-        // If the terminal is loading then return to avoid
+        // If the terminal is loading then break to avoid
         // executing the same command multiple times
         if (loading.status !== 'idle') {
-          return;
+          break;
         }
 
         // Call the `execute` function with
@@ -120,6 +136,8 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
 
         setInputValue('');
         setInputHistoryIndex(-1);
+
+        event.preventDefault();
 
         break;
       }
@@ -162,62 +180,136 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
     }
   };
 
+  /**
+   * Used to handle keyboard events from the `TerminalTextInput`
+   * component underlying `textarea` HTML element
+   *
+   * @param event The keyboard event
+   */
+  const _onTextInputKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>): void => {
+    const { key, shiftKey } = event;
+
+    switch (key) {
+      case 'Enter': {
+
+        // If the user is holding shift
+        // then continue as normal
+        if (shiftKey === true) {
+          break;
+        }
+
+        // If the input value is not empty, send the text
+        // input to the terminal and reset the input state
+        if (inputValue !== '') {
+          sendText(inputValue);
+          setInputValue('');
+        }
+
+        event.preventDefault();
+
+        break;
+      }
+
+      case 'Escape': {
+
+        // Set the terminal mode state back to `command` to exit
+        // text mode and reset the input value state
+        setMode('command');
+        setInputValue('');
+
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+  };
+
   return (
     <Fragment>
       <div className="w-full h-full flex flex-col-reverse items-start gap-y-10 pb-6 pl-6 pr-6 overflow-y-auto no-scrollbar touch-pan-y">
         {
           blocks.map((block) => {
-            const { id, type, input, duration } = block;
 
-            // For the validation error block render the
-            // terminal validation error block component
-            if (type === 'validation-error') {
-              return (
-                <TerminalValidationErrorBlock
-                  key={`validation-error-block-${id}`}
-                  input={input}
-                  duration={duration}
-                  regex={block.regex}
-                  errors={block.errors}
-                />
-              );
+            switch (block.type) {
+              case 'executed': {
+                const { id, input, duration, output } = block;
+
+                return (
+                  <TerminalExecutedBlock
+                    key={`executed-block-${id}`}
+                    input={input}
+                    duration={duration}
+                    output={output}
+                  />
+                );
+              }
+
+              case 'text': {
+                const { id, value } = block;
+
+                return (
+                  <TerminalTextBlock
+                    key={`text-block-${id}`}
+                    value={value}
+                  />
+                );
+              }
+
+              case 'validation-error': {
+                const { id, input, duration, regex, errors } = block;
+
+                return (
+                  <TerminalValidationErrorBlock
+                    key={`validation-error-block-${id}`}
+                    input={input}
+                    duration={duration}
+                    regex={regex}
+                    errors={errors}
+                  />
+                );
+              }
+
+              case 'error': {
+                const { id, input, duration, error } = block;
+
+                return (
+                  <TerminalErrorBlock
+                    key={`error-block-${id}`}
+                    input={input}
+                    duration={duration}
+                    error={error}
+                  />
+                );
+              }
             }
-
-            // For the error block render the
-            // terminal error block component
-            if (type === 'error') {
-              return (
-                <TerminalErrorBlock
-                  key={`error-block-${id}`}
-                  input={input}
-                  duration={duration}
-                  error={block.error}
-                />
-              );
-            }
-
-            // For the executed block render the
-            // terminal executed block component
-            return (
-              <TerminalExecutedBlock
-                key={`executed-block-${id}`}
-                input={input}
-                duration={duration}
-                output={block.output}
-              />
-            );
           })
         }
         {children}
       </div>
-      <TerminalCommandInput
-        ref={inputRef}
-        value={inputValue}
-        loading={loading}
-        isDisabled={loading.status !== 'idle'}
-        onChange={setInputValue}
-        onKeyDown={_onKeyDown}
-      />
+      {
+        (mode === 'command') && (
+          <TerminalCommandInput
+            ref={inputRef}
+            value={inputValue}
+            loading={loading}
+            isDisabled={loading.status !== 'idle'}
+            onChange={setInputValue}
+            onKeyDown={_onCommandInputKeyDown}
+          />
+        )
+      }
+      {
+        (mode === 'text') && (
+          <TerminalTextInput
+            ref={inputRef}
+            value={inputValue}
+            onChange={setInputValue}
+            onKeyDown={_onTextInputKeyDown}
+          />
+        )
+      }
     </Fragment>
   );
 };

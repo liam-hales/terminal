@@ -1,4 +1,4 @@
-import { TerminalBlock } from '../types';
+import { TerminalBlock, TerminalMode } from '../types';
 
 /**
  * Describes the terminal loading status used for when
@@ -15,6 +15,7 @@ export interface TerminalLoading {
  * of the terminal `blocks`
  */
 export interface TerminalState {
+  readonly mode: TerminalMode;
   readonly inputValue: string;
   readonly blocks: TerminalBlock[];
   readonly inputHistory: string[];
@@ -27,6 +28,15 @@ export interface TerminalState {
  * `execute` function used to execute terminal commands
  */
 export interface TerminalActions {
+
+  /**
+   * Used to set the current mode
+   * the terminal is in
+   *
+   * @param value The mode to switch to
+   */
+  readonly setMode: (mode: TerminalMode) => void;
+
   /**
    * Used to set the terminal input
    * value to a given `value`
@@ -50,4 +60,12 @@ export interface TerminalActions {
    * @param input The user input
    */
   readonly execute: (input: string) => Promise<void>;
+
+  /**
+   * Used to send text to the
+   * terminal when in text mode
+   *
+   * @param input The user text input
+   */
+  readonly sendText: (input: string) => void;
 }

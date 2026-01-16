@@ -25,6 +25,16 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
     return;
   }
 
+  // If the command is set to `text` then treat this separately
+  // to a standard feature and yield the text event
+  if (inputCommand === 'text') {
+    yield {
+      type: 'text',
+    };
+
+    return;
+  }
+
   // Resolve the feature from
   // the parsed input
   const { id, command } = resolveFeature(input);

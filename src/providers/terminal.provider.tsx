@@ -2,7 +2,7 @@
 
 import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { TerminalContext } from '../context';
-import { BaseProps, FeatureOutput, TerminalBlock } from '../types';
+import { BaseProps, FeatureOutput, TerminalBlock, TerminalMode } from '../types';
 import { executeInput, parseInput } from '../helpers';
 import { TerminalLoading } from '../context/types';
 import { nanoid } from 'nanoid';
@@ -30,6 +30,7 @@ interface Props extends BaseProps {
  * );
  */
 const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
+  const [mode, setMode] = useState<TerminalMode>('command');
   const [inputValue, setInputValue] = useState<string>('');
   const [blocks, setBlocks] = useState<TerminalBlock[]>([]);
 
@@ -45,7 +46,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
    * Used to execute a terminal command
    * from a user `input`
    *
-   * @param input The user input
+   * @param input The user command input
    */
   const _execute = async (input: string): Promise<void> => {
     // Add the input to the input history
@@ -80,6 +81,15 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
             // If `last` has been set in the event then remove that
             // number of blocks, otherwise remove them all
             setBlocks((previous) => previous.slice(last ?? previous.length, previous.length));
+
+            break;
+          }
+
+          case 'text': {
+            // Set the terminal mode state back to `text` to switch
+            // the terminal to text mode and reset the input value state
+            setMode('text');
+            setInputValue('');
 
             break;
           }
@@ -209,17 +219,43 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
     }
   };
 
+  /**
+   * Used to send text to the
+   * terminal when in text mode
+   *
+   * @param input The user text input
+   */
+  const _sendText = (input: string): void => {
+    const blockId = nanoid(16);
+
+    // Add the text block to the
+    // terminal blocks state
+    setBlocks((previous) => {
+      return [
+        {
+          type: 'text',
+          id: blockId,
+          value: input,
+        },
+        ...previous,
+      ];
+    });
+  };
+
   return (
     <TerminalContext.Provider value={
       {
+        mode: mode,
         inputValue: inputValue,
         blocks: blocks,
         inputHistory: inputHistory,
         inputHistoryIndex: inputHistoryIndex,
         loading: loading,
+        setMode: setMode,
         setInputValue: setInputValue,
         setInputHistoryIndex: setInputHistoryIndex,
         execute: _execute,
+        sendText: _sendText,
       }
     }
     >
