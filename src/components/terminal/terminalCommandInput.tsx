@@ -46,7 +46,12 @@ const TerminalCommandInput: FunctionComponent<Props> = (props): ReactElement<Pro
             )
           }
           <div className="relative w-full flex flex-col items-start">
-            <p className="absolute text-xs white whitespace-pre pointer-events-none">
+            <p className={`
+              absolute text-xs whitespace-pre pointer-events-none
+
+              ${(value !== '') ? 'opacity-100' : 'opacity-60'}
+            `}
+            >
               {
                 (value !== '')
                   ? value
@@ -55,7 +60,7 @@ const TerminalCommandInput: FunctionComponent<Props> = (props): ReactElement<Pro
             </p>
             <input
               ref={internalRef}
-              className="w-full relative text-xs bg-transparent text-transparent placeholder-transparent outline-none caret-white"
+              className="w-full text-xs bg-transparent text-transparent placeholder-transparent outline-none caret-white"
               value={value}
               disabled={isDisabled}
               onKeyDown={(event) => onKeyDown(event)}
