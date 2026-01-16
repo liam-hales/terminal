@@ -5,7 +5,7 @@ import GroupedListOutput from './groupedListOutput';
 import HelpFeature from './help/helpFeature';
 import SpeedTestFeature from './speedTestFeature';
 import Terminal from './terminal/terminal';
-import TerminalInput from './terminal/terminalInput';
+import TerminalCommandInput from './terminal/terminalCommandInput';
 import TerminalExecutedBlock from './terminal/terminalExecutedBlock';
 import TerminalValidationErrorBlock from './terminal/terminalValidationErrorBlock';
 import TerminalErrorBlock from './terminal/terminalErrorBlock';
@@ -20,7 +20,7 @@ export {
   SpeedTestFeature,
   HelpFeature,
   Terminal,
-  TerminalInput,
+  TerminalCommandInput,
   TerminalExecutedBlock,
   TerminalValidationErrorBlock,
   TerminalErrorBlock,

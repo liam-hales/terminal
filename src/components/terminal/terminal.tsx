@@ -3,7 +3,7 @@
 import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef, Fragment } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { BaseProps } from '../../types';
-import { TerminalInput, TerminalValidationErrorBlock, TerminalErrorBlock, TerminalExecutedBlock } from '..';
+import { TerminalCommandInput, TerminalValidationErrorBlock, TerminalErrorBlock, TerminalExecutedBlock } from '..';
 import { useTerminal } from '../../hooks';
 import { decodeParam } from '../../helpers';
 
@@ -78,7 +78,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   ]);
 
   /**
-   * Used to focus the `TerminalInput` when the
+   * Used to focus the `TerminalCommandInput` when the
    * `inputValue` state changes to an empty string
    */
   useEffect(() => {
@@ -91,7 +91,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   }, [inputValue]);
 
   /**
-   * Used to handle keyboard events from the `TerminalInput`
+   * Used to handle keyboard events from the `TerminalCommandInput`
    * component underlying `input` HTML element
    *
    * @param event The keyboard event
@@ -210,7 +210,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
         }
         {children}
       </div>
-      <TerminalInput
+      <TerminalCommandInput
         ref={inputRef}
         value={inputValue}
         loading={loading}

@@ -5,7 +5,7 @@ import { withRef } from '../../helpers';
 import { TerminalLoading } from '../../context/types';
 
 /**
- * The `TerminalInput` component props
+ * The `TerminalCommandInput` component props
  */
 interface Props extends BaseProps<HTMLInputElement> {
   readonly value: string;
@@ -20,9 +20,9 @@ interface Props extends BaseProps<HTMLInputElement> {
  * allows the user to enter commands to execute
  *
  * @param props The component props
- * @returns The `TerminalInput` component
+ * @returns The `TerminalCommandInput` component
  */
-const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => {
+const TerminalCommandInput: FunctionComponent<Props> = (props): ReactElement<Props> => {
   const {
     internalRef,
     value,
@@ -84,4 +84,4 @@ const TerminalInput: FunctionComponent<Props> = (props): ReactElement<Props> => 
   );
 };
 
-export default withRef(TerminalInput);
+export default withRef(TerminalCommandInput);
