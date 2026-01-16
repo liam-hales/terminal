@@ -32,7 +32,10 @@ interface Props extends BaseProps {
 const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<Props> => {
   const [inputValue, setInputValue] = useState<string>('');
   const [blocks, setBlocks] = useState<TerminalBlock[]>([]);
+
+  const [inputHistory, setInputHistory] = useState<string[]>([]);
   const [inputHistoryIndex, setInputHistoryIndex] = useState<number>(-1);
+
   const [loading, setLoading] = useState<TerminalLoading>({
     status: 'idle',
     percentage: 0,
@@ -45,6 +48,9 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
    * @param input The user input
    */
   const _execute = async (input: string): Promise<void> => {
+    // Add the input to the input history
+    // state and set the loading state
+    setInputHistory((previous) => [input, ...previous]);
     setLoading({
       ...loading,
       status: 'loading',
@@ -208,7 +214,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
       {
         inputValue: inputValue,
         blocks: blocks,
-        inputHistory: blocks.map((block) => block.input),
+        inputHistory: inputHistory,
         inputHistoryIndex: inputHistoryIndex,
         loading: loading,
         setInputValue: setInputValue,
