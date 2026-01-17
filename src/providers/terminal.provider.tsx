@@ -127,12 +127,12 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                 setBlocks((previous) => {
                   const found = previous.find((block) => block.id === blockId);
 
-                  // If there has not yet been an executed terminal
+                  // If there has not yet been a feature terminal
                   // block created then add a new one to state
                   if (found == null) {
                     return [
                       {
-                        type: 'executed',
+                        type: 'feature',
                         id: blockId,
                         input: input,
                         duration: endTime - startTime,
@@ -145,7 +145,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                   // There is an existing terminal block, update
                   // it wth the latest duration and output
                   return previous.map((block) => {
-                    return (block.id === blockId && block.type === 'executed')
+                    return (block.id === blockId && block.type === 'feature')
                       ? {
                           ...block,
                           duration: endTime - startTime,

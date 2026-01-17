@@ -33,7 +33,7 @@ export type TerminalMode = 'command' | 'text';
  * The union type for all
  * terminal block types
  */
-export type TerminalBlock = TerminalExecutedBlock | TerminalTextBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
+export type TerminalBlock = TerminalFeatureBlock | TerminalTextBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
 
 /**
  * The union type for all server
@@ -240,11 +240,11 @@ export interface ValidationError {
 }
 
 /**
- * Describes the terminal executed block used
- * to store data for an executed command
+ * Describes the terminal feature block used
+ * to store data for the feature output
  */
-export interface TerminalExecutedBlock {
-  readonly type: 'executed';
+export interface TerminalFeatureBlock {
+  readonly type: 'feature';
   readonly id: string;
   readonly input: string;
   readonly duration: number;

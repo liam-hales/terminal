@@ -7,7 +7,7 @@ import SpeedTestFeature from './speedTestFeature';
 import Terminal from './terminal/terminal';
 import TerminalCommandInput from './terminal/terminalCommandInput';
 import TerminalTextInput from './terminal/terminalTextInput';
-import TerminalExecutedBlock from './terminal/terminalExecutedBlock';
+import TerminalFeatureBlock from './terminal/terminalFeatureBlock';
 import TerminalTextBlock from './terminal/terminalTextBlock';
 import TerminalValidationErrorBlock from './terminal/terminalValidationErrorBlock';
 import TerminalErrorBlock from './terminal/terminalErrorBlock';
@@ -24,7 +24,7 @@ export {
   Terminal,
   TerminalCommandInput,
   TerminalTextInput,
-  TerminalExecutedBlock,
+  TerminalFeatureBlock,
   TerminalTextBlock,
   TerminalValidationErrorBlock,
   TerminalErrorBlock,
