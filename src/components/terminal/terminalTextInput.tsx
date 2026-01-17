@@ -25,7 +25,7 @@ const TerminalTextInput: FunctionComponent<Props> = ({ internalRef, value, onCha
     <div className="w-full flex flex-col items-start bg-background gap-y-3 pb-4 pl-4 pr-4">
       <TextArea
         ref={internalRef}
-        className="w-full min-h-16 text-retro text-xs placeholder-primary/60 outline-none caret-white resize-none border-solid border-[1px] border-primary/20 rounded-sm blur-[0.4px] p-3"
+        className="w-full min-h-16 text-retro text-xs outline-none caret-white resize-none border-solid border-[1px] border-primary/20 rounded-sm p-3"
         value={value}
         onKeyDown={(event) => onKeyDown(event)}
         onChange={(event) => {

@@ -38,7 +38,7 @@ const TerminalCommandInput: FunctionComponent<Props> = (props): ReactElement<Pro
   return (
     <div className="w-full flex flex-col items-start bg-background gap-y-4 pb-4 pl-4 pr-4">
       <div className="relative w-full flex flex-col items-start">
-        <div className="absolute w-full h-10 flex flex-row items-center border-solid border-[1px] border-primary/20 rounded-sm blur-[0.4px]" />
+        <div className="absolute w-full h-10 border-solid border-[1px] border-primary/20 rounded-sm blur-[0.4px]" />
         <div className="relative w-full h-10 flex flex-row items-center pl-3 pr-3">
           {
             (loading.status !== 'idle') && (
