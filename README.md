@@ -5,21 +5,12 @@
   </h1>
   <p>
     Terminal is a web app created to provide web-based developer tools with a dev-friendly terminal interface.
-</p>
+  </p>
   <a
-    href="https://cli.liamhales.dev"
+    href="https://t.liamhales.dev"
     target="_blank"
   >
-    https://cli.liamhales.dev
-  </a>
-  <br/>
-  <br/>
-  <br/>
-  <a
-    href="https://github.com/liam-hales/terminal/deployments?environment=Production"
-    target="_blank"
-  >
-    <img src="https://img.shields.io/github/deployments/liam-hales/terminal/production?style=for-the-badge&label=Build&labelColor=181c24&logo=github&logoColor=ffffff"/>
+    https://t.liamhales.dev
   </a>
 </div>
 
@@ -114,7 +105,7 @@ v4.5.3
 6. Create a `.env` file in the project root
 
 ```sh
-SITE_URL = 'https://cli.liamhales.dev'
+SITE_URL = 'https://t.liamhales.dev'
 FILE_STORE_ID = '******'
 FILE_READ_WRITE_TOKEN = '******'
 ```
