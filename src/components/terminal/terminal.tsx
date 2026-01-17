@@ -48,6 +48,12 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
   } = useTerminal();
 
   /**
+   * Used to focus the terminal inputs when the
+   * terminal `mode` or `loading` state changes
+   */
+  useEffect(() => inputRef.current?.focus(), [mode, loading]);
+
+  /**
    * Used to monitor the terminal `inputValue`
    * and set the `?input=` URL query param
    */
@@ -92,19 +98,6 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
     searchParams,
     setInputValue,
   ]);
-
-  /**
-   * Used to focus the `TerminalCommandInput` when the
-   * `inputValue` state changes to an empty string
-   */
-  useEffect(() => {
-
-    // Only focus the input if the input
-    // value state is an empty string
-    if (inputValue === '') {
-      inputRef.current?.focus();
-    }
-  }, [inputValue]);
 
   /**
    * Used to handle keyboard events from the `TerminalCommandInput`
