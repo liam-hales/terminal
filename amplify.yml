@@ -1,0 +1,19 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - corepack enable
+        - yarn install
+    build:
+      commands:
+        - yarn build
+        - yarn build:icons
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - .next/cache/**/*
+      - node_modules/**/*
