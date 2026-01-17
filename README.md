@@ -77,12 +77,6 @@ This app was built and hosted with the following technologies. For a full list o
   >
     <img src="https://img.shields.io/badge/Tailwind-181c24?style=for-the-badge&logo=tailwindcss&logoColor=ffffff"/>
   </a>
-  <a
-    href="https://vercel.com"
-    target="_blank"
-  >
-    <img src="https://img.shields.io/badge/Vercel-181c24?style=for-the-badge&logo=vercel&logoColor=ffffff"/>
-  </a>
 <div>
 
 <br/>
@@ -168,7 +162,7 @@ $ yarn build
 
 ## Deploying
 
-The app is hosted on [Vercel] and is built and deployed using Vercel Git Deployments. When code is pushed to the repos `main` branch, a production build and deployment is triggered. No need to manually build or deploy.
+The app is hosted on [AWS Amplify] and is built and deployed using their GitHub integration and auto-build feature. When code is pushed to the repos `main` branch, a production build and deployment is triggered. No need to manually build or deploy.
 
 ```sh
 $ git checkout main
@@ -228,5 +222,5 @@ Check out the [`npm-check-updates`] docs or run `yarn ncu --help` for more info.
 [`yarn`]: https://yarnpkg.com
 [Yarn Installation Guide]: https://yarnpkg.com/getting-started/install
 [Corepack]: https://nodejs.org/api/corepack.html
-[Vercel]: https://vercel.com
+[AWS Amplify]: https://aws.amazon.com/amplify
 [`npm-check-updates`]: https://npmjs.com/package/npm-check-updates
