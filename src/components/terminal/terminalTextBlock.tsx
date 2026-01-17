@@ -1,5 +1,6 @@
 import { FunctionComponent, ReactElement } from 'react';
 import { BaseProps, TerminalTextBlock as TextBlock } from '../../types';
+import TextArea from 'react-textarea-autosize';
 
 /**
  * The `TerminalTextBlock` component props
@@ -18,9 +19,13 @@ const TerminalTextBlock: FunctionComponent<Props> = ({ value }): ReactElement<Pr
       <p className="text-xs break-all">
         {`> text`}
       </p>
-      <pre className="text-xs">
-        {value}
-      </pre>
+      <div className="relative w-full flex flex-col items-start">
+        <TextArea
+          className="w-full text-retro text-xs outline-none caret-white resize-none border-solid border-[1px] border-primary/20 rounded-sm p-3"
+          value={value}
+          disabled={true}
+        />
+      </div>
     </div>
   );
 };
