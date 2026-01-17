@@ -76,17 +76,17 @@ This app was built and hosted with the following technologies. For a full list o
 # Getting Started 🚀
 
 1. Download and install [Node Version Manager]
-2. Install and use a version of Node.js `>= v22.11`
+2. Install and use a version of Node.js `>= v24.13`
 
 ```sh
-$ nvm install 22.11
-$ nvm use 22.11
+$ nvm install 24.13
+$ nvm use 24.13
 
 $ node --version
-v22.11.0
+v24.13.0
 
 $ npm --version
-v10.9.0
+v11.6.2
 ```
 
 3. Run `corepack enable` to enable [Corepack]
@@ -96,7 +96,7 @@ v10.9.0
 
 ```sh
 $ yarn --version
-v4.5.3
+v4.12.0
 ```
 
 > 📝 _**NOTE** - The current version of Yarn should match the `packageManager` version in the [`package.json`](/package.json)_
