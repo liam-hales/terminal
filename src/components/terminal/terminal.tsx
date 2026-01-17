@@ -43,7 +43,7 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
     setMode,
     setInputValue,
     setInputHistoryIndex,
-    execute,
+    executeCommand,
     sendText,
   } = useTerminal();
 
@@ -130,9 +130,9 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
           break;
         }
 
-        // Call the `execute` function with
-        // the user input from state
-        await execute(inputValue);
+        // Execute the command using
+        // the input value state
+        await executeCommand(inputValue);
 
         setInputValue('');
         setInputHistoryIndex(-1);

@@ -59,7 +59,7 @@ export interface TerminalActions {
    *
    * @param input The user input
    */
-  readonly execute: (input: string) => Promise<void>;
+  readonly executeCommand: (input: string) => Promise<void>;
 
   /**
    * Used to send text to the

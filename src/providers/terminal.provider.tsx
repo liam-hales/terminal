@@ -48,7 +48,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
    *
    * @param input The user command input
    */
-  const _execute = async (input: string): Promise<void> => {
+  const _executeCommand = async (input: string): Promise<void> => {
     // Add the input to the input history
     // state and set the loading state
     setInputHistory((previous) => [input, ...previous]);
@@ -254,7 +254,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
         setMode: setMode,
         setInputValue: setInputValue,
         setInputHistoryIndex: setInputHistoryIndex,
-        execute: _execute,
+        executeCommand: _executeCommand,
         sendText: _sendText,
       }
     }
