@@ -6,7 +6,6 @@ import { hp100lx } from '../fonts';
 import { RetroScreen, Terminal } from '../components';
 import { TerminalProvider } from '../providers';
 import { viewport, generateMetadata } from './metadata';
-import { Analytics } from '@vercel/analytics/next';
 
 /**
  * The `AppLayout` component props
@@ -29,7 +28,6 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
       className={`h-full ${hp100lx.className} overscroll-none`}
     >
       <body className="h-full bg-background touch-none">
-        <Analytics />
         {
         /**
          * `<Suspense>` is required here because the `Terminal` component
