@@ -14,13 +14,8 @@ const resolveFeature = (input: ParsedInput): Feature => {
   const { command: inputCommand } = input;
 
   // Attempt to find a feature with a command
-  // name that matches the input command
-  const feature = features.find((feature) => {
-    const { command } = feature;
-    const { name } = command;
-
-    return name === inputCommand;
-  });
+  // that matches the input command
+  const feature = features.find((feature) => feature.command === inputCommand);
 
   // If a feature cannot be found for the command,
   // then throw a validation exception
@@ -28,7 +23,7 @@ const resolveFeature = (input: ParsedInput): Feature => {
 
     // Attempt to search for features that are
     // a close match to the input command
-    const names = features.map((feature) => feature.command.name);
+    const names = features.map((feature) => feature.command);
     const matches = search(inputCommand, names);
 
     throw new ValidationException(input, [

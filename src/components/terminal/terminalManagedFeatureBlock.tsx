@@ -1,19 +1,20 @@
 import { FunctionComponent, ReactElement } from 'react';
-import { BaseProps, TerminalFeatureBlock as FeatureBlock } from '../../types';
+import { BaseProps, TerminalManagedFeatureBlock as FeatureBlock } from '../../types';
 import { featureMap } from '../../features';
 
 /**
- * The `TerminalFeatureBlock` component props
+ * The `TerminalManagedFeatureBlock` component props
  */
 type Props = Omit<FeatureBlock, 'id' | 'type'> & BaseProps;
 
 /**
- * Used to render the terminal feature block
+ * Used to render the terminal
+ * managed feature block
  *
  * @param props The component props
- * @returns The `TerminalFeatureBlock` component
+ * @returns The `TerminalManagedFeatureBlock` component
  */
-const TerminalFeatureBlock: FunctionComponent<Props> = ({ input, duration, output }): ReactElement<Props> => {
+const TerminalManagedFeatureBlock: FunctionComponent<Props> = ({ input, duration, output }): ReactElement<Props> => {
   const { featureId, componentProps } = output;
 
   const feature = featureMap[featureId];
@@ -37,4 +38,4 @@ const TerminalFeatureBlock: FunctionComponent<Props> = ({ input, duration, outpu
   );
 };
 
-export default TerminalFeatureBlock;
+export default TerminalManagedFeatureBlock;

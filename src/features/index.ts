@@ -1,4 +1,6 @@
 import { FeatureMap } from './types';
+import { clearFeature } from './clear';
+import { textFeature } from './text';
 import { helpFeature } from './help';
 import { encodeFeature } from './encode';
 import { ipFeature } from './ip';
@@ -17,9 +19,10 @@ import { formatSqlFeature } from './format/sql';
 
 /**
  * Describes all the features
- * as an array
  */
 export const features = [
+  clearFeature,
+  textFeature,
   helpFeature,
   encodeFeature,
   ipFeature,
@@ -38,8 +41,8 @@ export const features = [
 ];
 
 /**
- * Describes all the features as a map between the
- * feature `id` and the corresponding feature
+ * Describes the map between the feature `id`
+ * and the corresponding feature
  */
 export const featureMap = features.reduce<FeatureMap>((map, feature) => {
   const { id } = feature;

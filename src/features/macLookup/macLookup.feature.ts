@@ -6,15 +6,13 @@ import { macLookupOptions, macLookupAction } from '.';
  * The MAC address lookup feature, executed with `maclookup`, Used to lookup the
  * vendor/manufacturer for a given MAC address using the `maclookup.com` API under the hood
  */
-const macLookupFeature = buildFeature({
+const macLookupFeature = buildFeature('managed', {
   id: 'mac-lookup',
-  command: {
-    name: 'maclookup',
-    description: 'Used to lookup the vendor/manufacturer for a given MAC address',
-    options: macLookupOptions,
-    execution: 'server',
-    action: macLookupAction,
-  },
+  command: 'maclookup',
+  description: 'Used to lookup the vendor/manufacturer for a given MAC address',
+  options: macLookupOptions,
+  execution: 'server',
+  action: macLookupAction,
   component: GroupedListOutput,
   isEnabled: true,
 });

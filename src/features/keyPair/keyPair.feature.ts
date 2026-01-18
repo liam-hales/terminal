@@ -6,15 +6,13 @@ import { keyPairOptions, keyPairAction } from '.';
  * The key pair feature, executed with `keypair`, used to generate
  * public and private key pairs using the `crypto` package under the hood
  */
-const keyPairFeature = buildFeature({
+const keyPairFeature = buildFeature('managed', {
   id: 'key-pair',
-  command: {
-    name: 'keypair',
-    description: 'Used to generate public and private key pairs',
-    options: keyPairOptions,
-    execution: 'server',
-    action: keyPairAction,
-  },
+  command: 'keypair',
+  description: 'Used to generate public and private key pairs',
+  options: keyPairOptions,
+  execution: 'server',
+  action: keyPairAction,
   component: GroupedListOutput,
   isEnabled: true,
 });

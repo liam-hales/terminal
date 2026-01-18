@@ -1,25 +1,26 @@
 import { FunctionComponent, ReactElement, Fragment } from 'react';
 import { kebabCase } from 'change-case';
-import { BaseProps, Command } from '../../types';
+import { BaseProps, FeatureId } from '../../types';
 import { extractKeys, unwrapType } from '../../helpers';
 import { CodeInline } from '../common';
+import { featureMap } from '../../features';
 
 /**
  * The `CommandHelp` component props
  */
 interface Props extends BaseProps {
-  readonly command: Command;
+  readonly featureId: FeatureId;
 }
 
 /**
  * Used to render the help user interface
- * for a specific feature command
+ * for a specific feature
  *
  * @param props The component props
  * @returns The `CommandHelp` component
  */
-const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props> => {
-  const { name, description, options } = command;
+const CommandHelp: FunctionComponent<Props> = ({ featureId }): ReactElement<Props> => {
+  const { command, description, options } = featureMap[featureId];
   const { shape } = options;
 
   return (
@@ -32,7 +33,7 @@ const CommandHelp: FunctionComponent<Props> = ({ command }): ReactElement<Props>
           Usage:
         </p>
         <p className="text-xs pl-4">
-          {`${name} [options]`}
+          {`${command} [options]`}
         </p>
       </div>
       <div className="flex flex-col gap-y-4">

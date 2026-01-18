@@ -6,15 +6,13 @@ import { GroupedListOutput } from '../../components';
  * The file upload feature, executed with `file upload`, used to upload files
  * and share via a link using the `@vercel/blob` package under the hood
  */
-const fileUploadFeature = buildFeature({
+const fileUploadFeature = buildFeature('managed', {
   id: 'file-upload',
-  command: {
-    name: 'file upload',
-    description: 'Used to upload files and share via a link',
-    options: fileUploadOptions,
-    execution: 'client',
-    action: fileUploadAction,
-  },
+  command: 'file upload',
+  description: 'Used to upload files and share via a link',
+  options: fileUploadOptions,
+  execution: 'client',
+  action: fileUploadAction,
   component: GroupedListOutput,
   isEnabled: true,
 });

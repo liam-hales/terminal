@@ -6,15 +6,13 @@ import { uuidOptions, uuidAction } from '.';
  * The UUID feature, executed with `uuid`, used to generate
  * a UUID using the `uuid` package under the hood
  */
-const uuidFeature = buildFeature({
+const uuidFeature = buildFeature('managed', {
   id: 'uuid',
-  command: {
-    name: 'uuid',
-    description: 'Used to generate a UUID',
-    options: uuidOptions,
-    execution: 'client',
-    action: uuidAction,
-  },
+  command: 'uuid',
+  description: 'Used to generate a UUID',
+  options: uuidOptions,
+  execution: 'client',
+  action: uuidAction,
   component: TextOutput,
   isEnabled: true,
 });

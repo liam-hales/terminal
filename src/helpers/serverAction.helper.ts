@@ -29,7 +29,7 @@ const serverAction = async <
       data: data,
     };
   }
-  // Any errors will be unwrapped and their
+  // Any errors will be unwrapped and its
   // message returned in the response
   catch (error) {
     if (error instanceof Error) {

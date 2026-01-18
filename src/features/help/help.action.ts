@@ -31,13 +31,8 @@ const helpAction = (options: Options): Props => {
   }
 
   // Attempt to find a feature with a command
-  // name that matches the `for` option
-  const feature = features.find((feature) => {
-    const { command } = feature;
-    const { name } = command;
-
-    return name === commandName;
-  });
+  // that matches the `for` option
+  const feature = features.find((feature) => feature.command === commandName);
 
   // If a feature cannot be found for the
   // command, then throw an error
@@ -46,7 +41,7 @@ const helpAction = (options: Options): Props => {
   }
 
   return {
-    command: feature.command,
+    featureId: feature.id,
   };
 };
 

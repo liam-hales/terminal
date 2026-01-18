@@ -1,52 +1,43 @@
-import { z, ZodObject } from 'zod';
-import { FeatureId, IFeature } from '../types';
+import { ZodObject } from 'zod';
+import { FeatureId, FeatureType, SystemFeature, ClientFeature, ServerFeature } from '../types';
+import { commonOptions } from '../features/common';
 
 /**
- * The common options schema used to describe the
- * common command options for all features using `zod`.
- *
- * This options schema is used for
- * validation and type inference.
- */
-const commonOptions = z.object({
-  help: z
-    .boolean()
-    .optional()
-    .default(false)
-    .describe('Display help for the command'),
-});
-
-/**
- * Used to build the feature from the `config`
+ * Used to build a feature from the `config`
  * and allow generic type inference
  *
  * - Generic type `F` for the feature ID
- * - Generic type `O` for the command options
+ * - Generic type `O` for the options schema
  * - Generic type `P` for the component props
  *
+ * @param type The feature type
  * @param config The feature config
- * @returns The full feature
+ *
+ * @returns The feature
  */
 const buildFeature = <
+  T extends FeatureType,
   F extends FeatureId,
   O extends ZodObject,
   P extends object,
->(config: IFeature<F, O, P>) => {
-  const { command } = config;
-  const { options } = command;
+>(
+  type: T,
+  config: T extends 'system'
+    ? Omit<SystemFeature<F, O>, 'type'>
+    : Omit<ClientFeature<F, O, P> | ServerFeature<F, O, P>, 'type'>,
+) => {
+  const { options } = config;
 
-  // Return the config with the command
-  // options schema merged with the common one
+  // Return the config with the options
+  // schema merged with the common one
   return {
     ...config,
-    command: {
-      ...command,
-      // Using `.merge` is still required as the types
-      // when using `.extends` does not work the same
-      // eslint-disable-next-line @typescript-eslint/no-deprecated
-      options: commonOptions.merge(options),
-    },
-  };
+    type: type,
+    // Using `.merge` is still required as the types
+    // when using `.extends` does not work the same
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    options: commonOptions.merge(options),
+  } as const;
 };
 
 export default buildFeature;

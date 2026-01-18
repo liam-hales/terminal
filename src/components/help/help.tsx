@@ -26,17 +26,16 @@ const Help: FunctionComponent = (): ReactElement => {
         <div className="flex flex-wrap gap-y-4 pb-8 pl-4">
           {
             features
-              .map((feature) => feature.command)
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((command) => {
-                const { name, description } = command;
+              .sort((a, b) => a.command.localeCompare(b.command))
+              .map((feature) => {
+                const { command, description } = feature;
 
                 return (
-                  <Fragment key={`feature-${name}`}>
+                  <Fragment key={`feature-${command}`}>
                     <div className="w-[18%]">
                       <p className="text-xs">
                         <CodeInline>
-                          {name}
+                          {command}
                         </CodeInline>
                       </p>
                     </div>

@@ -1,20 +1,25 @@
 import { features } from '.';
+import { Map } from '../types';
 
 /**
- * The feature type used to
- * describe all features
+ * Used to describe all features
  */
 export type Feature = typeof features[number];
 
 /**
- * The feature map between the feature `id`
- * and the corresponding feature
+ * Used to describe the map between the
+ * feature `id` and the corresponding feature
  */
-export type FeatureMap = {
-  [K in Feature['id']]: Extract<
-    Feature,
-    {
-      readonly id: K;
-    }
-  >;
-};
+export type FeatureMap = Map<Feature, 'id'>;
+
+/**
+ * Used to describe the map between the feature `id`
+ * and the corresponding system feature
+ */
+export type SystemFeatureMap = Map<Extract<Feature, { readonly type: 'system'; }>, 'id'>;
+
+/**
+ * Used to describe the map between the feature `id`
+ * and the corresponding managed feature
+ */
+export type ManagedFeatureMap = Map<Extract<Feature, { readonly type: 'managed'; }>, 'id'>;

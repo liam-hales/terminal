@@ -6,15 +6,13 @@ import { datetimeOptions, datetimeAction } from '.';
  * The datetime feature, executed with `datetime`, used to display the
  * current, or a specific date and time in multiple different formats
  */
-const datetimeFeature = buildFeature({
+const datetimeFeature = buildFeature('managed', {
   id: 'datetime',
-  command: {
-    name: 'datetime',
-    description: 'Used to display the current, or a specific date and time in multiple different formats',
-    options: datetimeOptions,
-    execution: 'client',
-    action: datetimeAction,
-  },
+  command: 'datetime',
+  description: 'Used to display the current, or a specific date and time in multiple different formats',
+  options: datetimeOptions,
+  execution: 'client',
+  action: datetimeAction,
   component: GroupedListOutput,
   isEnabled: true,
 });

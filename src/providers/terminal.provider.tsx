@@ -2,7 +2,7 @@
 
 import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { TerminalContext } from '../context';
-import { BaseProps, FeatureOutput, TerminalBlock, TerminalMode } from '../types';
+import { BaseProps, ManagedFeatureOutput, TerminalBlock, TerminalMode } from '../types';
 import { executeInput, parseInput } from '../helpers';
 import { TerminalLoading } from '../context/types';
 import { nanoid } from 'nanoid';
@@ -70,35 +70,42 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
       // Loop through and process
       // each generator event
       for await (const event of generator) {
-
-        // Process each type of event and update
-        // the terminal state for each
         switch (event.type) {
 
-          case 'clear': {
-            const { last } = event;
+          case 'system': {
+            const { featureId, options } = event;
 
-            // If `last` has been set in the event then remove that
-            // number of blocks, otherwise remove them all
-            setBlocks((previous) => previous.slice(last ?? previous.length, previous.length));
+            // Process the event for the
+            // different system features
+            switch (featureId) {
+              case 'clear': {
+                const { last } = options;
+
+                // If `last` has been set in the event then remove that
+                // number of blocks, otherwise remove them all
+                setBlocks((previous) => previous.slice(last ?? previous.length, previous.length));
+
+                break;
+              }
+
+              case 'text': {
+                // Set the terminal mode state back to `text` to switch
+                // the terminal to text mode and reset the input value state
+                setMode('text');
+                setInputValue('');
+
+                break;
+              }
+            }
 
             break;
           }
 
-          case 'text': {
-            // Set the terminal mode state back to `text` to switch
-            // the terminal to text mode and reset the input value state
-            setMode('text');
-            setInputValue('');
-
-            break;
-          }
-
-          case 'feature': {
+          case 'managed-feature': {
             const { featureId, actionEvent } = event;
 
-            // Process each type of action event and
-            // update the terminal state for each
+            // Process the action event and
+            // update the terminal state
             switch (actionEvent.type) {
 
               case 'progress': {
@@ -122,7 +129,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                 const output = {
                   featureId: featureId,
                   componentProps: componentProps,
-                } as FeatureOutput;
+                } as ManagedFeatureOutput;
 
                 setBlocks((previous) => {
                   const found = previous.find((block) => block.id === blockId);
@@ -132,7 +139,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                   if (found == null) {
                     return [
                       {
-                        type: 'feature',
+                        type: 'managed-feature',
                         id: blockId,
                         input: input,
                         duration: endTime - startTime,
@@ -145,7 +152,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                   // There is an existing terminal block, update
                   // it wth the latest duration and output
                   return previous.map((block) => {
-                    return (block.id === blockId && block.type === 'feature')
+                    return (block.id === blockId && block.type === 'managed-feature')
                       ? {
                           ...block,
                           duration: endTime - startTime,

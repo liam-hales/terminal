@@ -6,15 +6,13 @@ import { encodeOptions, encodeAction } from '.';
  * The encode feature, executed with `encode`, used to
  * encode a given value from one encoding to another
  */
-const encodeFeature = buildFeature({
+const encodeFeature = buildFeature('managed', {
   id: 'encode',
-  command: {
-    name: 'encode',
-    description: 'Used to encode a given value from one encoding to another',
-    options: encodeOptions,
-    execution: 'client',
-    action: encodeAction,
-  },
+  command: 'encode',
+  description: 'Used to encode a given value from one encoding to another',
+  options: encodeOptions,
+  execution: 'client',
+  action: encodeAction,
   component: TextOutput,
   isEnabled: true,
 });

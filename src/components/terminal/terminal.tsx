@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { BaseProps } from '../../types';
 import {
   TerminalCommandInput,
-  TerminalFeatureBlock,
+  TerminalManagedFeatureBlock,
   TerminalTextBlock,
   TerminalValidationErrorBlock,
   TerminalErrorBlock,
@@ -226,12 +226,12 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
           blocks.map((block) => {
 
             switch (block.type) {
-              case 'feature': {
+              case 'managed-feature': {
                 const { id, input, duration, output } = block;
 
                 return (
-                  <TerminalFeatureBlock
-                    key={`feature-block-${id}`}
+                  <TerminalManagedFeatureBlock
+                    key={`managed-feature-block-${id}`}
                     input={input}
                     duration={duration}
                     output={output}

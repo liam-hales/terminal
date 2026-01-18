@@ -1,12 +1,12 @@
 import { FunctionComponent, ReactElement } from 'react';
-import { BaseProps, Command } from '../../types';
+import { BaseProps, FeatureId } from '../../types';
 import { Help, CommandHelp } from '..';
 
 /**
  * The `HelpFeature` component props
  */
 interface Props extends BaseProps {
-  readonly command?: Command;
+  readonly featureId?: FeatureId;
 }
 
 /**
@@ -16,12 +16,12 @@ interface Props extends BaseProps {
  * @param props The component props
  * @returns The `HelpFeature` component
  */
-const HelpFeature: FunctionComponent<Props> = ({ command }): ReactElement<Props> => {
+const HelpFeature: FunctionComponent<Props> = ({ featureId }): ReactElement<Props> => {
 
   // Render the correct help component depending
-  // on if the `command` prop was passed
-  return (command != null)
-    ? <CommandHelp command={command} />
+  // on if the `featureId` prop was passed
+  return (featureId != null)
+    ? <CommandHelp featureId={featureId} />
     : <Help />;
 };
 

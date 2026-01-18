@@ -1,12 +1,14 @@
 import { ComponentProps, FunctionComponent, Ref } from 'react';
 import { ZodObject, z } from 'zod';
-import { Feature, FeatureMap } from './features';
+import { SystemFeatureMap, ManagedFeatureMap } from './features';
 
 /**
- * The feature ID used to differentiate
- * each individual feature
+ * Describes the feature ID's used to
+ * differentiate each feature
  */
 export type FeatureId =
+  | 'clear'
+  | 'text'
   | 'help'
   | 'encode'
   | 'ip'
@@ -24,6 +26,12 @@ export type FeatureId =
   | 'format-sql';
 
 /**
+ * Describes the different
+ * feature types
+ */
+export type FeatureType = 'system' | 'managed';
+
+/**
  * Describes the different modes
  * the terminal can be in
  */
@@ -33,7 +41,7 @@ export type TerminalMode = 'command' | 'text';
  * The union type for all
  * terminal block types
  */
-export type TerminalBlock = TerminalFeatureBlock | TerminalTextBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
+export type TerminalBlock = TerminalManagedFeatureBlock | TerminalTextBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
 
 /**
  * The union type for all server
@@ -47,15 +55,34 @@ export type ServerActionResponse<T> = ServerActionSuccessResponse<T> | ServerAct
  * The union type for all
  * execute input event types
  */
-export type ExecuteInputEvent = ExecuteInputFeatureEvent | ExecuteInputClearEvent | ExecuteInputTextEvent;
+export type ExecuteInputEvent = ExecuteInputSystemEvent | ExecuteInputManagedFeatureEvent;
 
 /**
- * The union type for all
- * action event types
+ * The union type for all managed
+ * feature action event types
  *
  * - Generic type `T` for the props
  */
 export type ActionEvent<P extends object> = ActionProgressEvent | ActionUpdateEvent<P>;
+
+/**
+ * Used to create a map type from a
+ * given object type and index key
+ *
+ * - Generic type `T` for the type to map
+ * - Generic type `U` for the index key
+ */
+export type Map<
+  T extends { readonly [K in U]: string },
+  U extends keyof T,
+> = {
+  [K in T[U]]: Extract<
+    T,
+    {
+      readonly [Key in U]: K;
+    }
+  >;
+};
 
 /**
  * The props that all component
@@ -74,108 +101,112 @@ export interface BaseProps<T extends HTMLElement = HTMLElement> {
 }
 
 /**
- * Used to describe a feature that can
- * be used within the terminal
+ * Used to describe a feature that is run at a system
+ * level and is managed different to other features
  *
  * - Generic type `F` for the feature ID
- * - Generic type `O` for the command options
+ * - Generic type `O` for the options schema
+ */
+export interface SystemFeature<
+  F extends FeatureId,
+  O extends ZodObject,
+> {
+  readonly type: 'system';
+  readonly id: F;
+  readonly command: string;
+  readonly description: string;
+  readonly options: O;
+  readonly isEnabled: boolean;
+}
+
+/**
+ * Used to describe a feature that is fully managed
+ * by the terminal and is executed on the client
+ *
+ * - Generic type `F` for the feature ID
+ * - Generic type `O` for the options schema
  * - Generic type `P` for the component props
  */
-export interface IFeature<
+export interface ClientFeature<
   F extends FeatureId,
   O extends ZodObject,
   P extends object,
 > {
+  readonly type: 'managed';
   readonly id: F;
-  readonly command: IClientCommand<O, P> | IServerCommand<O, P>;
+  readonly command: string;
+  readonly description: string;
+  readonly options: O;
+  readonly execution: 'client';
+  readonly action: (options: z.infer<O>) => P | Promise<P> | AsyncGenerator<ActionEvent<P>>;
   readonly component: FunctionComponent<P>;
   readonly isEnabled: boolean;
 }
 
 /**
- * Used to describe a feature command
- * which is executed on the client
+ * Used to describe a feature that is fully managed
+ * by the terminal and is executed on the server
  *
- * - Generic type `O` for the command options
+ * - Generic type `F` for the feature ID
+ * - Generic type `O` for the options schema
  * - Generic type `P` for the component props
  */
-export interface IClientCommand<
+export interface ServerFeature<
+  F extends FeatureId,
   O extends ZodObject,
   P extends object,
 > {
-  readonly name: string;
-  readonly description: string;
-  readonly options: O;
-  readonly execution: 'client';
-  readonly action: (options: z.infer<O>) => P | Promise<P> | AsyncGenerator<ActionEvent<P>>;
-}
-
-/**
- * Used to describe a feature command
- * which is executed on the server
- *
- * - Generic type `O` for the command options
- * - Generic type `P` for the component props
- */
-export interface IServerCommand<
-  O extends ZodObject,
-  P extends object,
-> {
-  readonly name: string;
+  readonly type: 'managed';
+  readonly id: F;
+  readonly command: string;
   readonly description: string;
   readonly options: O;
   readonly execution: 'server';
   readonly action: (options: z.infer<O>) => P | Promise<P>;
+  readonly component: FunctionComponent<P>;
+  readonly isEnabled: boolean;
 }
-
-/**
- * The type used to describe
- * all feature commands
- */
-export type Command = Feature['command'];
 
 /**
  * Used to describe the feature output
- * type for all features
+ * type for all managed features
  */
-export type FeatureOutput = {
-  [K in keyof FeatureMap]: {
+export type ManagedFeatureOutput = {
+  [K in keyof ManagedFeatureMap]: {
     readonly featureId: K;
-    readonly componentProps: ComponentProps<FeatureMap[K]['component']>;
+    readonly componentProps: ComponentProps<ManagedFeatureMap[K]['component']>;
   }
-}[keyof FeatureMap];
+}[keyof ManagedFeatureMap];
 
 /**
- * Used to describe the feature event data for
- * events sent from the `executeInput` helper
+ * Used to describe the system events
+ * sent from the `executeInput` helper
  */
-export type ExecuteInputFeatureEvent =
+export type ExecuteInputSystemEvent =
   {
-    readonly type: 'feature';
+    readonly type: 'system';
   }
   & {
-    [K in keyof FeatureMap]: {
+    [K in keyof SystemFeatureMap]: {
       readonly featureId: K;
-      readonly actionEvent: ActionEvent<ComponentProps<FeatureMap[K]['component']>>;
+      readonly options: z.infer<SystemFeatureMap[K]['options']>;
     }
-  }[keyof FeatureMap];
+  }[keyof SystemFeatureMap];
 
 /**
- * Used to describe the clear event data for
- * events sent from the `executeInput` helper
+ * Used to describe the managed feature events
+ * sent from the `executeInput` helper
  */
-export interface ExecuteInputClearEvent {
-  readonly type: 'clear';
-  readonly last?: number;
-}
-
-/**
- * Used to describe the text event data for
- * events sent from the `executeInput` helper
- */
-export interface ExecuteInputTextEvent {
-  readonly type: 'text';
-}
+export type ExecuteInputManagedFeatureEvent =
+  {
+    readonly type: 'managed-feature';
+  }
+  & {
+    [K in keyof ManagedFeatureMap]: {
+      readonly featureId: K;
+      readonly actionEvent: ActionEvent<ComponentProps<ManagedFeatureMap[K]['component']>>;
+    }
+  }[keyof ManagedFeatureMap];
 
 /**
  * Describes the parsed input which consists of
@@ -188,8 +219,8 @@ export interface ParsedInput {
 }
 
 /**
- * Used to send progress from an action to the
- * terminal for long-running actions
+ * Used to send progress from a managed feature
+ * action to the terminal for long-running actions
  */
 export interface ActionProgressEvent {
   readonly type: 'progress';
@@ -198,8 +229,8 @@ export interface ActionProgressEvent {
 }
 
 /**
- * Used to send updates from an action to the terminal to update
- * the feature data such as the component `props`
+ * Used to send updates from a managed feature action to the terminal
+ * to update the feature data such as the component `props`
  *
  * - Generic type `P` for the component props
  */
@@ -240,15 +271,15 @@ export interface ValidationError {
 }
 
 /**
- * Describes the terminal feature block used
- * to store data for the feature output
+ * Describes the terminal managed feature block used
+ * to store data for the managed feature
  */
-export interface TerminalFeatureBlock {
-  readonly type: 'feature';
+export interface TerminalManagedFeatureBlock {
+  readonly type: 'managed-feature';
   readonly id: string;
   readonly input: string;
   readonly duration: number;
-  readonly output: FeatureOutput;
+  readonly output: ManagedFeatureOutput;
 }
 
 /**
