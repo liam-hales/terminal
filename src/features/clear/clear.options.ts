@@ -11,6 +11,7 @@ const clearOptions = z.object({
   last: z
     .number()
     .min(1)
+    .max(256)
     .optional()
     .describe('The number of previous blocks to clear'),
 });
