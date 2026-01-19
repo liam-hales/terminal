@@ -28,6 +28,8 @@
     "cleanup": "rm -rf .next/"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.971.0",
+    "@aws-sdk/lib-dynamodb": "^3.971.0",
     "@cloudflare/speedtest": "^1.7.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@vercel/blob": "^2.0.0",
