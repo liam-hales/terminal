@@ -1,6 +1,6 @@
 import { ComponentProps, FunctionComponent, Ref } from 'react';
 import { ZodObject, z } from 'zod';
-import { SystemFeatureMap, ManagedFeatureMap } from './features';
+import { SystemFeatureMap, ManagedFeatureMap, FeatureMap } from './features';
 
 /**
  * Describes the feature ID's used to
@@ -41,7 +41,7 @@ export type TerminalMode = 'command' | 'text';
  * The union type for all
  * terminal block types
  */
-export type TerminalBlock = TerminalManagedFeatureBlock | TerminalTextBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
+export type TerminalBlock = TerminalFeatureBlock | TerminalValidationErrorBlock | TerminalErrorBlock;
 
 /**
  * The union type for all server
@@ -106,16 +106,19 @@ export interface BaseProps<T extends HTMLElement = HTMLElement> {
  *
  * - Generic type `F` for the feature ID
  * - Generic type `O` for the options schema
+ * - Generic type `C` for the component
  */
 export interface SystemFeature<
   F extends FeatureId,
   O extends ZodObject,
+  C extends FunctionComponent<never> | undefined = undefined,
 > {
   readonly type: 'system';
   readonly id: F;
   readonly command: string;
   readonly description: string;
   readonly options: O;
+  readonly component: C;
   readonly isEnabled: boolean;
 }
 
@@ -169,14 +172,18 @@ export interface ServerFeature<
 
 /**
  * Used to describe the feature output
- * type for all managed features
+ * type for all features
  */
-export type ManagedFeatureOutput = {
-  [K in keyof ManagedFeatureMap]: {
-    readonly featureId: K;
-    readonly componentProps: ComponentProps<ManagedFeatureMap[K]['component']>;
-  }
-}[keyof ManagedFeatureMap];
+export type FeatureOutput = {
+  [K in keyof FeatureMap]: FeatureMap[K] extends { readonly component: infer C; }
+    ? C extends FunctionComponent<infer P>
+      ? {
+          readonly featureId: K;
+          readonly componentProps: P;
+        }
+      : never
+    : never;
+}[keyof FeatureMap];
 
 /**
  * Used to describe the system events
@@ -271,25 +278,15 @@ export interface ValidationError {
 }
 
 /**
- * Describes the terminal managed feature block used
- * to store data for the managed feature
+ * Describes the terminal feature block used
+ * to store data for the feature
  */
-export interface TerminalManagedFeatureBlock {
-  readonly type: 'managed-feature';
+export interface TerminalFeatureBlock {
+  readonly type: 'feature';
   readonly id: string;
   readonly input: string;
-  readonly duration: number;
-  readonly output: ManagedFeatureOutput;
-}
-
-/**
- * Describes the terminal text block used to store
- * text data sent when the terminal is in text mode
- */
-export interface TerminalTextBlock {
-  readonly type: 'text';
-  readonly id: string;
-  readonly value: string;
+  readonly duration?: number;
+  readonly output: FeatureOutput;
 }
 
 /**

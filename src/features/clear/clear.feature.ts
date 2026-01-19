@@ -10,6 +10,7 @@ const clearFeature = buildFeature('system', {
   command: 'clear',
   description: 'Used to clear the terminal',
   options: clearOptions,
+  component: undefined,
   isEnabled: true,
 });
 

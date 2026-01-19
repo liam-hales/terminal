@@ -1,20 +1,20 @@
 import { FunctionComponent, ReactElement } from 'react';
-import { BaseProps, TerminalManagedFeatureBlock as FeatureBlock } from '../../types';
+import { BaseProps, TerminalFeatureBlock as FeatureBlock } from '../../types';
 import { featureMap } from '../../features';
 
 /**
- * The `TerminalManagedFeatureBlock` component props
+ * The `TerminalFeatureBlock` component props
  */
 type Props = Omit<FeatureBlock, 'id' | 'type'> & BaseProps;
 
 /**
  * Used to render the terminal
- * managed feature block
+ * feature block
  *
  * @param props The component props
  * @returns The `TerminalManagedFeatureBlock` component
  */
-const TerminalManagedFeatureBlock: FunctionComponent<Props> = ({ input, duration, output }): ReactElement<Props> => {
+const TerminalFeatureBlock: FunctionComponent<Props> = ({ input, duration, output }): ReactElement<Props> => {
   const { featureId, componentProps } = output;
 
   const feature = featureMap[featureId];
@@ -25,17 +25,21 @@ const TerminalManagedFeatureBlock: FunctionComponent<Props> = ({ input, duration
         {`> ${input}`}
       </p>
       <div className="flex flex-row items-end justify-between gap-x-3">
-        <div className="flex flex-col">
+        <div className="w-full flex flex-col items-start">
           {/* @ts-expect-error - TypeScript does not currently support correlated unions */}
           <feature.component {...componentProps} />
         </div>
-        <p className="text-xs">
-          {duration.toFixed(0)}
-          <span className="pl-1">ms</span>
-        </p>
+        {
+          (duration != null) && (
+            <p className="text-xs">
+              {duration.toFixed(0)}
+              <span className="pl-1">ms</span>
+            </p>
+          )
+        }
       </div>
     </div>
   );
 };
 
-export default TerminalManagedFeatureBlock;
+export default TerminalFeatureBlock;

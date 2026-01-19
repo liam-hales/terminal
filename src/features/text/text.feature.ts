@@ -1,4 +1,5 @@
 import { buildFeature } from '../../helpers';
+import { TextOutput } from '../../components';
 import { z } from 'zod';
 
 /**
@@ -10,6 +11,7 @@ const textFeature = buildFeature('system', {
   command: 'text',
   description: 'Used to enter text mode for posting plain text to the terminal',
   options: z.object({}),
+  component: TextOutput,
   isEnabled: true,
 });
 

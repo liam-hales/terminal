@@ -2,7 +2,7 @@
 
 import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { TerminalContext } from '../context';
-import { BaseProps, ManagedFeatureOutput, TerminalBlock, TerminalMode } from '../types';
+import { BaseProps, FeatureOutput, TerminalBlock, TerminalMode } from '../types';
 import { executeInput, parseInput } from '../helpers';
 import { TerminalLoading } from '../context/types';
 import { nanoid } from 'nanoid';
@@ -129,7 +129,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                 const output = {
                   featureId: featureId,
                   componentProps: componentProps,
-                } as ManagedFeatureOutput;
+                } as FeatureOutput;
 
                 setBlocks((previous) => {
                   const found = previous.find((block) => block.id === blockId);
@@ -139,7 +139,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                   if (found == null) {
                     return [
                       {
-                        type: 'managed-feature',
+                        type: 'feature',
                         id: blockId,
                         input: input,
                         duration: endTime - startTime,
@@ -152,7 +152,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                   // There is an existing terminal block, update
                   // it wth the latest duration and output
                   return previous.map((block) => {
-                    return (block.id === blockId && block.type === 'managed-feature')
+                    return (block.id === blockId && block.type === 'feature')
                       ? {
                           ...block,
                           duration: endTime - startTime,
@@ -240,9 +240,16 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
     setBlocks((previous) => {
       return [
         {
-          type: 'text',
+          type: 'feature',
           id: blockId,
-          value: input,
+          input: 'text',
+          output: {
+            featureId: 'text',
+            componentProps: {
+              value: input,
+              showBorder: true,
+            },
+          },
         },
         ...previous,
       ];

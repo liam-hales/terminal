@@ -1,6 +1,7 @@
 import { ZodObject } from 'zod';
 import { FeatureId, FeatureType, SystemFeature, ClientFeature, ServerFeature } from '../types';
 import { commonOptions } from '../features/common';
+import { FunctionComponent } from 'react';
 
 /**
  * Used to build a feature from the `config`
@@ -9,6 +10,7 @@ import { commonOptions } from '../features/common';
  * - Generic type `F` for the feature ID
  * - Generic type `O` for the options schema
  * - Generic type `P` for the component props
+ * - Generic type `C` for the component
  *
  * @param type The feature type
  * @param config The feature config
@@ -20,10 +22,11 @@ const buildFeature = <
   F extends FeatureId,
   O extends ZodObject,
   P extends object,
+  C extends FunctionComponent<never> | undefined = undefined,
 >(
   type: T,
   config: T extends 'system'
-    ? Omit<SystemFeature<F, O>, 'type'>
+    ? Omit<SystemFeature<F, O, C>, 'type'>
     : Omit<ClientFeature<F, O, P> | ServerFeature<F, O, P>, 'type'>,
 ) => {
   const { options } = config;
