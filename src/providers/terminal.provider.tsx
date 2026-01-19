@@ -235,8 +235,8 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
   const _sendText = (input: string): void => {
     const blockId = nanoid(16);
 
-    // Add the text block to the
-    // terminal blocks state
+    // Add the feature block for the text feature
+    // to the terminal blocks state
     setBlocks((previous) => {
       return [
         {
