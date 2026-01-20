@@ -3,7 +3,7 @@
 import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { TerminalContext } from '../context';
 import { BaseProps, FeatureOutput, TerminalBlock, TerminalMode } from '../types';
-import { executeInput, parseInput } from '../helpers';
+import { encryptData, executeInput, parseInput, uploadShareData } from '../helpers';
 import { TerminalLoading } from '../context/types';
 import { nanoid } from 'nanoid';
 import { ValidationException } from '../exceptions';
@@ -93,6 +93,63 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                 // the terminal to text mode and reset the input value state
                 setMode('text');
                 setInputValue('');
+
+                break;
+              }
+
+              case 'share': {
+                const { last, selfDestruct } = options;
+
+                // Check if there is at least one block
+                // to share before sharing nothing
+                if (blocks.length === 0) {
+                  throw new Error('There are no blocks to share');
+                }
+
+                // Extract the blocks to share, stringify
+                // the data and encrypt it
+                const { iv, ciphertext, key } = await encryptData(
+                  JSON.stringify(
+                    blocks.slice(last, blocks.length),
+                  ),
+                );
+
+                // Upload the encrypted data and use
+                // the ID to create the share URL
+                const id = await uploadShareData({
+                  iv: iv,
+                  ciphertext: ciphertext,
+                  selfDestruct: selfDestruct,
+                });
+
+                // Add the feature block for the share feature
+                // to the terminal blocks state
+                setBlocks((previous) => {
+                  return [
+                    {
+                      type: 'feature',
+                      id: blockId,
+                      input: input,
+                      output: {
+                        featureId: 'share',
+                        componentProps: {
+                          spacing: 'medium',
+                          items: [
+                            {
+                              name: 'Share ID',
+                              value: id,
+                            },
+                            {
+                              name: 'Share URL',
+                              value: `https://${window.location.hostname}/share/${id}?key=${key}`,
+                            },
+                          ],
+                        },
+                      },
+                    },
+                    ...previous,
+                  ];
+                });
 
                 break;
               }
