@@ -1,6 +1,7 @@
 import { FeatureMap } from './types';
 import { clearFeature } from './clear';
 import { textFeature } from './text';
+import { shareFeature } from './share';
 import { helpFeature } from './help';
 import { encodeFeature } from './encode';
 import { ipFeature } from './ip';
@@ -23,6 +24,7 @@ import { formatSqlFeature } from './format/sql';
 export const features = [
   clearFeature,
   textFeature,
+  shareFeature,
   helpFeature,
   encodeFeature,
   ipFeature,

@@ -9,6 +9,7 @@ import { SystemFeatureMap, ManagedFeatureMap, FeatureMap } from './features';
 export type FeatureId =
   | 'clear'
   | 'text'
+  | 'share'
   | 'help'
   | 'encode'
   | 'ip'
@@ -312,4 +313,15 @@ export interface TerminalErrorBlock {
   readonly input: string;
   readonly duration: number;
   readonly error: Error;
+}
+
+/**
+ * Describes the share block
+ * item stored in DynamoDB
+ */
+export interface ShareBlockItem {
+  readonly id: string;
+  readonly iv: string;
+  readonly ciphertext: string;
+  readonly selfDestruct: boolean;
 }
