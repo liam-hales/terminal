@@ -316,10 +316,10 @@ export interface TerminalErrorBlock {
 }
 
 /**
- * Describes the share block
- * item stored in DynamoDB
+ * Describes the share item
+ * record stored in DynamoDB
  */
-export interface ShareBlockItem {
+export interface ShareItem {
   readonly id: string;
   readonly iv: string;
   readonly ciphertext: string;

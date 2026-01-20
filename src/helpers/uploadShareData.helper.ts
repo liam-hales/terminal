@@ -5,7 +5,7 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';
 import { nanoid } from 'nanoid';
-import { ShareBlockItem } from '../types';
+import { ShareItem } from '../types';
 
 /**
  * Used to upload share data to
@@ -14,7 +14,7 @@ import { ShareBlockItem } from '../types';
  * @param payload The item payload
  * @returns The share ID
  */
-const uploadShareData = async (payload: Omit<ShareBlockItem, 'id'>): Promise<string> => {
+const uploadShareData = async (payload: Omit<ShareItem, 'id'>): Promise<string> => {
 
   // Extract the DynamoDB environment variables
   // and make sure they have been set
