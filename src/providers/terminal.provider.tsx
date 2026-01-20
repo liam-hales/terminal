@@ -110,7 +110,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                 // the data and encrypt it
                 const { iv, ciphertext, key } = await encryptData(
                   JSON.stringify(
-                    blocks.slice(last, blocks.length),
+                    blocks.slice(last - 1, blocks.length),
                   ),
                 );
 
