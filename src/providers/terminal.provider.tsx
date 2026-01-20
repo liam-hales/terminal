@@ -122,6 +122,10 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                   selfDestruct: selfDestruct,
                 });
 
+                // Get the end time stamp which along with the start time
+                // can be used to capture the current duration
+                const endTime = performance.now();
+
                 // Add the feature block for the share feature
                 // to the terminal blocks state
                 setBlocks((previous) => {
@@ -130,6 +134,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                       type: 'feature',
                       id: blockId,
                       input: input,
+                      duration: endTime - startTime,
                       output: {
                         featureId: 'share',
                         componentProps: {
