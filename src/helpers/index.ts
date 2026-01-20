@@ -10,6 +10,7 @@ import unwrapType from './unwrapType.helper';
 import serverAction from './serverAction.helper';
 import selectFiles from './selectFiles.helper';
 import zipStream from './zipStream.helper';
+import encryptData from './encryptData.helper';
 
 export {
   buildFeature,
@@ -24,4 +25,5 @@ export {
   serverAction,
   selectFiles,
   zipStream,
+  encryptData,
 };
