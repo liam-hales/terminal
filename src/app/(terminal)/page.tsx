@@ -1,17 +1,17 @@
 'use client';
 
 import { FunctionComponent, ReactElement } from 'react';
-import { CodeInline } from '../components/common';
+import { CodeInline } from '../../components/common';
 import Link from 'next/link';
 import dedent from 'dedent';
 
 /**
- * The entry point for the `/` app route,
- * used to display the app welcome UI
+ * The terminal page component used to render the welcome UI
+ * and getting started section within the terminal
  *
- * @returns The `AppPage` component
+ * @returns The `TerminalPage` component
  */
-const AppPage: FunctionComponent = (): ReactElement => {
+const TerminalPage: FunctionComponent = (): ReactElement => {
   return (
     <div className="w-full flex flex-col items-start pt-12 pb-12">
       <pre className="leading-5">
@@ -75,4 +75,4 @@ const AppPage: FunctionComponent = (): ReactElement => {
   );
 };
 
-export default AppPage;
+export default TerminalPage;
