@@ -125,9 +125,10 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                   selfDestruct: selfDestruct,
                 });
 
-                // Get the end time stamp which along with the start time
-                // can be used to capture the current duration
+                // Get the end time stamp used to capture the execution duration and generate
+                // the share URL using the share item ID and URL encoded encryption key
                 const endTime = performance.now();
+                const shareUrl = `https://${window.location.hostname}/share/${id}#key=${window.encodeURIComponent(key)}`;
 
                 // Add the feature block for the share feature
                 // to the terminal blocks state
@@ -149,7 +150,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
                             },
                             {
                               name: 'Share URL',
-                              value: `https://${window.location.hostname}/share/${id}?key=${key}`,
+                              value: shareUrl,
                             },
                           ],
                         },
