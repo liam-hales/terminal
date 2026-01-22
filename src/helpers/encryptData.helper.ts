@@ -20,13 +20,13 @@ const encryptData = async (data: string): Promise<EncryptDataResponse> => {
 
   // Generate a new 96-bit random
   // initialisation vector
-  const iv = crypto.getRandomValues(
+  const ivBuffer = crypto.getRandomValues(
     new Uint8Array(12),
   );
 
   // Generate a new AES-GCM 256-bit encryption key
   // which will be used for encryption
-  const key = await crypto.subtle.generateKey(
+  const cryptoKey = await crypto.subtle.generateKey(
     {
       name: 'AES-GCM',
       length: 256,
@@ -41,24 +41,24 @@ const encryptData = async (data: string): Promise<EncryptDataResponse> => {
   // Encode the data and encrypt it using the
   // AES-GCM algorithm and generated key
   const encoded = new TextEncoder().encode(data);
-  const encrypted = await crypto.subtle.encrypt(
+  const encryptedBuffer = await crypto.subtle.encrypt(
     {
       name: 'AES-GCM',
-      iv: iv,
+      iv: ivBuffer,
     },
-    key,
+    cryptoKey,
     encoded,
   );
 
   // Export the key into
   // its raw format
-  const rawKey = await crypto.subtle.exportKey('raw', key);
+  const keyBuffer = await crypto.subtle.exportKey('raw', cryptoKey);
 
   // Encode the IV, ciphertext and
   // encryption key to base64
-  const ivBase64 = btoa(String.fromCharCode(...iv));
-  const cipherBase64 = btoa(String.fromCharCode(...new Uint8Array(encrypted)));
-  const keyBase64 = btoa(String.fromCharCode(...new Uint8Array(rawKey)));
+  const ivBase64 = btoa(String.fromCharCode(...ivBuffer));
+  const cipherBase64 = btoa(String.fromCharCode(...new Uint8Array(encryptedBuffer)));
+  const keyBase64 = btoa(String.fromCharCode(...new Uint8Array(keyBuffer)));
 
   return {
     iv: ivBase64,
