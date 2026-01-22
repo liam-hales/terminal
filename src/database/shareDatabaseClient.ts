@@ -2,7 +2,7 @@
 
 'use server';
 
-import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBDocumentClient, GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { ShareItem } from '../types';
 import { nanoid } from 'nanoid';
@@ -48,6 +48,30 @@ class ShareDatabaseClient extends DynamoDBDocumentClient {
     this._client = client;
     this._region = region;
     this._tableName = tableName;
+  }
+
+  /**
+   * Used to fetch a share
+   * item via its ID
+   *
+   * @param id The share item ID
+   * @returns The share item
+   */
+  public async get(id: string): Promise<ShareItem | undefined> {
+
+    // Create the new get command for fetching
+    // a record from the table via its ID
+    const command = new GetCommand({
+      TableName: this._tableName,
+      Key: {
+        id: id,
+      },
+    });
+
+    // Send the command to fetch the
+    // record from the database table
+    const { Item } = await this.send(command);
+    return Item as ShareItem;
   }
 
   /**
