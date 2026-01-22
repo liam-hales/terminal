@@ -3,13 +3,7 @@
 import { FunctionComponent, KeyboardEvent, ReactElement, ReactNode, useEffect, useRef, Fragment } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { BaseProps } from '../../types';
-import {
-  TerminalCommandInput,
-  TerminalFeatureBlock,
-  TerminalValidationErrorBlock,
-  TerminalErrorBlock,
-  TerminalTextInput,
-} from '..';
+import { TerminalCommandInput, TerminalTextInput, TerminalBlock } from '..';
 import { useTerminal } from '../../hooks';
 import { decodeParam } from '../../helpers';
 
@@ -223,48 +217,14 @@ const Terminal: FunctionComponent<Props> = ({ children }): ReactElement<Props> =
       <div className="w-full h-full flex flex-col-reverse items-start gap-y-10 pb-6 pl-6 pr-6 overflow-y-auto no-scrollbar touch-pan-y">
         {
           blocks.map((block) => {
+            const { id, type } = block;
 
-            switch (block.type) {
-              case 'feature': {
-                const { id, input, duration, output } = block;
-
-                return (
-                  <TerminalFeatureBlock
-                    key={`feature-block-${id}`}
-                    input={input}
-                    duration={duration}
-                    output={output}
-                  />
-                );
-              }
-
-              case 'validation-error': {
-                const { id, input, duration, regex, errors } = block;
-
-                return (
-                  <TerminalValidationErrorBlock
-                    key={`validation-error-block-${id}`}
-                    input={input}
-                    duration={duration}
-                    regex={regex}
-                    errors={errors}
-                  />
-                );
-              }
-
-              case 'error': {
-                const { id, input, duration, error } = block;
-
-                return (
-                  <TerminalErrorBlock
-                    key={`error-block-${id}`}
-                    input={input}
-                    duration={duration}
-                    error={error}
-                  />
-                );
-              }
-            }
+            return (
+              <TerminalBlock
+                key={`terminal-${type}-block-${id}`}
+                {...block}
+              />
+            );
           })
         }
         {children}
