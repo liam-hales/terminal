@@ -1,10 +1,9 @@
 import './globals.css';
 
-import { FunctionComponent, ReactElement, ReactNode, Suspense } from 'react';
+import { FunctionComponent, ReactElement, ReactNode } from 'react';
 import { BaseProps } from '../types';
 import { hp100lx } from '../fonts';
-import { RetroScreen, Terminal } from '../components';
-import { TerminalProvider } from '../providers';
+import { RetroScreen } from '../components';
 import { viewport, generateMetadata } from './metadata';
 
 /**
@@ -15,8 +14,8 @@ interface Props extends BaseProps {
 }
 
 /**
- * The root layout component used as the
- * entry point to render the app
+ * The app layout component used as the entry
+ * point for the entire app across all routes
  *
  * @param props The component props
  * @returns The `AppLayout` component
@@ -28,21 +27,9 @@ const AppLayout: FunctionComponent<Props> = ({ children }): ReactElement<Props> 
       className={`h-full ${hp100lx.className} overscroll-none`}
     >
       <body className="h-full bg-background touch-none">
-        {
-        /**
-         * `<Suspense>` is required here because the `Terminal` component
-         * uses the `useSearchParams` hook which requires it
-         */
-        }
-        <Suspense>
-          <TerminalProvider>
-            <RetroScreen>
-              <Terminal>
-                {children}
-              </Terminal>
-            </RetroScreen>
-          </TerminalProvider>
-        </Suspense>
+        <RetroScreen>
+          {children}
+        </RetroScreen>
       </body>
     </html>
   );
