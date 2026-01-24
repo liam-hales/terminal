@@ -106,6 +106,10 @@ v4.12.0
 
 ```sh
 SITE_URL = 'https://t.liamhales.dev'
+
+DYNAMO_DB_REGION = 'eu-west-2'
+DYNAMO_DB_SHARED_BLOCKS_TABLE_NAME = 'terminal-shared-blocks'
+
 FILE_STORE_ID = '******'
 FILE_READ_WRITE_TOKEN = '******'
 ```
