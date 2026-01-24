@@ -33,7 +33,7 @@ const RetroScreen: FunctionComponent<Props> = ({ children }): ReactElement<Props
         {children}
       </div>
       <div className="fixed top-0 bottom-0 left-0 right-0 bg-radial from-primary to-black blur-xl opacity-10 z-0 pointer-events-none" />
-      <div className="fixed left-0 right-0 h-28 bg-gradient-to-b from-transparent to-white/5 blur-[1px] animate-scanner z-20 pointer-events-none" />
+      <div className="fixed left-0 right-0 h-28 bg-linear-to-b from-transparent to-white/5 blur-[1px] animate-scanner z-20 pointer-events-none" />
       <div className="fixed -inset-[200%] bg-[url('/noise.png')] animate-shift opacity-5 z-30 pointer-events-none" />
     </Fragment>
   );

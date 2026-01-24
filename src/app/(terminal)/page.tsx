@@ -27,7 +27,7 @@ const TerminalPage: FunctionComponent = (): ReactElement => {
         }
       </pre>
       <div className="flex flex-col pt-16">
-        <p className="max-w-[440px] text-xs">
+        <p className="max-w-110 text-xs">
           Web-based developer tools with a dev-friendly terminal interface.
         </p>
         <p className="text-xs pt-8">
