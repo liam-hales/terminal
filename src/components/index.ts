@@ -11,6 +11,7 @@ import TerminalBlock from './terminal/terminalBlock';
 import TerminalFeatureBlock from './terminal/terminalFeatureBlock';
 import TerminalValidationErrorBlock from './terminal/terminalValidationErrorBlock';
 import TerminalErrorBlock from './terminal/terminalErrorBlock';
+import TerminalTitle from './terminal/terminalTitle';
 import Help from './help/help';
 import CommandHelp from './help/commandHelp';
 
@@ -28,6 +29,7 @@ export {
   TerminalFeatureBlock,
   TerminalValidationErrorBlock,
   TerminalErrorBlock,
+  TerminalTitle,
   Help,
   CommandHelp,
 };

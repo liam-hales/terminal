@@ -2,8 +2,8 @@
 
 import { FunctionComponent, ReactElement } from 'react';
 import { CodeInline } from '../../components/common';
+import { TerminalTitle } from '../../components';
 import Link from 'next/link';
-import dedent from 'dedent';
 
 /**
  * The terminal page component used to render the welcome UI
@@ -14,18 +14,7 @@ import dedent from 'dedent';
 const TerminalPage: FunctionComponent = (): ReactElement => {
   return (
     <div className="w-full flex flex-col items-start pt-12 pb-12">
-      <pre className="leading-5">
-        {
-          dedent`
-              ████████╗ ███████╗ ██████╗  ███╗   ███╗ ██╗ ███╗   ██╗  █████╗  ██╗
-              ╚══██╔══╝ ██╔════╝ ██╔══██╗ ████╗ ████║ ██║ ████╗  ██║ ██╔══██╗ ██║
-                 ██║    █████╗   ██████╔╝ ██╔████╔██║ ██║ ██╔██╗ ██║ ███████║ ██║
-                 ██║    ██╔══╝   ██╔══██╗ ██║╚██╔╝██║ ██║ ██║╚██╗██║ ██╔══██║ ██║
-                 ██║    ███████╗ ██║  ██║ ██║ ╚═╝ ██║ ██║ ██║ ╚████║ ██║  ██║ ███████╗
-                 ╚═╝    ╚══════╝ ╚═╝  ╚═╝ ╚═╝     ╚═╝ ╚═╝ ╚═╝  ╚═══╝ ╚═╝  ╚═╝ ╚══════╝
-            `
-        }
-      </pre>
+      <TerminalTitle className="leading-5" />
       <div className="flex flex-col pt-16">
         <p className="max-w-110 text-xs">
           Web-based developer tools with a dev-friendly terminal interface.
