@@ -59,7 +59,7 @@ const SharePage: FunctionComponent = (): ReactElement => {
 
   return (
     <div className="w-full h-full flex flex-col items-center pt-6 pb-10 pl-6 pr-6">
-      <div className="w-full max-w-200 h-full flex flex-col items-start gap-y-8">
+      <div className="w-full max-w-200 h-full flex flex-col items-start justify-between gap-y-8">
         <div className="w-full flex flex-col items-start border-solid border border-primary/20 rounded-sm gap-y-10 p-6 overflow-y-auto no-scrollbar touch-pan-y">
           {
             (blocks == null)
