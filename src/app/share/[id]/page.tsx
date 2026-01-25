@@ -1,12 +1,12 @@
 'use client';
 
 import { FunctionComponent, ReactElement, useEffect, useState } from 'react';
-import { fetchShareItem } from '../../../database';
+import { shareDatabase } from '../../../database';
 import { useParams } from 'next/navigation';
 import { decryptData } from '../../../helpers';
 import { Loader } from '../../../components/common';
 import { TerminalTitle, TerminalBlock } from '../../../components';
-import { TerminalBlock as Block } from '../../../types';
+import { ShareItem, TerminalBlock as Block } from '../../../types';
 import Link from 'next/link';
 
 /**
@@ -17,7 +17,52 @@ import Link from 'next/link';
  */
 const SharePage: FunctionComponent = (): ReactElement => {
   const { id } = useParams<{ readonly id: string; }>();
+
   const [blocks, setBlocks] = useState<Block[] | undefined>();
+  const [error, setError] = useState<Error | undefined>();
+
+  /**
+   * Used to fetch the share item
+   * from the server via its ID
+   *
+   * @param id The share item ID
+   * @returns The share item
+   */
+  const _fetchShareItem = async (id: string): Promise<ShareItem> => {
+    const shareItem = await shareDatabase('get', id);
+
+    // If the share item cound not be
+    // found then throw an error
+    if (shareItem == null) {
+      throw new Error(`No share item found for ID "${id}"`);
+    }
+
+    return shareItem;
+  };
+
+  /**
+   * Used to decrypt the share item
+   * data using the encryption key
+   *
+   * @param shareItem The share item
+   * @param key The encryption key
+   *
+   * @returns The decrypted blocks
+   */
+  const _decryptShareItem = async (shareItem: ShareItem, key: string): Promise<Block[]> => {
+    const { iv, ciphertext } = shareItem;
+
+    try {
+
+      // Decrypt the data and parse it
+      // back into terminal blocks
+      const decrypted = await decryptData(iv, ciphertext, key);
+      return JSON.parse(decrypted) as Block[];
+    }
+    catch {
+      throw new Error('Failed to decrypt share data');
+    }
+  };
 
   /**
    * Used to fetch the share item and decrypt
@@ -37,25 +82,34 @@ const SharePage: FunctionComponent = (): ReactElement => {
       throw new Error('No encryption key found in URL');
     }
 
-    void (async () => {
-      const shareItem = await fetchShareItem(id);
+    void (async (): Promise<void> => {
+      try {
+        const shareItem = await _fetchShareItem(id);
+        const blocks = await _decryptShareItem(shareItem, key);
 
-      // If the share item cound not be
-      // found then throw an error
-      if (shareItem == null) {
-        throw new Error(`No sare item was found for ID "${id}"`);
+        setBlocks(blocks);
       }
+      // Catch any async errors that are thrown and set the error to
+      // state so it can be re-thrown and caught by the error boundary
+      catch (error) {
+        if (error instanceof Error) {
+          setError(error);
+        }
 
-      const { iv, ciphertext } = shareItem;
-
-      // Decrypt the data and parse it
-      // back into terminal blocks
-      const decrypted = await decryptData(iv, ciphertext, key);
-      const blocks = JSON.parse(decrypted) as Block[];
-
-      setBlocks(blocks);
+        throw error;
+      }
     })();
   }, [id]);
+
+  /**
+   * Used to throw the error state so it
+   * can be caught by the error boundary
+   */
+  useEffect(() => {
+    if (error != null) {
+      throw error;
+    }
+  }, [error]);
 
   return (
     <div className="w-full max-w-200 h-full flex flex-col items-start justify-between gap-y-8 pt-6 pb-10 pl-6 pr-6">
