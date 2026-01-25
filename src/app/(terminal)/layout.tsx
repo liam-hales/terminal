@@ -1,12 +1,11 @@
 import { FunctionComponent, ReactElement, ReactNode, Suspense } from 'react';
 import { TerminalProvider } from '../../providers';
 import { Terminal } from '../../components';
-import { BaseProps } from '../../types';
 
 /**
  * The `TerminalLayout` component props
  */
-interface Props extends BaseProps {
+interface Props {
   readonly children: ReactNode;
 }
 
