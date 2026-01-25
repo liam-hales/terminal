@@ -4,7 +4,7 @@ import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
 import { TerminalContext } from '../context';
 import { BaseProps, FeatureOutput, TerminalBlock, TerminalMode } from '../types';
 import { encryptData, executeInput, parseInput } from '../helpers';
-import { uploadShareItem } from '../database';
+import { shareDatabase } from '../database';
 import { TerminalLoading } from '../context/types';
 import { nanoid } from 'nanoid';
 import { ValidationException } from '../exceptions';
@@ -119,7 +119,7 @@ const TerminalProvider: FunctionComponent<Props> = ({ children }): ReactElement<
 
                 // Upload the encrypted data and use
                 // the ID to create the share URL
-                const { id } = await uploadShareItem({
+                const { id } = await shareDatabase('insert', {
                   iv: iv,
                   ciphertext: ciphertext,
                   selfDestruct: selfDestruct,
