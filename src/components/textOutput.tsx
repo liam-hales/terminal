@@ -22,7 +22,7 @@ const TextOutput: FunctionComponent<Props> = ({ value, showBorder = false }): Re
     <>
       {(showBorder === true) && (
         <TextArea
-          className="w-full text-retro text-xs outline-none caret-white resize-none border-solid border- border-primary/20 rounded-sm p-3"
+          className="w-full text-retro text-xs outline-none caret-white resize-none border-solid border border-primary/20 rounded-sm p-3"
           value={value}
           disabled={true}
         />

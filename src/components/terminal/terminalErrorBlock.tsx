@@ -19,7 +19,7 @@ const TerminalErrorBlock: FunctionComponent<Props> = ({ input, duration, error }
         {`> ${input}`}
       </p>
       <div className="flex flex-row items-end justify-between gap-x-3">
-        <p className="text-xs !text-error border-solid border-[1px] border-l-[6px] border-error whitespace-pre-wrap break-all pt-1 pb-1 pl-2 pr-2">
+        <p className="text-xs text-error! border-solid border border-l-[6px] border-error whitespace-pre-wrap break-all pt-1 pb-1 pl-2 pr-2">
           {`X - ${error.message}`}
         </p>
         <p className="text-xs">
