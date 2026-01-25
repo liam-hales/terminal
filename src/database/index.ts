@@ -1,9 +1,7 @@
-import ShareDatabaseClient from './shareDatabaseClient';
-import uploadShareItem from './uploadShareItem.action';
-import fetchShareItem from './fetchShareItem.action';
+import ShareDatabaseClient from './shareDatabase.client';
+import shareDatabase from './shareDatabase.action';
 
 export {
   ShareDatabaseClient,
-  uploadShareItem,
-  fetchShareItem,
+  shareDatabase,
 };

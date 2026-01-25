@@ -11,9 +11,9 @@ import { nanoid } from 'nanoid';
  * The database client used to interact with
  * share items stored in DynamoDB
  */
-class ShareDatabaseClient extends DynamoDBDocumentClient {
+class ShareDatabaseClient {
 
-  private readonly _client: DynamoDBClient;
+  private readonly _client: DynamoDBDocumentClient;
   private readonly _region: string;
   private readonly _tableName: string;
 
@@ -35,17 +35,14 @@ class ShareDatabaseClient extends DynamoDBDocumentClient {
       throw new Error('The "DYNAMO_DB_SHARED_BLOCKS_TABLE_NAME" environment variable is required');
     }
 
-    // Initialise the underlying
-    // DynamoDB client
-    const client = new DynamoDBClient({
-      region: region,
-    });
+    // Initialise the `DynamoDBDocumentClient` client
+    // using the DynamoDB client
+    this._client = DynamoDBDocumentClient.from(
+      new DynamoDBClient({
+        region: region,
+      }),
+    );
 
-    // Call super with the underlying DynamoDB client
-    // to initialise the `DynamoDBDocumentClient`
-    super(client);
-
-    this._client = client;
     this._region = region;
     this._tableName = tableName;
   }
@@ -70,7 +67,7 @@ class ShareDatabaseClient extends DynamoDBDocumentClient {
 
     // Send the command to fetch the
     // record from the database table
-    const { Item } = await this.send(command);
+    const { Item } = await this._client.send(command);
     return Item as ShareItem;
   }
 
@@ -100,7 +97,7 @@ class ShareDatabaseClient extends DynamoDBDocumentClient {
 
     // Send the command to insert the
     // record into the database table
-    await this.send(command);
+    await this._client.send(command);
 
     return item;
   }
