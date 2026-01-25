@@ -7,6 +7,9 @@ frontend:
         - yarn install
     build:
       commands:
+        - env | grep -e SITE_URL >> .env.production
+        - env | grep -e DYNAMO_DB_REGION >> .env.production
+        - env | grep -e DYNAMO_DB_SHARED_BLOCKS_TABLE_NAME >> .env.production
         - yarn build
         - yarn build:icons
   artifacts:
