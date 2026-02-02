@@ -87,6 +87,12 @@ const SharePage: FunctionComponent = (): ReactElement => {
         const shareItem = await _fetchShareItem(id);
         const blocks = await _decryptShareItem(shareItem, key);
 
+        // If the share item should self-destruct
+        // then delete it from the database
+        if (shareItem.selfDestruct === true) {
+          await shareDatabase('delete', id);
+        }
+
         setBlocks(blocks);
       }
       // Catch any async errors that are thrown and set the error to
