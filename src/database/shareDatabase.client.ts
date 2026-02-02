@@ -56,7 +56,7 @@ class ShareDatabaseClient {
    */
   public async get(id: string): Promise<ShareItem | undefined> {
 
-    // Create the new get command for fetching
+    // Create a new command for fetching
     // a record from the table via its ID
     const command = new GetCommand({
       TableName: this._tableName,
@@ -65,8 +65,6 @@ class ShareDatabaseClient {
       },
     });
 
-    // Send the command to fetch the
-    // record from the database table
     const { Item } = await this._client.send(command);
     return Item as ShareItem;
   }
@@ -88,17 +86,14 @@ class ShareDatabaseClient {
       id: id,
     };
 
-    // Create the new put command for
-    // inserting a record into the table
+    // Create a new command for inserting
+    // a record into the table
     const command = new PutCommand({
       TableName: this._tableName,
       Item: item,
     });
 
-    // Send the command to insert the
-    // record into the database table
     await this._client.send(command);
-
     return item;
   }
 
@@ -110,7 +105,7 @@ class ShareDatabaseClient {
    */
   public async delete(id: string): Promise<void> {
 
-    // Create the new delete command for deleting
+    // Create a new command for deleting
     // a record from the database table
     const command = new DeleteCommand({
       TableName: this._tableName,
