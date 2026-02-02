@@ -2,7 +2,7 @@
 
 'use server';
 
-import { DynamoDBDocumentClient, GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
+import { DeleteCommand, DynamoDBDocumentClient, GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { ShareItem } from '../types';
 import { nanoid } from 'nanoid';
@@ -100,6 +100,26 @@ class ShareDatabaseClient {
     await this._client.send(command);
 
     return item;
+  }
+
+  /**
+   * Used to delete a share
+   * item via its ID
+   *
+   * @param id The share item ID
+   */
+  public async delete(id: string): Promise<void> {
+
+    // Create the new delete command for deleting
+    // a record from the database table
+    const command = new DeleteCommand({
+      TableName: this._tableName,
+      Key: {
+        id: id,
+      },
+    });
+
+    await this._client.send(command);
   }
 }
 
