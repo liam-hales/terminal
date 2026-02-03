@@ -21,7 +21,7 @@ interface Props extends BaseProps {
  */
 const CommandHelp: FunctionComponent<Props> = ({ featureId }): ReactElement<Props> => {
   const { command, description, options } = featureMap[featureId];
-  const { shape } = options;
+  const { schema, aliases } = options;
 
   return (
     <div className="flex flex-col gap-y-8">
@@ -42,20 +42,30 @@ const CommandHelp: FunctionComponent<Props> = ({ featureId }): ReactElement<Prop
         </p>
         <div className="flex flex-wrap gap-y-4 pl-4">
           {
-            extractKeys(shape)
+            extractKeys(schema.shape)
               .sort((a, b) => a.localeCompare(b))
               .map((key) => {
 
                 // Fully unwrap the Zod type to
                 // extract the option details
-                const { def, description } = shape[key];
-                const { def: unwrappedDef } = unwrapType(shape[key]);
+                const { def, description } = schema.shape[key];
+                const { def: unwrappedDef } = unwrapType(schema.shape[key]);
 
                 const option = kebabCase(key);
+                const alias = aliases[key] as string | undefined;
 
                 return (
                   <Fragment key={`command-option-${option}`}>
-                    <div className="w-[18%]">
+                    <div className="w-[28%] flex flex-row items-center gap-x-4">
+                      {
+                        (alias != null) && (
+                          <p className="text-xs">
+                            <CodeInline>
+                              {`-${alias}`}
+                            </CodeInline>
+                          </p>
+                        )
+                      }
                       <p className="text-xs">
                         <CodeInline>
                           {`--${option}`}
@@ -119,7 +129,7 @@ const CommandHelp: FunctionComponent<Props> = ({ featureId }): ReactElement<Prop
                         })()
                       }
                     </div>
-                    <div className="w-[50%] flex flex-row gap-x-2">
+                    <div className="w-[40%] flex flex-row gap-x-2">
                       <p className="text-xs">
                         -
                       </p>
