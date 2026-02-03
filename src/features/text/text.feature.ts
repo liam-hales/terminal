@@ -10,7 +10,10 @@ const textFeature = buildFeature('system', {
   id: 'text',
   command: 'text',
   description: 'Used to enter text mode for posting plain text to the terminal',
-  options: z.object({}),
+  options: {
+    schema: z.object({}),
+    aliases: {},
+  },
   component: TextOutput,
   isEnabled: true,
 });

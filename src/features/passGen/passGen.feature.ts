@@ -10,7 +10,16 @@ const passGenFeature = buildFeature('managed', {
   id: 'pass-gen',
   command: 'passgen',
   description: 'Used to generate strong and secure passwords',
-  options: passGenOptions,
+  options: {
+    schema: passGenOptions,
+    aliases: {
+      length: 'l',
+      lowercase: 'lc',
+      uppercase: 'uc',
+      numbers: 'n',
+      symbols: 's',
+    },
+  },
   execution: 'client',
   action: passGenAction,
   component: TextOutput,

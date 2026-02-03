@@ -5,22 +5,56 @@ import { z, ZodObject, ZodRawShape } from 'zod';
 import { ParsedInput } from '../types';
 
 /**
- * Used to validate input
- * options against a schema
+ * Used to validate input options
+ * against an options schema
+ *
+ * - Generic type `S` for the options schema shape
  *
  * @param input The parsed input
- * @param schema The validation schema
+ * @param schema The options schema
+ * @param aliases The option aliases
  *
  * @returns The validated options
  */
 const validateOptions = <S extends ZodRawShape>(
   input: ParsedInput,
   schema: ZodObject<S>,
+  aliases: Record<keyof S, string | undefined>,
 ): z.infer<typeof schema> => {
   const { command, options = {} } = input;
 
-  const validated = schema
-    .strict()
+  // Pre-process the input data before validation to
+  // merge the options with their corresponding aliases
+  const validated = z
+    .preprocess((input: Record<keyof S, unknown>) => {
+      const aliasKeys = Object.values(aliases);
+
+      // Reduce the keys from both the input and schema
+      // shape to retain any unknown keys
+      return Object
+        .keys({
+          ...input,
+          ...schema.shape,
+        })
+        .reduce((map, key) => {
+
+          // If the key is an alias then return
+          // the map to exclude it
+          if (aliasKeys.includes(key) === true) {
+            return map;
+          }
+
+          const aliasKey = aliases[key];
+          const aliasValue = (aliasKey != null) ? input[aliasKey] : undefined;
+
+          // Favour the value from the option key using
+          // the value from the alias as a fallback
+          return {
+            ...map,
+            [key]: input[key] ?? aliasValue,
+          };
+        }, {});
+    }, schema.strict())
     .safeParse(options);
 
   // Check if the validation was successful, if so then call the feature action with the transformed

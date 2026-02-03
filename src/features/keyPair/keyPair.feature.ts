@@ -10,7 +10,14 @@ const keyPairFeature = buildFeature('managed', {
   id: 'key-pair',
   command: 'keypair',
   description: 'Used to generate public and private key pairs',
-  options: keyPairOptions,
+  options: {
+    schema: keyPairOptions,
+    aliases: {
+      alg: 'a',
+      format: 'f',
+      size: 's',
+    },
+  },
   execution: 'server',
   action: keyPairAction,
   component: GroupedListOutput,

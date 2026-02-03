@@ -10,7 +10,12 @@ const ipFeature = buildFeature('managed', {
   id: 'ip',
   command: 'ip',
   description: 'Used to resolve the users public IP address',
-  options: ipOptions,
+  options: {
+    schema: ipOptions,
+    aliases: {
+      version: 'v',
+    },
+  },
   execution: 'client',
   action: ipAction,
   component: ListOutput,

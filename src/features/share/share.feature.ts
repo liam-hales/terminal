@@ -10,7 +10,13 @@ const shareFeature = buildFeature('system', {
   id: 'share',
   command: 'share',
   description: 'Used to share encrypted terminal blocks via share URLs',
-  options: shareOptions,
+  options: {
+    schema: shareOptions,
+    aliases: {
+      last: 'l',
+      selfDestruct: 'sd',
+    },
+  },
   component: ListOutput,
   isEnabled: true,
 });

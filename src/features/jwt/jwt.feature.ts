@@ -10,7 +10,12 @@ const jwtFeature = buildFeature('managed', {
   id: 'jwt',
   command: 'jwt',
   description: 'Used to decode and inspect a JSON Web Token',
-  options: jwtOptions,
+  options: {
+    schema: jwtOptions,
+    aliases: {
+      token: 't',
+    },
+  },
   execution: 'client',
   action: jwtAction,
   component: GroupedListOutput,

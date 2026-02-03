@@ -20,6 +20,7 @@ const parseInput = (input: string): ParsedInput => {
       'dot-notation': false,
       'camel-case-expansion': false,
       'boolean-negation': false,
+      'short-option-groups': false,
     },
   });
 

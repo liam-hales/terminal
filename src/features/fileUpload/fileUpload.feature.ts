@@ -10,7 +10,12 @@ const fileUploadFeature = buildFeature('managed', {
   id: 'file-upload',
   command: 'file upload',
   description: 'Used to upload files and share via a link',
-  options: fileUploadOptions,
+  options: {
+    schema: fileUploadOptions,
+    aliases: {
+      zip: 'z',
+    },
+  },
   execution: 'client',
   action: fileUploadAction,
   component: GroupedListOutput,

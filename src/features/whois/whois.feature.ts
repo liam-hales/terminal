@@ -10,7 +10,15 @@ const whoisFeature = buildFeature('managed', {
   id: 'whois',
   command: 'whois',
   description: 'Used to perform a whois search on domain names and IP addresses to obtain owner information',
-  options: whoisOptions,
+  options: {
+    schema: whoisOptions,
+    aliases: {
+      search: 's',
+      server: 'sv',
+      follow: 'f',
+      excludeRedacted: 'ex',
+    },
+  },
   execution: 'server',
   action: whoisAction,
   component: GroupedListOutput,

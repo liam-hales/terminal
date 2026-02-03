@@ -10,7 +10,13 @@ const formatSqlFeature = buildFeature('managed', {
   id: 'format-sql',
   command: 'format sql',
   description: 'Used to format a given SQL string',
-  options: formatSqlOptions,
+  options: {
+    schema: formatSqlOptions,
+    aliases: {
+      value: 'v',
+      dialect: 'd',
+    },
+  },
   execution: 'client',
   action: formatSqlAction,
   component: TextOutput,

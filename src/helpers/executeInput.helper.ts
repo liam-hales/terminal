@@ -12,8 +12,10 @@ import { isAsyncGenerator } from '../guards';
 const executeInput = async function* (input: ParsedInput): AsyncGenerator<ExecuteInputEvent> {
   // Resolve the feature from the parsed input and validate
   // the input options against the feature schema
-  const feature = resolveFeature(input);
-  const options = validateOptions(input, feature.options);
+  const { id, ...feature } = resolveFeature(input);
+  const { schema, aliases } = feature.options;
+
+  const options = validateOptions(input, schema, aliases);
 
   // If the help option has been set to true,
   // yield the event for the help feature
@@ -24,7 +26,7 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
       actionEvent: {
         type: 'update',
         componentProps: {
-          featureId: feature.id,
+          featureId: id,
         },
       },
     };
@@ -37,14 +39,14 @@ const executeInput = async function* (input: ParsedInput): AsyncGenerator<Execut
   if (feature.type === 'system') {
     yield {
       type: 'system',
-      featureId: feature.id,
+      featureId: id,
       options: options,
     } as ExecuteInputSystemEvent;
 
     return;
   }
 
-  const { id, execution, action } = feature;
+  const { execution, action } = feature;
 
   // If the command execution needs to be done on the server, wrap the
   // action in the `serverAction` helper to execute this correctly

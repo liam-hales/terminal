@@ -7,6 +7,7 @@ import { FunctionComponent } from 'react';
  * Used to build a feature from the `config`
  * and allow generic type inference
  *
+ * - Generic type `T` for the feature type
  * - Generic type `F` for the feature ID
  * - Generic type `O` for the options schema
  * - Generic type `P` for the component props
@@ -36,10 +37,16 @@ const buildFeature = <
   return {
     ...config,
     type: type,
-    // Using `.merge` is still required as the types
-    // when using `.extends` does not work the same
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    options: commonOptions.merge(options),
+    options: {
+      // Using `.merge` is still required as the types
+      // when using `.extends` does not work the same
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
+      schema: commonOptions.merge(options.schema),
+      aliases: {
+        ...options.aliases,
+        help: 'h',
+      },
+    },
   } as const;
 };
 

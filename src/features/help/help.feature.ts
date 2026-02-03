@@ -10,7 +10,12 @@ const helpFeature = buildFeature('managed', {
   id: 'help',
   command: 'help',
   description: 'Used to display help for commands and give guidance on their options and how to use them',
-  options: helpOptions,
+  options: {
+    schema: helpOptions,
+    aliases: {
+      for: 'f',
+    },
+  },
   execution: 'client',
   action: helpAction,
   component: HelpFeature,

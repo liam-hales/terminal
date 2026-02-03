@@ -118,7 +118,7 @@ export interface SystemFeature<
   readonly id: F;
   readonly command: string;
   readonly description: string;
-  readonly options: O;
+  readonly options: FeatureOptions<O>;
   readonly component: C;
   readonly isEnabled: boolean;
 }
@@ -140,7 +140,7 @@ export interface ClientFeature<
   readonly id: F;
   readonly command: string;
   readonly description: string;
-  readonly options: O;
+  readonly options: FeatureOptions<O>;
   readonly execution: 'client';
   readonly action: (options: z.infer<O>) => P | Promise<P> | AsyncGenerator<ActionEvent<P>>;
   readonly component: FunctionComponent<P>;
@@ -164,11 +164,22 @@ export interface ServerFeature<
   readonly id: F;
   readonly command: string;
   readonly description: string;
-  readonly options: O;
+  readonly options: FeatureOptions<O>;
   readonly execution: 'server';
   readonly action: (options: z.infer<O>) => P | Promise<P>;
   readonly component: FunctionComponent<P>;
   readonly isEnabled: boolean;
+}
+
+/**
+ * Used to describe the feature options which
+ * consists of the schema and aliases
+ *
+ * - Generic type `S` for the schema
+ */
+export interface FeatureOptions<S extends ZodObject> {
+  readonly schema: S;
+  readonly aliases: Record<keyof S['shape'], string | undefined>;
 }
 
 /**
@@ -197,7 +208,7 @@ export type ExecuteInputSystemEvent =
   & {
     [K in keyof SystemFeatureMap]: {
       readonly featureId: K;
-      readonly options: z.infer<SystemFeatureMap[K]['options']>;
+      readonly options: z.infer<SystemFeatureMap[K]['options']['schema']>;
     }
   }[keyof SystemFeatureMap];
 

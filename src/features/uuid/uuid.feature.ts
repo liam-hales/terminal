@@ -10,7 +10,12 @@ const uuidFeature = buildFeature('managed', {
   id: 'uuid',
   command: 'uuid',
   description: 'Used to generate a UUID',
-  options: uuidOptions,
+  options: {
+    schema: uuidOptions,
+    aliases: {
+      version: 'v',
+    },
+  },
   execution: 'client',
   action: uuidAction,
   component: TextOutput,

@@ -10,7 +10,12 @@ const macLookupFeature = buildFeature('managed', {
   id: 'mac-lookup',
   command: 'maclookup',
   description: 'Used to lookup the vendor/manufacturer for a given MAC address',
-  options: macLookupOptions,
+  options: {
+    schema: macLookupOptions,
+    aliases: {
+      address: 'a',
+    },
+  },
   execution: 'server',
   action: macLookupAction,
   component: GroupedListOutput,

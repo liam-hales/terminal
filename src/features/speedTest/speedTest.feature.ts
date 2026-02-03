@@ -10,7 +10,13 @@ const speedTestFeature = buildFeature('managed', {
   id: 'speed-test',
   command: 'speed test',
   description: 'Used to perform a network speed test (powered by Cloudflare)',
-  options: speedTestOptions,
+  options: {
+    schema: speedTestOptions,
+    aliases: {
+      unit: 'u',
+      detailed: 'd',
+    },
+  },
   execution: 'client',
   action: speedTestAction,
   component: SpeedTestFeature,

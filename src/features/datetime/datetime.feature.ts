@@ -10,7 +10,13 @@ const datetimeFeature = buildFeature('managed', {
   id: 'datetime',
   command: 'datetime',
   description: 'Used to display the current, or a specific date and time in multiple different formats',
-  options: datetimeOptions,
+  options: {
+    schema: datetimeOptions,
+    aliases: {
+      value: 'v',
+      timezone: 'tz',
+    },
+  },
   execution: 'client',
   action: datetimeAction,
   component: GroupedListOutput,

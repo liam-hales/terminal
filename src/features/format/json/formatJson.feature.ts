@@ -10,7 +10,12 @@ const formatJsonFeature = buildFeature('managed', {
   id: 'format-json',
   command: 'format json',
   description: 'Used to format a given JSON string',
-  options: formatJsonOptions,
+  options: {
+    schema: formatJsonOptions,
+    aliases: {
+      value: 'v',
+    },
+  },
   execution: 'client',
   action: formatJsonAction,
   component: TextOutput,
