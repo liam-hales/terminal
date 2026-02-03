@@ -19,6 +19,7 @@ const SharePage: FunctionComponent = (): ReactElement => {
   const { id } = useParams<{ readonly id: string; }>();
 
   const [blocks, setBlocks] = useState<Block[] | undefined>();
+  const [selfDestruct, setSelfDestruct] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>();
 
   /**
@@ -94,6 +95,7 @@ const SharePage: FunctionComponent = (): ReactElement => {
         }
 
         setBlocks(blocks);
+        setSelfDestruct(shareItem.selfDestruct);
       }
       // Catch any async errors that are thrown and set the error to
       // state so it can be re-thrown and caught by the error boundary
@@ -119,27 +121,38 @@ const SharePage: FunctionComponent = (): ReactElement => {
 
   return (
     <div className="w-full max-w-200 h-full flex flex-col items-start justify-between gap-y-8 pt-6 pb-10 pl-6 pr-6">
-      <div className="w-full flex flex-col items-start border-solid border border-primary/20 rounded-sm gap-y-10 p-6 overflow-y-auto no-scrollbar touch-pan-y">
-        {
-          (blocks == null)
-            ? (
-                <div className="flex flex-row items-center gap-x-4">
-                  <Loader />
-                  <p className="text-xs">
-                    Loading...
-                  </p>
-                </div>
-              )
-            : blocks.map((block) => {
-                const { id, type } = block;
+      <div className="w-full flex flex-col items-start gap-y-4">
+        <div className="w-full flex flex-col items-start border-solid border border-primary/20 rounded-sm gap-y-10 p-6 overflow-y-auto no-scrollbar touch-pan-y">
+          {
+            (blocks == null)
+              ? (
+                  <div className="flex flex-row items-center gap-x-4">
+                    <Loader />
+                    <p className="text-xs">
+                      Loading...
+                    </p>
+                  </div>
+                )
+              : blocks.map((block) => {
+                  const { id, type } = block;
 
-                return (
-                  <TerminalBlock
-                    key={`terminal-${type}-block-${id}`}
-                    {...block}
-                  />
-                );
-              })
+                  return (
+                    <TerminalBlock
+                      key={`terminal-${type}-block-${id}`}
+                      {...block}
+                    />
+                  );
+                })
+          }
+        </div>
+        {
+          (selfDestruct === true) && (
+            <div className="w-full flex flex-col items-start border-solid border border-error shadow-error/60 shadow-[5px_5px_0px_0px] rounded-sm p-4">
+              <p className="text-xs text-error! leading-5">
+                This share is set to self-destruct and its data has already been deleted. Refresh or leave this page with caution.
+              </p>
+            </div>
+          )
         }
       </div>
       {
