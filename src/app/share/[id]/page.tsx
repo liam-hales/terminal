@@ -155,22 +155,18 @@ const SharePage: FunctionComponent = (): ReactElement => {
           )
         }
       </div>
-      {
-        (blocks != null) && (
-          <div className="w-full flex flex-col items-start gap-y-2 pl-4">
-            <p className="text-sm">
-              Shared from
-            </p>
-            <Link
-              href={`https://${window.location.hostname}`}
-              target="_blank"
-              passHref={true}
-            >
-              <TerminalTitle className="text-[5px] leading-[6.4px]" />
-            </Link>
-          </div>
-        )
-      }
+      <div className="w-full flex flex-col items-start gap-y-2 pl-4">
+        <p className="text-sm">
+          Shared from
+        </p>
+        <Link
+          href={`https://${window.location.hostname}`}
+          target="_blank"
+          passHref={true}
+        >
+          <TerminalTitle className="text-[5px] leading-[6.4px]" />
+        </Link>
+      </div>
     </div>
   );
 };
