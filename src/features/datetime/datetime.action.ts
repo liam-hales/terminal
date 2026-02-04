@@ -1,11 +1,8 @@
 import { ComponentProps } from 'react';
 import { z } from 'zod';
-import dayjs from 'dayjs';
-import utcPlugin from 'dayjs/plugin/utc';
-import timezonePlugin from 'dayjs/plugin/timezone';
-import relativeTimePlugin from 'dayjs/plugin/relativeTime';
 import { GroupedListOutput } from '../../components';
 import { datetimeOptions } from '.';
+import date from '../../date';
 
 /**
  * The datetime feature options
@@ -27,24 +24,18 @@ type Props = ComponentProps<typeof GroupedListOutput>;
 const datetimeAction = (options: Options): Props => {
   const { value, timezone } = options;
 
-  // Apply the Day.js plugins to `dayjs` in order
-  // to extend its functionality
-  dayjs.extend(utcPlugin);
-  dayjs.extend(timezonePlugin);
-  dayjs.extend(relativeTimePlugin);
-
   // Guess the users current timezone and the actual
   // timezone based on the `timezone` option
-  const currentTimezone = dayjs.tz.guess();
+  const currentTimezone = date.tz.guess();
   const actualTimezone = (timezone === 'current')
     ? currentTimezone
     : timezone;
 
-  // Get the date from the `value`
+  // Parse the date from the `value`
   // and `timezone` options
-  const date = (actualTimezone == null)
-    ? dayjs.utc(value)
-    : dayjs
+  const parsedDate = (actualTimezone == null)
+    ? date.utc(value)
+    : date
         .utc(value)
         .tz(actualTimezone);
 
@@ -55,19 +46,19 @@ const datetimeAction = (options: Options): Props => {
     groups: [
       {
         items: [
-          date.format('dddd, D MMMM YYYY'),
-          date.format('hh:mm a'),
+          parsedDate.format('dddd, D MMMM YYYY'),
+          parsedDate.format('hh:mm a'),
         ],
       },
       {
         items: [
           {
             name: 'Date',
-            value: date.format('DD-MM-YYYY'),
+            value: parsedDate.format('DD-MM-YYYY'),
           },
           {
             name: 'Time',
-            value: date.format('HH:mm:ss.SSS'),
+            value: parsedDate.format('HH:mm:ss.SSS'),
           },
           {
             name: 'Timezone',
@@ -75,27 +66,27 @@ const datetimeAction = (options: Options): Props => {
           },
           {
             name: 'Offset',
-            value: date.format('Z'),
+            value: parsedDate.format('Z'),
           },
           {
             name: 'ISO Timestamp',
-            value: date.toISOString(),
+            value: parsedDate.toISOString(),
           },
           {
             name: 'UNIX (seconds)',
-            value: date
+            value: parsedDate
               .unix()
               .toString(),
           },
           {
             name: 'UNIX (milliseconds)',
-            value: date
+            value: parsedDate
               .valueOf()
               .toString(),
           },
           {
             name: 'Relative',
-            value: date.fromNow(),
+            value: parsedDate.fromNow(),
           },
         ],
       },
