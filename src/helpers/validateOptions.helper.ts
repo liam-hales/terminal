@@ -23,6 +23,23 @@ const validateOptions = <S extends ZodRawShape>(
 ): z.infer<typeof schema> => {
   const { command, options = {} } = input;
 
+  // Used to skip options schema validation when the `help` option is set to `true`
+  // This stops validation from failing when required options are not present in the input
+  const schemaUnion = z
+    .discriminatedUnion('help', [
+      z.object({
+        help: z.literal(true),
+      }),
+      schema
+        .extend({
+          help: z
+            .literal(false)
+            .optional()
+            .default(false),
+        })
+        .strict(),
+    ]);
+
   // Pre-process the input data before validation to
   // merge the options with their corresponding aliases
   const validated = z
@@ -54,13 +71,13 @@ const validateOptions = <S extends ZodRawShape>(
             [key]: input[key] ?? aliasValue,
           };
         }, {});
-    }, schema.strict())
+    }, schemaUnion)
     .safeParse(options);
 
   // Check if the validation was successful, if so then call the feature action with the transformed
   // and validated options and use the returned props for the terminal executed block
   if (validated.success === true) {
-    return validated.data;
+    return validated.data as z.infer<typeof schema>;
   }
 
   // The validation failed, extract the error
