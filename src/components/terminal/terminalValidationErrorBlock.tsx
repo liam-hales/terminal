@@ -14,6 +14,8 @@ type Props = Omit<ValidationErrorBlock, 'id' | 'type'> & BaseProps;
  * @returns The `TerminalValidationErrorBlock` component
  */
 const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duration, regex, errors }): ReactElement<Props> => {
+  const splitRegex = new RegExp(`(${regex.source})`, 'g');
+
   return (
     <div className="w-full flex flex-col gap-y-3">
       <p className="text-xs break-all">
@@ -24,12 +26,8 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
           <p className="text-xs whitespace-pre-wrap break-all pb-6">
             {
               input
-                // Split the input string at the spaces while
-                // grouping command options and their values
-                .split(/("[^"]*"|--\S+="[^"]*"|--\S+=\S+|--\S+\s\S+|--\S+|\S+)/g)
-                .filter((part) => part !== '')
+                .split(splitRegex)
                 .map((part) => {
-
                   const isMatch = regex.test(part);
 
                   // If the part of the input string is a match
