@@ -23,6 +23,23 @@ const validateOptions = <S extends ZodRawShape>(
 ): z.infer<typeof schema> => {
   const { command, options = {} } = input;
 
+  /**
+   * Used to build regex for a given option
+   * key used for validation errors
+   *
+   * @param optionKey The option key
+   * @param isUnknown Set if the option key is unknown
+   */
+  const _buildRegex = (optionKey: string, isUnknown: boolean = false): RegExp => {
+    // If the option key is unknown then set the alias to the same value as
+    // we don't know how the option was set, and we won't have an alias
+    const alias = (isUnknown === true)
+      ? optionKey
+      : aliases[optionKey];
+
+    return new RegExp(`(?:--${kebabCase(optionKey)}${(alias != null) ? `|-${alias}` : ''})+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`);
+  };
+
   // Used to skip options schema validation when the `help` option is set to `true`
   // This stops validation from failing when required options are not present in the input
   const schemaUnion = z
@@ -108,10 +125,10 @@ const validateOptions = <S extends ZodRawShape>(
           const matches = search(key, names);
 
           return {
-            match: `--${kebabCase(key)}`,
+            match: _buildRegex(key, true),
             message: (matches.length > 0)
               ? `Unknown command option, did you mean ${matches.map((match) => `"--${kebabCase(match)}"`).join(' or ')}?`
-              : `Unknown command option "--${kebabCase(key)}"`,
+              : 'Unknown command option',
           };
         });
       }
@@ -129,7 +146,7 @@ const validateOptions = <S extends ZodRawShape>(
         }
 
         return {
-          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          match: _buildRegex(key),
           message: `Invalid type, expected: "${expected}"`,
         };
       }
@@ -138,7 +155,7 @@ const validateOptions = <S extends ZodRawShape>(
         const { format, message } = issue;
 
         return {
-          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          match: _buildRegex(key),
           message: (format === 'regex')
             ? `Invalid format, expected: "${message}"`
             : `Invalid format, expected: "${format}"`,
@@ -149,7 +166,7 @@ const validateOptions = <S extends ZodRawShape>(
         const { values } = issue;
 
         return {
-          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          match: _buildRegex(key),
           message: `Invalid value, expected: "${values.toString()}"`,
         };
       }
@@ -157,9 +174,12 @@ const validateOptions = <S extends ZodRawShape>(
       case 'invalid_union': {
         const { errors } = issue;
 
-        // If the input options does not contain a value for the key then this
-        // is considered a required option otherwise there would be no error
-        if (options[key] == null) {
+        // If the input options does not contain a value for the key (or alias) then
+        // this is considered a required option otherwise there would be no error
+        if (
+          options[key] == null &&
+          options[aliases[key] ?? ''] == null
+        ) {
           return {
             match: command,
             message: `Command is missing required option "--${kebabCase(key)} <${kebabCase(key)}>"`,
@@ -192,7 +212,7 @@ const validateOptions = <S extends ZodRawShape>(
           .join(', ');
 
         return {
-          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          match: _buildRegex(key),
           message: `Invalid value, expected: ${expectedValues}`,
         };
       }
@@ -201,7 +221,7 @@ const validateOptions = <S extends ZodRawShape>(
         const { origin, maximum } = issue;
 
         return {
-          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          match: _buildRegex(key),
           message: (origin === 'string')
             ? `Value length too long, maximum length: ${maximum}`
             : `Value too big, maximum: ${maximum}`,
@@ -212,7 +232,7 @@ const validateOptions = <S extends ZodRawShape>(
         const { origin, minimum } = issue;
 
         return {
-          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          match: _buildRegex(key),
           message: (origin === 'string')
             ? `Value length too short, minimum length: ${minimum}`
             : `Value too small, minimum: ${minimum}`,
@@ -224,7 +244,7 @@ const validateOptions = <S extends ZodRawShape>(
       default: {
         const { message } = issue;
         return {
-          match: new RegExp(`(--${kebabCase(key)}\\b)+(?:\\s+[^-\\s]+|="[^"]*"|=[^\\s"]*)?`),
+          match: _buildRegex(key),
           message: message,
         };
       }
