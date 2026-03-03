@@ -61,7 +61,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                 return (
                   <div
                     className="flex flex-row"
-                    key={`validation-error-message-${message}`}
+                    key={`validation-error-message-${line}-${position}`}
                   >
                     <p className="w-24 text-xs">
                       {`[${line}:${position}]`}
