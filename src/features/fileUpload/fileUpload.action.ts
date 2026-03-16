@@ -69,7 +69,7 @@ const fileUploadAction = async function* (options: Options): AsyncGenerator<Acti
 
   // Execute the function to used to upload the files one
   // after another and push events to the channel
-  void (async () => {
+  void (async (): Promise<void> => {
     for (let index = 0; index < toUpload.length; index++) {
 
       const file = toUpload[index];
