@@ -23,7 +23,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
       </p>
       <div className="flex flex-row items-end justify-between gap-x-3">
         <div className="w-full pt-2 pb-4 pl-5 pr-5">
-          <p className="text-xs whitespace-pre-wrap break-all pb-6">
+          <p className="text-xs break-all pb-6">
             {
               input
                 .split(splitRegex)
@@ -69,7 +69,7 @@ const TerminalValidationErrorBlock: FunctionComponent<Props> = ({ input, duratio
                     <p className="w-28 text-xs text-error!">
                       x error
                     </p>
-                    <pre className="text-xs text-error! whitespace-pre-wrap break-all">
+                    <pre className="text-xs text-error! whitespace-pre-wrap">
                       {message}
                     </pre>
                   </div>
