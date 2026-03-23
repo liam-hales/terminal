@@ -27,6 +27,7 @@ const RetroScreen: FunctionComponent<Props> = ({ children }): ReactElement<Props
         w-full h-full flex flex-col items-center bg-background z-10
 
         [&_p]:text-retro
+        [&_a]:text-retro
         [&_pre]:text-retro
        `}
       >
