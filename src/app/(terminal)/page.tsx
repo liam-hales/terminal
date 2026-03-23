@@ -1,9 +1,8 @@
 'use client';
 
 import { FunctionComponent, ReactElement } from 'react';
-import { CodeInline } from '../../components/common';
+import { CodeInline, LinkButton } from '../../components/common';
 import { TerminalTitle } from '../../components';
-import Link from 'next/link';
 import date from '../../date';
 
 /**
@@ -31,31 +30,19 @@ const TerminalPage: FunctionComponent = (): ReactElement => {
           Web-based developer tools with a dev-friendly terminal interface.
         </p>
         <div className="flex flex-row items-center gap-x-6">
-          <Link
-            href="https://liamhales.dev"
-            target="_blank"
-            passHref={true}
-          >
-            <p className="text-xs border-solid border border-primary shadow-primary/60 shadow-[4px_4px_0px_0px] p-2">
-              liamhales.dev
-            </p>
-          </Link>
-          <Link
-            href="https://github.com/liam-hales/terminal"
-            target="_blank"
-            passHref={true}
-          >
-            <p className="text-xs border-solid border border-primary shadow-primary/60 shadow-[4px_4px_0px_0px] p-2">
-              source / github
-            </p>
-          </Link>
+          <LinkButton url="https://liamhales.dev">
+            liamhales.dev
+          </LinkButton>
+          <LinkButton url="https://github.com/liam-hales/terminal">
+            source / github
+          </LinkButton>
         </div>
       </div>
       <div className="flex flex-col pt-24">
         <p className="text-xl">
           GETTING STARTED
         </p>
-        <div className="flex flex-col gap-y-2 pt-6">
+        <div className="flex flex-col gap-y-3 pt-6">
           <p className="text-xs">
             - Use the
             <CodeInline className="ml-2 mr-2">
